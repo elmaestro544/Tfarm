@@ -1046,6 +1046,8 @@
         .cf-why p { margin: 0; flex: 1; font-size: 14px; line-height: 1.8; color: var(--mu); }
         .cf-why p b { color: var(--tx); }
         .cf-why.is-ok > .tf-ico { color: var(--pri); }
+        .cf-why-acts { display: flex; gap: 8px; flex: none; flex-wrap: wrap; justify-content: flex-end; }
+        .cf-why-note { display: block; margin-top: 4px; color: var(--tx2); }
 
         /* Chart: balance above the axis, partner funding below */
         .cf-chart { display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 0 10px; direction: rtl; }
@@ -1112,6 +1114,7 @@
             .cf-why { flex-direction: column; align-items: stretch; padding: 16px; border-radius: 16px; }
             .cf-why > .tf-ico { display: none; }
             .cf-why .tf-btn { width: 100%; }
+            .cf-why-acts { flex-direction: column; }
             .cf-chart { gap: 0 3px; }
             .cf-col { grid-template-rows: 110px 1px 50px auto; }
             .cf-val { display: none; }
@@ -1507,7 +1510,7 @@
             <span class="tf-logo"><svg class="tf-ico" style="width:20px;height:20px" aria-hidden="true"><use href="#i-leaf"/></svg></span>
             <span>
                 <span class="tf-brand-name">مزرعة تنيدة</span>
-                <span class="tf-brand-sub tf-only-desktop">الوادي الجديد · 202 فدان</span>
+                <span class="tf-brand-sub tf-only-desktop">الوادي الجديد · 200 فدان</span>
                 <span class="tf-brand-sub tf-only-mobile">الخزينة <span class="num" data-treasury>45,006</span> ج.م · <span id="top-now-q">Q4 2026</span></span>
             </span>
         </button>
@@ -1515,7 +1518,7 @@
             <button type="button" class="tf-btn tf-icon-btn" style="border:0;background:transparent" onclick="switchTab('more')" aria-label="رجوع إلى المزيد">
                 <svg class="tf-ico" style="width:22px;height:22px" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
             </button>
-            <span><b id="top-sub-title">مخطط المزرعة</b><small id="top-sub-meta">202 فدان · 59 حوشة · 187 كود</small></span>
+            <span><b id="top-sub-title">مخطط المزرعة</b><small id="top-sub-meta">200 فدان · 59 حوشة · 187 كود</small></span>
         </div>
         <div class="tf-top-actions">
             <span id="save-indicator" class="tf-saved tf-only-desktop"><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg>محفوظ تلقائياً</span>
@@ -1560,7 +1563,7 @@
                 </button>
                 <div class="tf-nav-group">الأرض والإنتاج</div>
                 <button type="button" class="tf-nav-item" data-tab="masterplan" onclick="switchTab('masterplan')">
-                    <svg class="tf-ico" aria-hidden="true"><use href="#i-map"/></svg><span class="tf-nav-label">مخطط المزرعة</span><span class="tf-nav-badge num">202 ف</span>
+                    <svg class="tf-ico" aria-hidden="true"><use href="#i-map"/></svg><span class="tf-nav-label">مخطط المزرعة</span><span class="tf-nav-badge num">200 ف</span>
                 </button>
                 <button type="button" class="tf-nav-item" data-tab="livestock" onclick="switchTab('livestock')">
                     <svg class="tf-ico" aria-hidden="true"><use href="#i-barn"/></svg><span class="tf-nav-label">المواشي</span><span id="nav-badge-sheep" class="tf-nav-badge num">150 رأس</span>
@@ -1675,6 +1678,9 @@
                             <button type="button" id="decision-primary" class="tf-btn tf-btn-primary" onclick="scheduleGanttWithoutGap()">
                                 <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-calcheck"/></svg><span>جدولة بدون عجز</span>
                             </button>
+                            <button type="button" class="tf-btn js-restore hidden no-print" onclick="restoreOriginalSchedule()">
+                                <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-rotate"/></svg><span>استعادة الخطة الأصلية</span>
+                            </button>
                             <button type="button" class="tf-btn" onclick="switchTab('cashflow')">
                                 تفاصيل السيولة<svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-arrow"/></svg>
                             </button>
@@ -1786,7 +1792,7 @@
 
                 <!-- Survey summary -->
                 <div class="tf-stats tf-only-desktop">
-                    <div><span>المساحة الكلية</span><strong class="num">202 فدان</strong><small>شريط طولي ~2100 × 420 م</small></div>
+                    <div><span>المساحة الكلية</span><strong class="num">200 فدان</strong><small>شريط طولي ~2100 × 420 م</small></div>
                     <div><span>الأحواش والأكواد</span><strong class="num">59 حوشة · 187 كود</strong><small>186.9 فدان صافي · 0.77–1.44 ف/كود</small></div>
                     <div><span>الطرق والمدقات</span><strong class="num">15.1 فدان</strong><small>+ دائري جنوبي 10–13 م</small></div>
                     <div><span>المزروع فعلياً</span><strong class="num">140 فدان</strong><small>قمح شتوي + برسيم حجازي</small></div>
@@ -2454,6 +2460,9 @@
                         <button type="button" class="tf-btn" onclick="scheduleGanttWithoutGap()" title="تأجيل المراحل التي لم تبدأ إلى أقرب ربع لا يسبب عجزاً في الخزينة">
                             <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-calcheck"/></svg>جدولة بدون عجز
                         </button>
+                        <button type="button" class="tf-btn js-restore hidden" onclick="restoreOriginalSchedule()">
+                            <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-rotate"/></svg>استعادة الخطة الأصلية
+                        </button>
                         <button type="button" class="tf-btn tf-btn-primary" onclick="openNewGanttTask()">
                             <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>إضافة مهمة
                         </button>
@@ -2486,6 +2495,9 @@
                         <button type="button" class="tf-btn" onclick="scheduleGanttWithoutGap()">
                             <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-calcheck"/></svg>جدولة بدون عجز
                         </button>
+                        <button type="button" class="tf-btn js-restore hidden" onclick="restoreOriginalSchedule()">
+                            <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-rotate"/></svg>استعادة الخطة الأصلية
+                        </button>
                     </div>
                 </section>
 
@@ -2510,7 +2522,7 @@
                     <ol class="tf-ms">
                         <li class="is-done"><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2024 – 2026</span><b>تم التنفيذ</b></div><p>الكهرباء الحكومية، والمنصة الإلكترونية، وزراعة 140 فداناً.</p><span class="tf-sr">مكتمل</span></li>
                         <li class="is-current"><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2027 – 2028</span><b>المرحلة أ</b></div><p>بحيرة التخزين، واستصلاح وغرس أول 25 فدان، وتعاقد التصدير.</p><span class="tf-sr">المرحلة التالية</span></li>
-                        <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2028 – 2029</span><b>المرحلة ب</b></div><p>استكمال 25 فدان مجدول واكتمال الـ 202 فدان.</p></li>
+                        <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2028 – 2029</span><b>المرحلة ب</b></div><p>استكمال 25 فدان مجدول واكتمال الـ 200 فدان.</p></li>
                         <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2030 – 2032</span><b>بداية الإثمار</b></div><p>محصول أول متدرج (10–30% من الطاقة) من نخيل 2027–2028، والتوسع في عنبر العجول.</p></li>
                         <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2035</span><b>الإنتاج الكامل</b></div><p>اكتمال إثمار الـ 50 فدان (السنة 7–8 للنخلة)، والهدف صافي 12.5 مليون ج.م سنوياً والعلامة التجارية.</p></li>
                     </ol>
@@ -2755,7 +2767,7 @@
                     <div class="tf-list">
                         <button type="button" class="tf-list-item" onclick="switchTab('masterplan')">
                             <span class="tf-list-icon"><svg class="tf-ico" style="width:20px;height:20px" aria-hidden="true"><use href="#i-map"/></svg></span>
-                            <span class="tf-list-text"><b>مخطط المزرعة</b><small>202 فدان · 59 حوشة</small></span>
+                            <span class="tf-list-text"><b>مخطط المزرعة</b><small>200 فدان · 59 حوشة</small></span>
                             <svg class="tf-ico" style="color:var(--su)" aria-hidden="true"><use href="#i-chev-start"/></svg>
                         </button>
                         <button type="button" class="tf-list-item" onclick="switchTab('livestock')">
@@ -2844,7 +2856,7 @@
             <div class="tf-pm-actions">
                 <label class="tf-sr" for="print-sheet-selector">اللوحة المعروضة</label>
                 <select id="print-sheet-selector" class="tf-select" onchange="openStandalonePrintSheet(this.value)">
-                    <option value="cad_full">المخطط العام للمزرعة (ح1–ح59 · 202 فدان)</option>
+                    <option value="cad_full">المخطط العام للمزرعة (ح1–ح59 · 200 فدان)</option>
                     <option value="cad_sector">القطاع المحدد حالياً في المخطط</option>
                     <option value="livestock_master">الموقع العام لمجمع المواشي (كود 083)</option>
                     <option value="phase1_single">مساقط العنصر المختار من المرحلة الأولى</option>
@@ -4538,7 +4550,7 @@
                 <div class="border-2 border-slate-900 rounded-xl p-4 bg-slate-50 flex flex-wrap items-center justify-between gap-4 text-xs">
                     <div class="space-y-1">
                         <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded bg-emerald-800 text-white font-black">مزرعة تنيدة — الوادي الجديد (202 فدان)</span>
+                            <span class="px-2.5 py-0.5 rounded bg-emerald-800 text-white font-black">مزرعة تنيدة — الوادي الجديد (200 فدان)</span>
                             <span class="px-2.5 py-0.5 rounded border border-slate-900 text-slate-900 font-black">كود اللوحة: ${sheetCode}</span>
                         </div>
                         <h2 class="text-lg sm:text-xl font-black text-slate-900">${sheetTitle}</h2>
@@ -4631,10 +4643,10 @@
                     .replace(/viewBox="[^"]*"/, 'viewBox="0 0 1320 340"')
                     .replace(/class="[^"]*"/, 'class="w-full h-[360px] border border-slate-400 rounded-xl bg-white"');
                 container.innerHTML = `
-                    ${buildEngineeringTitleBlockHTML('المخطط المساحي الشامل لمزرعة تنيدة وتوقيع المشروعات الخدمية (ح1 – ح59)', 'CAD-MASTER-202', '1:2500')}
+                    ${buildEngineeringTitleBlockHTML('المخطط المساحي الشامل لمزرعة تنيدة وتوقيع المشروعات الخدمية (ح1 – ح59)', 'CAD-MASTER-200', '1:2500')}
                     <div class="p-2 border-2 border-slate-800 rounded-xl bg-white">${cadSvgClone}</div>
                     <div class="grid grid-cols-3 gap-3 text-xs">
-                        <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>إجمالي المساحة الجيوديسية:</strong> 202.0 فدان (186.9 فدان صافي · 59 حوشة · 187 كود + 15.1 فدان طرق ومدقات).</div>
+                        <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>إجمالي المساحة الجيوديسية:</strong> 200.0 فدان (186.9 فدان صافي · 59 حوشة · 187 كود + 13.1 فدان طرق ومدقات).</div>
                         <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>منطقة الخدمات والمواشي (ح23):</strong> 6.6 فدان تشمل الأكواد 076–083 (الاستراحة، المخزن، الحزام العازل، ومجمع المواشي في الكود 083).</div>
                         <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>الارتكاز المائي وتوسع النخيل:</strong> البئر BEER1 في ح30 (كود 095)، البحيرة في كود 088، وتوسع الـ 50 فدان نخيل في ح47–ح59.</div>
                     </div>
@@ -5437,6 +5449,7 @@
 
             // Render Quarterly Cash Flow Table
             renderCashFlowTable(m, cf);
+            renderRestoreButtons();
         }
 
         // Keep the cost of the standard Gantt tasks equal to the simulator figures
@@ -5470,13 +5483,16 @@
             const hasGap = cf.totals.inject > 0;
             const qN = quarterInfo(PLAN_QUARTERS);
             sum.classList.toggle('is-ok', !hasGap);
+            const rs = scheduleRestoreInfo(m, cf);
+            const note = rs ? ` <span class="cf-why-note">التوقيت الحالي مؤجَّل عن الخطة الأصلية في ${rs.countText}. في الخطة الأصلية: تمويل <span class="num">${formatNum(rs.inject)}</span> ج.م، واكتمال الغرس <bdi>${rs.endCode}</bdi> بدل <bdi>${rs.curEndCode}</bdi>.</span>` : '';
+            const restoreBtn = rs ? `<button type="button" class="tf-btn no-print" onclick="restoreOriginalSchedule()"><svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-rotate"/></svg>استعادة الخطة الأصلية</button>` : '';
             sum.innerHTML = hasGap
                 ? `<svg class="tf-ico" aria-hidden="true"><use href="#i-warn"/></svg>
                    <p><b>لماذا يظهر العجز؟</b> المصروفات الرأسمالية وشراء القطيع تقع في الشتاء، بينما يأتي النقد الكبير من حصاد القمح وبيع الأضاحي في الربع الثاني (أبريل–يونيو).${cf.endBalanceAfterRepay < 0
-                        ? ` <b>ولا يكفي فائض التشغيل حتى <bdi>${qN.code}</bdi> لرد هذا التمويل</b> — يلزم قرار: زيادة مساهمة الشركاء، أو تأجيل مراحل، أو رفع الإنتاجية.` : ''}</p>
-                   <button type="button" class="tf-btn tf-btn-primary no-print" onclick="scheduleGanttWithoutGap()">جدولة بدون عجز</button>`
+                        ? ` <b>ولا يكفي فائض التشغيل حتى <bdi>${qN.code}</bdi> لرد هذا التمويل</b> — يلزم قرار: زيادة مساهمة الشركاء، أو تأجيل مراحل، أو رفع الإنتاجية.` : ''}${note}</p>
+                   <div class="cf-why-acts">${restoreBtn}<button type="button" class="tf-btn tf-btn-primary no-print" onclick="scheduleGanttWithoutGap()">جدولة بدون عجز</button></div>`
                 : `<svg class="tf-ico" aria-hidden="true"><use href="#i-ok"/></svg>
-                   <p><b>الخطة ممولة ذاتياً.</b> لا ينزل رصيد الخزينة عن حد الأمان (<span class="num">${formatNum(cf.reserve)}</span> ج.م) في أي ربع حتى <bdi>${qN.code}</bdi>.</p>`;
+                   <p><b>الخطة ممولة ذاتياً.</b> لا ينزل رصيد الخزينة عن حد الأمان (<span class="num">${formatNum(cf.reserve)}</span> ج.م) في أي ربع حتى <bdi>${qN.code}</bdi>.${note}</p>${restoreBtn ? `<div class="cf-why-acts">${restoreBtn}</div>` : ''}`;
         }
 
         // Livestock page figures (the cycle inputs are edited in the simulator)
@@ -7091,21 +7107,82 @@
                 return;
             }
             const before = structuredClone(appState.ganttTasks);
+            const prevBaseline = appState.ganttBaseline ? structuredClone(appState.ganttBaseline) : null;
+            // Remember the timing before the first automatic re-schedule, so «استعادة الخطة الأصلية» can bring it back later
+            if (!appState.ganttBaseline) appState.ganttBaseline = { at: todayISO(), timing: Object.fromEntries(before.map(t => [t.id, Number(t.startQ) || 1])) };
             appState.ganttTasks = tasks;
             renderAll();
             saveState();
-            lastGanttUndo = before;
+            lastGanttUndo = { tasks: before, baseline: prevBaseline };
             showToast(`تمت إعادة الجدولة: التمويل المطلوب انخفض من ${formatNum(beforeInject)} إلى ${formatNum(afterInject)} ج.م${afterInject > 0 ? ' (المتبقي موسمي: شراء الأغنام ومصروفات الشتاء قبل حصاد مايو)' : ''}`, undoGanttSchedule);
         }
 
         let lastGanttUndo = null;
         function undoGanttSchedule() {
             if (!lastGanttUndo) return;
-            appState.ganttTasks = lastGanttUndo;
+            const u = lastGanttUndo;
+            appState.ganttTasks = Array.isArray(u) ? u : u.tasks;
+            if (!Array.isArray(u)) appState.ganttBaseline = u.baseline;
             lastGanttUndo = null;
             renderAll();
             saveState();
-            showToast('تم التراجع عن إعادة الجدولة');
+            showToast('تم التراجع، والجدول كما كان');
+        }
+
+        // Restoring the plan's original timing (before «جدولة بدون عجز»).
+        // The first automatic re-schedule stores every task's start quarter in appState.ganttBaseline.
+        // A plan re-scheduled before that existed has no baseline, so the default plan's timing is used.
+        function originalScheduleTiming() {
+            const b = appState.ganttBaseline;
+            if (b && b.timing) return { timing: b.timing, at: b.at || null, fromDefaults: false };
+            return { timing: Object.fromEntries(DEFAULT_STATE.ganttTasks.map(t => [t.id, t.startQ])), at: null, fromDefaults: true };
+        }
+        // Capex tasks that have not started and sit away from their original quarter, with the quarter each goes back to
+        function scheduleRestoreChanges() {
+            const { timing } = originalScheduleTiming();
+            const nowIdx = currentQuarterIdx();
+            return appState.ganttTasks
+                .filter(t => isCapexTask(t) && timing[t.id] != null && (Number(t.startQ) || 1) > nowIdx)
+                .map(t => ({ id: t.id, to: Math.max(nowIdx, Math.min(PLAN_QUARTERS, Number(timing[t.id]) || 1)) }))
+                .filter(c => c.to !== (Number(appState.ganttTasks.find(t => t.id === c.id).startQ) || 1));
+        }
+        const tasksCountAr = n => n === 1 ? 'مهمة واحدة' : n === 2 ? 'مهمتين' : n <= 10 ? `${n} مهام` : `${n} مهمة`;
+        // What the original timing would look like, for the note on the cash-flow page (null when nothing differs)
+        function scheduleRestoreInfo(m, cf) {
+            const changes = scheduleRestoreChanges();
+            if (!changes.length) return null;
+            const to = Object.fromEntries(changes.map(c => [c.id, c.to]));
+            const ocf = computeCashflow(m, appState.ganttTasks.map(t => to[t.id] ? { ...t, startQ: to[t.id] } : t));
+            return {
+                countText: tasksCountAr(changes.length),
+                inject: ocf.totals.inject,
+                endCode: ocf.lastCapexIdx ? quarterInfo(ocf.lastCapexIdx).code : '—',
+                curEndCode: cf.lastCapexIdx ? quarterInfo(cf.lastCapexIdx).code : '—'
+            };
+        }
+        function restoreOriginalSchedule() {
+            const changes = scheduleRestoreChanges();
+            if (!changes.length) {
+                appState.ganttBaseline = null;
+                saveState();
+                renderAll();
+                showToast('الجدول الحالي هو توقيت الخطة الأصلية');
+                return;
+            }
+            const beforeInject = computeCashflow(calculateMetrics()).totals.inject;
+            lastGanttUndo = { tasks: structuredClone(appState.ganttTasks), baseline: appState.ganttBaseline ? structuredClone(appState.ganttBaseline) : null };
+            const to = Object.fromEntries(changes.map(c => [c.id, c.to]));
+            appState.ganttTasks = appState.ganttTasks.map(t => to[t.id] ? { ...t, startQ: to[t.id] } : t);
+            appState.ganttBaseline = null;
+            renderAll();
+            saveState();
+            const afterInject = computeCashflow(calculateMetrics()).totals.inject;
+            showToast(`استُعيد توقيت الخطة الأصلية (${tasksCountAr(changes.length)}): التمويل المطلوب ${formatNum(afterInject)} ج.م بدل ${formatNum(beforeInject)}`, undoGanttSchedule);
+        }
+        function renderRestoreButtons() {
+            const n = scheduleRestoreChanges().length, o = originalScheduleTiming();
+            const tip = o.fromDefaults ? 'إرجاع المهام المؤجلة إلى توقيت الخطة الأصلية' : `إرجاع التوقيت إلى ما كان عليه قبل «جدولة بدون عجز» (${o.at})`;
+            document.querySelectorAll('.js-restore').forEach(b => { b.classList.toggle('hidden', !n); b.title = tip; });
         }
 
         // 6. QUARTERLY CASH-FLOW PAGE (display only — every figure comes from computeCashflow)
@@ -7313,7 +7390,7 @@
         const BOTTOM_NAV_TABS = ['dashboard', 'gantt', 'cashflow', 'simulator'];
         // Phone sub-pages (reached from "More") show a back button and their own title
         const SUB_PAGES = {
-            masterplan: { title: 'مخطط المزرعة', meta: '202 فدان · 59 حوشة · 187 كود' },
+            masterplan: { title: 'مخطط المزرعة', meta: '200 فدان · 59 حوشة · 187 كود' },
             livestock: { title: 'المواشي ودورة الأغنام', meta: 'كود 083 · 60 × 70 م' },
             constants: { title: 'الشركاء والأصول', meta: 'حصص متساوية 25% · مثبّتة بالريال' }
         };
