@@ -820,6 +820,7 @@
             --g-w1: #1D6B48; --g-w1-f: #D6EADD;
             --g-w2: #94652B; --g-w2-f: #F1E3C9;
             --g-care: #5F6B64; --g-care-f: #E3E7E2;
+            --g-irr: #0E7486; --g-irr-f: #D3EBEF;
             --dg: #B42318;
         }
         :root[data-theme="dark"] {
@@ -827,12 +828,27 @@
             --g-w1: #3FA374; --g-w1-f: #1C3328;
             --g-w2: #D2A35F; --g-w2-f: #3A2F1E;
             --g-care: #97A39B; --g-care-f: #2A342E;
+            --g-irr: #5CC4D2; --g-irr-f: #15363C;
             --dg: #F4A29A;
         }
         .tf-gp-setup { --g-solid: var(--g-setup); --g-fill: var(--g-setup-f); }
         .tf-gp-saidi { --g-solid: var(--g-w1); --g-fill: var(--g-w1-f); }
         .tf-gp-medjool { --g-solid: var(--g-w2); --g-fill: var(--g-w2-f); }
         .tf-gp-care { --g-solid: var(--g-care); --g-fill: var(--g-care-f); }
+        .tf-gp-irrigation { --g-solid: var(--g-irr); --g-fill: var(--g-irr-f); }
+        /* Gated (not yet approved) work: outlined bar, not counted in the cash flow */
+        .tf-g-row.is-gated .tf-g-bar { background: transparent; border: 1.5px dashed var(--g-solid); color: var(--mu); font-weight: 500; }
+        .tf-g-tag { display: inline-flex; align-items: center; padding: 0 6px; border: 1px dashed var(--g-solid); border-radius: 999px; font-size: 11px; font-weight: 600; color: var(--tx2); line-height: 18px; }
+        /* Decision gates row */
+        .tf-g-gatename { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; min-height: 44px; justify-content: center; }
+        .tf-g-gatename b { font-size: 13px; font-weight: 700; }
+        .tf-g-gatename small { font-size: 12px; color: var(--su); }
+        .tf-g-gate { grid-row: 1; align-self: center; justify-self: start; display: inline-flex; align-items: center; gap: 4px; z-index: 1; margin-inline-start: -6px; font-size: 12px; font-weight: 700; color: var(--tx); }
+        .tf-g-gate i { width: 10px; height: 10px; transform: rotate(45deg); background: var(--sf); border: 2px solid var(--g-irr); border-radius: 2px; }
+        .tf-g-gatebox { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 14px; border-radius: 10px; background: var(--sf2); border: 1px solid var(--ln); }
+        .tf-g-gatebox.is-pending { border-style: dashed; border-color: var(--g-irr); }
+        .tf-g-gatebox p { margin: 0; flex: 1 1 320px; font-size: 13px; line-height: 1.7; color: var(--mu); }
+        .tf-g-gatebox b { color: var(--tx); }
 
         /* KPI strip */
         .tf-gk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--sf); border: 1px solid var(--ln); border-radius: 14px; }
@@ -852,6 +868,7 @@
         .tf-g-dot.in { background: var(--pr); }
         .tf-g-dot.out { background: var(--wf); }
         .tf-g-gapmark { width: 14px; height: 4px; border-radius: 2px; background: var(--wf); display: inline-block; }
+        .tf-g-dashmark { width: 16px; height: 10px; box-sizing: border-box; border-radius: 3px; border: 1.5px dashed var(--g-irr); display: inline-block; }
         .tf-g-scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
         .tf-g { --g-task: 290px; min-width: 860px; }
         .tf-g-line { display: grid; grid-template-columns: var(--g-task) minmax(0, 1fr); }
@@ -982,6 +999,10 @@
             .tf-g-cell { height: 8px; border: 0; border-radius: 2px; background: var(--ln2); }
             .tf-g-cell.is-now { background: var(--ln2); }
             .tf-g-cell.is-on { background: var(--g-solid); }
+            .tf-g-row.is-gated .tf-g-cell.is-on { background: transparent; box-shadow: inset 0 0 0 1px var(--g-solid); }
+            .tf-g-gatename { padding: 8px 0 6px; min-height: 0; }
+            .tf-g-gate { margin-inline-start: -5px; font-size: 11px; }
+            .tf-g-gate i { width: 8px; height: 8px; }
             .tf-g-bar { display: none; }
             .tf-g-editor { margin: 14px 0 0; padding: 14px; background: var(--sf2); border-color: var(--ln); }
             .tf-g-editor h3 { font-size: 14px; }
@@ -1472,6 +1493,130 @@
             .pt-cards { display: none !important; }
         }
     </style>
+    <style id="tf-ui-water">
+        /* Irrigation development page (ir-*) and the dashboard water bars */
+        .ir-wbars { display: flex; flex-direction: column; gap: 14px; }
+        .ir-wrow { display: grid; grid-template-columns: 210px minmax(0, 1fr) 150px; align-items: center; gap: 14px; }
+        .ir-wlbl { font-size: 13px; font-weight: 600; color: var(--tx2); }
+        .ir-wtrack { position: relative; display: flex; height: 26px; border-radius: 6px; background: var(--sf2); }
+        .ir-seg { height: 100%; }
+        .ir-seg:first-child { border-start-start-radius: 6px; border-end-start-radius: 6px; }
+        .ir-seg + .ir-seg { box-shadow: inset 1px 0 0 var(--sf), inset -1px 0 0 var(--sf); }
+        .ir-seg0 { background: var(--g-irr); }
+        .ir-seg1 { background: var(--ax); }
+        .ir-seg2 { background: var(--ax2); }
+        .ir-seg3 { background: var(--g-w1); }
+        .ir-wcap { position: absolute; top: -5px; bottom: -5px; width: 0; border-inline-start: 2px dashed var(--tx); }
+        .ir-wval { display: flex; flex-direction: column; gap: 1px; }
+        .ir-wval b { font-size: 16px; font-weight: 700; }
+        .ir-wval small { font-size: 12px; color: var(--su); }
+        .ir-wrow.is-over .ir-wval b { color: var(--dg); }
+        .ir-wlegend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--mu); }
+        .ir-wlegend > span { display: inline-flex; align-items: center; gap: 6px; }
+        .ir-sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+        .ir-capsw { width: 0; height: 14px; border-inline-start: 2px dashed var(--tx); display: inline-block; }
+        .ir-compact .ir-wbars { gap: 10px; }
+        .ir-compact .ir-wrow { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; }
+        .ir-compact .ir-wlbl { grid-column: 1; font-size: 12px; font-weight: 500; color: var(--mu); }
+        .ir-compact .ir-wval { grid-column: 2; grid-row: 1; flex-direction: row; align-items: baseline; gap: 6px; }
+        .ir-compact .ir-wval b { font-size: 14px; }
+        .ir-compact .ir-wval small { display: none; }
+        .ir-compact .ir-wtrack { grid-column: 1 / -1; height: 12px; }
+        .ir-compact .ir-wlegend { margin-top: 2px; }
+
+        /* Priority table */
+        .ir-table { width: 100%; min-width: 980px; border-collapse: collapse; font-size: 13px; }
+        .ir-table th, .ir-table td { padding: 10px; text-align: start; vertical-align: top; border-bottom: 1px solid var(--ln2); line-height: 1.6; }
+        .ir-table thead th { font-size: 12px; font-weight: 600; color: var(--su); border-bottom-color: var(--ln); white-space: nowrap; }
+        .ir-table tbody th { font-weight: 600; color: var(--tx); min-width: 180px; }
+        .ir-table td { color: var(--mu); }
+        .ir-n { width: 28px; font-weight: 700; color: var(--tx) !important; }
+        .ir-cost { white-space: nowrap; }
+        .ir-cost b { display: block; color: var(--tx); font-weight: 700; }
+        .ir-cost small { display: block; font-size: 11px; color: var(--su); }
+        .ir-tier th { padding: 14px 10px 6px; font-size: 12px; font-weight: 700; color: var(--pri); background: transparent; border-bottom: 1px solid var(--ln); }
+        .ir-tier-later th, .ir-tier-no th { color: var(--su); }
+        .ir-row-no th, .ir-row-no td { color: var(--su); }
+        .ir-status { min-width: 150px; }
+        .ir-st { display: inline-flex; align-items: center; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 20px; white-space: nowrap; }
+        .ir-st.is-ok { background: var(--prt); color: var(--pri); }
+        .ir-st.is-gated { border: 1px dashed var(--g-irr); color: var(--tx2); }
+        .ir-st.is-muted { background: var(--sf2); color: var(--mu); }
+        .ir-st.is-no { background: transparent; color: var(--su); border: 1px solid var(--ln3); }
+        .ir-act { display: inline-flex; min-height: 32px; align-items: center; margin-inline-start: 8px; font-size: 12px; }
+        .ir-alt { min-width: 760px; }
+        .ir-alt tr.is-pick th, .ir-alt tr.is-pick td { background: var(--sf2); }
+        .ir-alt tr.is-pick th { box-shadow: inset -3px 0 0 var(--g-irr); }
+
+        /* Decision gates */
+        .ir-gates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+        .ir-gate { display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid var(--ln); border-radius: 12px; background: var(--sf); min-width: 0; }
+        .ir-gate.is-next { border-color: var(--g-irr); box-shadow: inset 0 3px 0 var(--g-irr); }
+        .ir-gate header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 15px; }
+        .ir-gate-dia { width: 11px; height: 11px; transform: rotate(45deg); border: 2px solid var(--g-irr); border-radius: 2px; background: var(--sf); }
+        .ir-gate-when { font-size: 13px; color: var(--su); }
+        .ir-gate-next { margin-inline-start: auto; font-size: 11px; font-weight: 700; color: var(--g-irr); }
+        .ir-gate p { margin: 0; font-size: 13px; line-height: 1.7; color: var(--mu); }
+        .ir-gate p b { color: var(--tx); font-weight: 600; }
+        .ir-gate-list { margin: 2px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; border-top: 1px solid var(--ln2); }
+        .ir-gate-list li { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; font-size: 12px; color: var(--tx2); border-bottom: 1px solid var(--ln2); }
+        .ir-gate-list li.is-pending span { color: var(--mu); }
+        .ir-gate-list li b { font-weight: 600; white-space: nowrap; }
+        .ir-gate footer { margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+        .ir-gate-sum { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--mu); }
+        .ir-gate-sum b { color: var(--tx); }
+        .ir-gate-sum small { font-size: 12px; color: var(--su); line-height: 1.6; }
+        .ir-gate footer .tf-btn { align-self: flex-start; }
+        .ir-gates-note { grid-column: 1 / -1; margin: 0; font-size: 13px; line-height: 1.8; color: var(--mu); }
+        .ir-gates-note b { color: var(--tx); }
+
+        .ir-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+        .ir-list { margin: 0; padding: 0 18px 0 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.7; color: var(--mu); list-style: disc; }
+        .ir-list b { color: var(--tx); font-weight: 600; }
+        .ir-keep { margin: 0; padding: 10px 12px; border-radius: 10px; background: var(--sf2); font-size: 13px; line-height: 1.7; color: var(--mu); }
+        .ir-keep b { color: var(--tx); }
+
+        @media (max-width: 1100px) {
+            .ir-gates { grid-template-columns: minmax(0, 1fr); }
+            .ir-two { grid-template-columns: minmax(0, 1fr); }
+        }
+        @media (max-width: 760px) {
+            .ir-wrow { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 10px; }
+            .ir-wlbl { grid-column: 1; }
+            .ir-wval { grid-column: 2; grid-row: 1; flex-direction: row; align-items: baseline; gap: 6px; }
+            .ir-wval small { display: none; }
+            .ir-wtrack { grid-column: 1 / -1; height: 16px; }
+            /* Tables become stacked cards */
+            .ir-table, .ir-alt { min-width: 0; }
+            .ir-table thead { display: none; }
+            .ir-table, .ir-table tbody, .ir-table tr, .ir-table th, .ir-table td { display: block; }
+            .ir-table tbody tr:not(.ir-tier) { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; padding: 12px 0; border-bottom: 1px solid var(--ln2); }
+            .ir-table tbody tr th, .ir-table tbody tr td { padding: 0; border: 0; min-width: 0; }
+            .ir-table tbody tr td[data-l] { grid-column: 1 / -1; display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 8px; }
+            .ir-table tbody tr td[data-l]::before { content: attr(data-l); font-size: 12px; color: var(--su); }
+            .ir-table tbody tr td.ir-n { grid-column: 1; display: block; }
+            .ir-table tbody tr td.ir-n::before { content: none; }
+            .ir-table tbody tr th[scope="row"] { grid-column: 2; grid-row: 1; }
+            .ir-alt tbody tr th[scope="row"] { grid-column: 1 / -1; }
+            .ir-cost b, .ir-cost small { display: inline; }
+            .ir-cost small { margin-inline-start: 6px; }
+            .ir-status > span { display: flex; align-items: center; flex-wrap: wrap; }
+            .ir-tier th { padding: 16px 0 6px; }
+            .ir-alt tr.is-pick th { box-shadow: none; }
+            .ir-alt tr.is-pick { background: var(--sf2); border-radius: 10px; padding: 12px !important; }
+            .ir-alt tr.is-pick th, .ir-alt tr.is-pick td { background: transparent; }
+            .ir-gate footer .tf-btn { align-self: stretch; }
+        }
+        @media print {
+            .ir-compact .ir-wlegend { display: none; }
+            .ir-compact .ir-wbars { gap: 4px; }
+            .ir-compact .ir-wtrack { height: 8px; }
+            .ir-table { min-width: 0; font-size: 10.5px; }
+            .ir-gate, .ir-wbars { break-inside: avoid; }
+            .ir-gates { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .ir-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+    </style>
 </head>
 <body class="viewport-locked tf-app min-h-screen flex flex-col">
 
@@ -1486,6 +1631,7 @@
         <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
         <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></symbol>
         <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4z"/><path d="M9 4v13.5"/><path d="M15 6.5V20"/></symbol>
+        <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.5c3.5 4.2 6 7.6 6 10.5a6 6 0 0 1-12 0c0-2.9 2.5-6.3 6-10.5z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/></symbol>
         <symbol id="i-barn" viewBox="0 0 24 24"><path d="M3 20V9.5L12 4l9 5.5V20"/><path d="M3 20h18"/><path d="M9 20v-6h6v6"/></symbol>
         <symbol id="i-gantt" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 7h8"/><path d="M10 12h9"/><path d="M7 17h6"/></symbol>
         <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4H18v3"/><path d="M3 6.5v11A2.5 2.5 0 0 0 5.5 20H21V7H5.5A2.5 2.5 0 0 1 3 6.5z"/><circle cx="16.5" cy="13.5" r="1.25"/></symbol>
@@ -1567,6 +1713,9 @@
                 </button>
                 <button type="button" class="tf-nav-item" data-tab="livestock" onclick="switchTab('livestock')">
                     <svg class="tf-ico" aria-hidden="true"><use href="#i-barn"/></svg><span class="tf-nav-label">المواشي</span><span id="nav-badge-sheep" class="tf-nav-badge num">150 رأس</span>
+                </button>
+                <button type="button" class="tf-nav-item" data-tab="water" onclick="switchTab('water')">
+                    <svg class="tf-ico" aria-hidden="true"><use href="#i-drop"/></svg><span class="tf-nav-label">تطوير الري</span><span id="nav-badge-water" class="tf-nav-badge num">137%</span>
                 </button>
                 <div class="tf-nav-group">النخيل والمال</div>
                 <button type="button" class="tf-nav-item" data-tab="gantt" onclick="switchTab('gantt')">
@@ -1725,7 +1874,7 @@
                     <!-- Water & energy -->
                     <section class="tf-card tf-collapsible" id="dash-water-card" aria-labelledby="water-title">
                         <button type="button" class="tf-mtoggle" aria-expanded="false" aria-controls="water-body" onclick="toggleCollapsible('dash-water-card')">
-                            <span><b>ميزان المياه والطاقة</b><small><span class="num">1,134,000</span> م³ سنوياً · فائض 8%</small></span>
+                            <span><b>ميزان المياه والطاقة</b><small><span class="num">1,134,000</span> م³ سنوياً · الطلب عند الإثمار 137%</small></span>
                             <svg class="tf-ico" aria-hidden="true"><use href="#i-chev-down"/></svg>
                         </button>
                         <div class="tf-card-head">
@@ -1736,24 +1885,16 @@
                         </div>
                         <div class="tf-collapse-body" id="water-body">
                             <div class="tf-kpi-main"><span class="num" style="font-size:26px;font-weight:700">1,134,000</span><span class="tf-kpi-unit">م³ متاحة سنوياً</span></div>
-                            <div class="tf-water-stack" role="img" aria-label="الزراعات الحالية 68%، الـ 50 فدان نخيل 24%، فائض 8%">
-                                <div style="width:68%;background:var(--pr)"></div>
-                                <div style="width:24%;background:var(--wf)"></div>
-                                <div style="width:8%;background:var(--ax2)"></div>
-                            </div>
-                            <div class="tf-water-legend">
-                                <div><span class="tf-swatch" style="background:var(--pr)"></span><span>الزراعات الحالية (140 فدان)</span><strong class="num">68%</strong></div>
-                                <div><span class="tf-swatch" style="background:var(--wf)"></span><span>الـ 50 فدان نخيل</span><strong class="num">24%</strong></div>
-                                <div><span class="tf-swatch" style="background:var(--ax2)"></span><span>فائض</span><strong class="num">8%</strong></div>
-                            </div>
+                            <div id="dash-water-bars" class="ir-compact"></div>
                             <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
                                 <div class="tf-tile"><span class="tf-tile-label">العائد لكل م³ اليوم</span><span class="tf-tile-value"><span id="kpi-water-value-current" class="num">0.97</span> <small style="font-size:12px;font-weight:500;color:var(--su)">ج.م</small></span></div>
                                 <div class="tf-tile accent"><span class="tf-tile-label">عند اكتمال الإثمار (2035)</span><span class="tf-tile-value"><span class="num">11.02</span> <small style="font-size:12px;font-weight:500">ج.م · <bdi dir="ltr">×6.3</bdi></small></span></div>
                             </div>
                             <ul class="tf-checks">
+                                <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>تحويل البرسيم إلى التنقيط تحت السطحي يحرر نحو 360 ألف م³ سنوياً، أي مياه النخيل المثمر تقريباً.</span></li>
                                 <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>إلغاء الديزل يوفر نحو 250,000 ج.م سنوياً لتمويل الفسائل.</span></li>
-                                <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>بحيرة التخزين تحفظ ضخ الليل لري 190 فداناً نهاراً دون إجهاد البئر.</span></li>
                             </ul>
+                            <button type="button" class="tf-link" style="align-self:flex-start" onclick="switchTab('water')">خطة تطوير الري والأولويات</button>
                         </div>
                     </section>
 
@@ -2454,7 +2595,7 @@
                     <div>
                         <span id="gantt-range-label" class="tf-eyebrow">16 ربعاً · Q4 2026 ← Q3 2030</span>
                         <h1 class="tf-h1">الجدول الزمني لاستكمال 50 فدان نخيل</h1>
-                        <p class="tf-lead">انقر على أي مهمة لتعديل توقيتها أو نسبة إنجازها — يتحدث جدول السيولة تلقائياً.</p>
+                        <p class="tf-lead">انقر على أي مهمة لتعديل توقيتها أو نسبة إنجازها — يتحدث جدول السيولة تلقائياً. المهام المنقطة مشروطة ببوابة قرار ولا تدخل السيولة قبل اعتمادها.</p>
                     </div>
                     <div class="tf-actions no-print" style="margin:0">
                         <button type="button" class="tf-btn" onclick="scheduleGanttWithoutGap()" title="تأجيل المراحل التي لم تبدأ إلى أقرب ربع لا يسبب عجزاً في الخزينة">
@@ -2521,12 +2662,165 @@
                     <h2 id="ms-title" class="tf-h2">المعالم بعيدة المدى</h2>
                     <ol class="tf-ms">
                         <li class="is-done"><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2024 – 2026</span><b>تم التنفيذ</b></div><p>الكهرباء الحكومية، والمنصة الإلكترونية، وزراعة 140 فداناً.</p><span class="tf-sr">مكتمل</span></li>
-                        <li class="is-current"><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2027 – 2028</span><b>المرحلة أ</b></div><p>بحيرة التخزين، واستصلاح وغرس أول 25 فدان، وتعاقد التصدير.</p><span class="tf-sr">المرحلة التالية</span></li>
-                        <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2028 – 2029</span><b>المرحلة ب</b></div><p>استكمال 25 فدان مجدول واكتمال الـ 200 فدان.</p></li>
+                        <li class="is-current"><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2027 – 2028</span><b>المرحلة أ</b></div><p>قياس المياه وتجربة التنقيط تحت السطحي، واستصلاح وغرس أول 25 فدان، وتعاقد التصدير. قرار البحيرة في يناير 2028.</p><span class="tf-sr">المرحلة التالية</span></li>
+                        <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2028 – 2029</span><b>المرحلة ب</b></div><p>استكمال 25 فدان مجدول واكتمال الـ 200 فدان، وتحويل البرسيم إلى التنقيط تدريجياً إذا نجحت التجربة.</p></li>
                         <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2030 – 2032</span><b>بداية الإثمار</b></div><p>محصول أول متدرج (10–30% من الطاقة) من نخيل 2027–2028، والتوسع في عنبر العجول.</p></li>
                         <li><span class="tf-ms-dot" aria-hidden="true"></span><div class="tf-ms-head"><span class="tf-ms-when num">2035</span><b>الإنتاج الكامل</b></div><p>اكتمال إثمار الـ 50 فدان (السنة 7–8 للنخلة)، والهدف صافي 12.5 مليون ج.م سنوياً والعلامة التجارية.</p></li>
                     </ol>
                 </section>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SECTION 3b: IRRIGATION DEVELOPMENT & PRIORITIES (study of 14 Nov 2026)
+             Static study content + live status from the Gantt tasks and computeCashflow
+             ========================================== -->
+        <section id="section-water" class="tab-section hidden">
+            <div class="tf-page">
+
+                <div class="tf-page-head tf-m-hide">
+                    <div>
+                        <span class="tf-eyebrow">دراسة 14 نوفمبر 2026 · الأرقام تقديرية حتى قراءة عداد البئر</span>
+                        <h1 class="tf-h1">تطوير الري وترتيب أولويات التطوير</h1>
+                        <p class="tf-lead">لا نبدأ بالري الخطي للمزرعة كاملة. نبدأ بالقياس والتجارب الرخيصة، وكل مشروع كبير مشروط ببوابة قرار ولا يدخل جدول السيولة قبل اعتماده.</p>
+                    </div>
+                    <div class="tf-actions no-print" style="margin:0">
+                        <a class="tf-btn" id="ir-study-link" href="#" target="_blank" rel="noopener">الدراسة الكاملة</a>
+                        <button type="button" class="tf-btn tf-btn-primary" onclick="switchTab('gantt')">
+                            <svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-gantt"/></svg>في الجدول الزمني
+                        </button>
+                    </div>
+                </div>
+
+                <section class="pt-kpis" id="ir-kpis" aria-label="ملخص ميزان المياه ومشاريع الري"></section>
+
+                <!-- Water balance -->
+                <section class="tf-card" aria-labelledby="ir-water-title">
+                    <div class="tf-card-head">
+                        <div>
+                            <h2 id="ir-water-title" class="tf-h2">النخيل المثمر يرفع الطلب فوق طاقة البئر، وتحويل البرسيم يعيده تحتها</h2>
+                            <p class="tf-sub">الطلب السنوي بالألف م³ مقابل طاقة البئر (180 م³/ساعة × 18 ساعة × 350 يوماً)</p>
+                        </div>
+                    </div>
+                    <div id="ir-water-bars"></div>
+                    <p class="tf-chart-note">الافتراضات: البرسيم 60 فداناً × 14,000 م³، والقمح 60 × 4,000، ومحاصيل أخرى 20 × 5,000، والنخيل 50 فداناً × 3,000 م³ صغيراً ثم 7,500 مثمراً. كانت اللوحة تفترض أن الزراعات الحالية تستهلك 68% من البئر (نحو 5,500 م³ للفدان)، وهذا منخفض لبرسيم مروي بالغمر. قراءات عداد البئر (مركب منذ أكتوبر 2024) تحسم الفرق.</p>
+                </section>
+
+                <!-- Priorities -->
+                <section class="tf-card" aria-labelledby="ir-prio-title">
+                    <div class="tf-card-head">
+                        <div>
+                            <h2 id="ir-prio-title" class="tf-h2">ترتيب أولويات كل خطط التطوير</h2>
+                            <p class="tf-sub">يبدأ بما يوفر المياه أو يدخل النقد بأقل المال. المعيار الحاسم: ألا يزيد أي مشروع التمويل المطلوب من الشركاء قبل أن تثبت جدواه.</p>
+                        </div>
+                    </div>
+                    <div class="tf-scroll-x">
+                        <table class="ir-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">الخطة</th>
+                                    <th scope="col">التكلفة</th>
+                                    <th scope="col">الأثر</th>
+                                    <th scope="col">التوقيت</th>
+                                    <th scope="col">التمويل</th>
+                                    <th scope="col">الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ir-prio-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Decision gates -->
+                <section class="tf-card" aria-labelledby="ir-gates-title">
+                    <div class="tf-card-head">
+                        <div>
+                            <h2 id="ir-gates-title" class="tf-h2">بوابات القرار</h2>
+                            <p class="tf-sub">كل بوابة تمنع الانتقال إلى إنفاق أكبر قبل أن تثبت الأرقام المقاسة جدواه. الاعتماد يُدخل المشاريع في جدول السيولة، ويمكن التراجع عنه.</p>
+                        </div>
+                    </div>
+                    <div id="ir-gates" class="ir-gates"></div>
+                </section>
+
+                <!-- Alternatives -->
+                <section class="tf-card tf-collapsible" id="ir-alt-card" aria-labelledby="ir-alt-title">
+                    <button type="button" class="tf-mtoggle" aria-expanded="false" aria-controls="ir-alt-body" onclick="toggleCollapsible('ir-alt-card')">
+                        <span><b>بدائل ري المحاصيل الحقلية</b><small>7 بدائل · التوفير مقابل الغمر المطور</small></span>
+                        <svg class="tf-ico" aria-hidden="true"><use href="#i-chev-down"/></svg>
+                    </button>
+                    <div class="tf-card-head">
+                        <div>
+                            <h2 id="ir-alt-title" class="tf-h2">بدائل ري المحاصيل الحقلية</h2>
+                            <p class="tf-sub">التوفير محسوب مقابل الغمر المطور بكفاءة مفترضة 50%. التكاليف تقديرات لسوق 2026 وتحتاج عروض أسعار.</p>
+                        </div>
+                    </div>
+                    <div class="tf-collapse-body" id="ir-alt-body">
+                        <table class="ir-table ir-alt">
+                            <thead>
+                                <tr><th scope="col">البديل</th><th scope="col">كفاءة الري</th><th scope="col">توفير المياه</th><th scope="col">التكلفة (ج.م/فدان)</th><th scope="col">الملاءمة للمزرعة</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><th scope="row">إدارة الري الحالي: عدادات وجدولة وتسوية وتصغير الأحواض</th><td data-l="كفاءة الري" class="num">55–60%</td><td data-l="توفير المياه" class="num">10–15%</td><td data-l="التكلفة" class="num">300–600</td><td data-l="الملاءمة">عالية، تبدأ فوراً</td></tr>
+                                <tr><th scope="row">تغيير التركيب المحصولي: برسيم ← طبي وعطري شتوي</th><td data-l="كفاءة الري">—</td><td data-l="توفير المياه" class="num">50–70% للفدان</td><td data-l="التكلفة">تشغيلية فقط</td><td data-l="الملاءمة">عالية: المناشر قائمة في ح24 وح25</td></tr>
+                                <tr><th scope="row">أنابيب مبوبة وري متقطع على الشبكة المدفونة</th><td data-l="كفاءة الري" class="num">60–70%</td><td data-l="توفير المياه" class="num">15–25%</td><td data-l="التكلفة" class="num">5,000–8,000</td><td data-l="الملاءمة">جيدة للقمح</td></tr>
+                                <tr><th scope="row">رش نصف ثابت على المواسير الحالية</th><td data-l="كفاءة الري" class="num">65–75%</td><td data-l="توفير المياه" class="num">20–30%</td><td data-l="التكلفة" class="num">15,000–25,000</td><td data-l="الملاءمة">متوسطة: رياح الوادي الجديد</td></tr>
+                                <tr class="is-pick"><th scope="row">تنقيط تحت سطحي للبرسيم (SDI)</th><td data-l="كفاءة الري" class="num">85–90%</td><td data-l="توفير المياه" class="num">35–45%</td><td data-l="التكلفة" class="num">35,000–50,000</td><td data-l="الملاءمة">عالية للبرسيم المعمر</td></tr>
+                                <tr><th scope="row">ري خطي لبلوك واحد (نحو 45 فداناً)</th><td data-l="كفاءة الري" class="num">75–85%</td><td data-l="توفير المياه" class="num">33–40%</td><td data-l="التكلفة" class="num">75,000–110,000</td><td data-l="الملاءمة">متوسطة: الخدمات والنخيل تقطع المسار</td></tr>
+                                <tr><th scope="row">ري محوري</th><td data-l="كفاءة الري" class="num">75–85%</td><td data-l="توفير المياه" class="num">33–40%</td><td data-l="التكلفة" class="num">40,000–60,000</td><td data-l="الملاءمة">ضعيفة: الشريط 386 م يحد الدائرة بنحو 27 فداناً</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="tf-chart-note">النخيل يبقى على التنقيط كما في الخطة؛ لا يصلح له الري الخطي أو المحوري لأن الأشجار أعلى من الجهاز.</p>
+                    </div>
+                </section>
+
+                <div class="ir-two">
+                    <!-- Linear-move study verdict -->
+                    <section class="tf-card tf-collapsible" id="ir-linear-card" aria-labelledby="ir-linear-title">
+                        <button type="button" class="tf-mtoggle" aria-expanded="false" aria-controls="ir-linear-body" onclick="toggleCollapsible('ir-linear-card')">
+                            <span><b>دراسة الري الخطي المرفقة</b><small>5.25–7.5 مليون · لا تصلح للمزرعة كاملة</small></span>
+                            <svg class="tf-ico" aria-hidden="true"><use href="#i-chev-down"/></svg>
+                        </button>
+                        <div class="tf-card-head">
+                            <div>
+                                <h2 id="ir-linear-title" class="tf-h2">دراسة الري الخطي المرفقة</h2>
+                                <p class="tf-sub">جهاز بجناح 380–386 م على الطريق الأوسط · 5.25–7.5 مليون ج.م (3.4–4.9 بأبراج مستعملة)</p>
+                            </div>
+                        </div>
+                        <div class="tf-collapse-body" id="ir-linear-body">
+                            <ul class="ir-list">
+                                <li><b>المسار مقطوع:</b> مباني ح23 ومحطة البئر والبحيرة بجوار الطريق، والحزام الشجري والنخيل شرقاً.</li>
+                                <li><b>يغطي بلوكاً واحداً:</b> الغربي (ح8–ح18) أو الأوسط (ح27–ح46)، نحو 45 فداناً، فتصبح التكلفة 75–110 ألف ج.م للفدان.</li>
+                                <li><b>بلا مقارنة مالية للنظام:</b> العائد في الدراسة عائد المحاصيل، والتوفير المباشر لا يسترد 3.4 مليون قبل نحو 15 سنة.</li>
+                                <li><b>إنتاجية متفائلة:</b> قمح 20–22 أردباً للفدان، والفعلي 8.8 وهدف الخطة 14.</li>
+                            </ul>
+                            <p class="ir-keep"><b>نحتفظ منها بـ:</b> رشاشات متدلية قريبة من الأرض، والضخ النهاري بالطاقة الشمسية، والفلترة عند مخرج البئر. يُعاد درس النظام لبلوك واحد في 2029 (البوابة 3).</p>
+                        </div>
+                    </section>
+
+                    <!-- Data needed -->
+                    <section class="tf-card tf-collapsible" id="ir-data-card" aria-labelledby="ir-data-title">
+                        <button type="button" class="tf-mtoggle" aria-expanded="false" aria-controls="ir-data-body" onclick="toggleCollapsible('ir-data-card')">
+                            <span><b>بيانات مطلوبة من المشرف</b><small>5 بنود تحسم التقديرات</small></span>
+                            <svg class="tf-ico" aria-hidden="true"><use href="#i-chev-down"/></svg>
+                        </button>
+                        <div class="tf-card-head">
+                            <div>
+                                <h2 id="ir-data-title" class="tf-h2">بيانات مطلوبة من المشرف</h2>
+                                <p class="tf-sub">قبل البوابة 1 (أبريل 2027)</p>
+                            </div>
+                        </div>
+                        <div class="tf-collapse-body" id="ir-data-body">
+                            <ul class="tf-checks">
+                                <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>قراءات عداد البئر شهرياً منذ تركيبه، وساعات تشغيل المضخة اليومية.</span></li>
+                                <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>مساحة البرسيم الفعلية، وعمر كل حوشة برسيم، وموعد تجديدها.</span></li>
+                                <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>مساحة كل حوشة ونوع ريها وعدد الريات ومدة كل رية.</span></li>
+                                <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>ضغط الشبكة عند المحطة وعند أبعد حوشة، وسعر الكيلووات ساعة ليلاً ونهاراً.</span></li>
+                                <li><svg class="tf-ico" aria-hidden="true"><use href="#i-check"/></svg><span>عرضا أسعار للتنقيط تحت السطحي لـ 10 أفدنة، وعرض شراء مسبق للبابونج أو الكمون.</span></li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
             </div>
         </section>
 
@@ -2775,6 +3069,11 @@
                             <span class="tf-list-text"><b>المواشي ودورة الأغنام</b><small id="more-sheep">150 رأس · ربح الدورة <bdi dir="ltr">+348,620</bdi></small></span>
                             <svg class="tf-ico" style="color:var(--su)" aria-hidden="true"><use href="#i-chev-start"/></svg>
                         </button>
+                        <button type="button" class="tf-list-item" onclick="switchTab('water')">
+                            <span class="tf-list-icon"><svg class="tf-ico" style="width:20px;height:20px" aria-hidden="true"><use href="#i-drop"/></svg></span>
+                            <span class="tf-list-text"><b>تطوير الري والأولويات</b><small id="more-water">الطلب عند الإثمار 137% من البئر</small></span>
+                            <svg class="tf-ico" style="color:var(--su)" aria-hidden="true"><use href="#i-chev-start"/></svg>
+                        </button>
                         <button type="button" class="tf-list-item" onclick="switchTab('constants')">
                             <span class="tf-list-icon"><svg class="tf-ico" style="width:20px;height:20px" aria-hidden="true"><use href="#i-users"/></svg></span>
                             <span class="tf-list-text"><b>الشركاء والأصول</b><small id="more-partners">4 شركاء · مسدد 99%</small></span>
@@ -2963,6 +3262,58 @@
             netSurplus: 128000
         });
 
+        // Irrigation development plan (study «خطة تطوير الري وترتيب أولويات التطوير», 14 Nov 2026).
+        // Field crops are on improved flood irrigation; estimated demand is ~104% of the well today and ~137% once
+        // the 50 feddan of palms bear fruit. Everything big waits behind a decision gate (q = plan quarter index).
+        const IRR_STUDY_URL = 'https://claude.ai/artifact/2GUXtSwmHh7DrdzPvkQ3Ka';
+        const IRR_GATES = [
+            { n: 1, q: 3, when: 'أبريل 2027', rule: 'قراءات عداد البئر ونتيجة التجربة المحصولية', unlocks: 'تجربة التنقيط تحت السطحي على 10 أفدنة' },
+            { n: 2, q: 6, when: 'يناير 2028', rule: 'توفير مقاس 30% أو أكثر في تجربة التنقيط', unlocks: 'تحويل البرسيم 2028–2029، والأنابيب المبوبة للقمح، وقرار البحيرة' },
+            { n: 3, q: 13, when: 'نهاية 2029', rule: 'ميزان مياه موجب بقراءات العداد', unlocks: 'باقي البرسيم، وإعادة دراسة الري الخطي لبلوك واحد إن لزم' }
+        ];
+        const IRR_SDI_PER_FEDDAN = 42500;   // subsurface drip for alfalfa: 35,000–50,000 EGP/feddan (estimate, needs quotes)
+        const IRR_DEFAULT_TASKS = [
+            { id: 'I1', name: 'قياس المياه وجدولة الري: عدادات للحقول وجدولة الريات وتصغير الأحواض', owner: 'المشرف الزراعي', category: 'irrigation', startQ: 1, durationQ: 2, progress: 0, cost: 60000 },
+            { id: 'I2', name: 'تجربة محصولية: 5–10 أفدنة بابونج أو كمون بدل برسيم انتهى عمره (تكلفة تشغيلية)', owner: 'المشرف الزراعي', category: 'irrigation', startQ: 1, durationQ: 3, progress: 0, cost: 0 },
+            { id: 'I3', name: 'تجربة تنقيط تحت سطحي (SDI) على 10 أفدنة برسيم، مع رأس تحكم وفلترة', owner: 'شريك التشغيل', category: 'irrigation', startQ: 4, durationQ: 1, progress: 0, cost: 475000, gate: 1, approved: true },
+            { id: 'I4', name: 'تحويل البرسيم إلى التنقيط تحت السطحي — الدفعة 1 (17 فداناً)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 8, durationQ: 1, progress: 0, cost: 17 * IRR_SDI_PER_FEDDAN, gate: 2, approved: false },
+            { id: 'I5', name: 'أنابيب مبوبة وري متقطع لأحواض القمح (60 فداناً)', owner: 'المشرف الزراعي', category: 'irrigation', startQ: 8, durationQ: 1, progress: 0, cost: 390000, gate: 2, approved: false },
+            { id: 'T1', name: 'حفر وتبطين بحيرة التخزين المائية (شمال ح27 - كود 088)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 7, durationQ: 2, progress: 15, cost: 0, gate: 2 },
+            { id: 'I6', name: 'تحويل البرسيم إلى التنقيط تحت السطحي — الدفعة 2 (17 فداناً)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 12, durationQ: 1, progress: 0, cost: 17 * IRR_SDI_PER_FEDDAN, gate: 2, approved: false },
+            { id: 'I7', name: 'تحويل البرسيم إلى التنقيط تحت السطحي — الدفعة 3 (16 فداناً)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 16, durationQ: 1, progress: 0, cost: 16 * IRR_SDI_PER_FEDDAN, gate: 3, approved: false }
+        ];
+
+        // Annual demand in thousand m³ per scenario (study assumptions; the well meter settles them)
+        const IRR_WATER_PARTS = ['البرسيم', 'القمح', 'محاصيل أخرى', 'النخيل'];
+        const IRR_WATER_SCENARIOS = [
+            { key: 'today', label: 'اليوم (غمر مطور)', parts: [840, 240, 100, 0] },
+            { key: 'young', label: 'نخيل صغير، والحقول على الغمر', parts: [840, 240, 100, 150] },
+            { key: 'mature', label: 'نخيل مثمر بلا تطوير', parts: [840, 240, 100, 375] },
+            { key: 'upgraded', label: 'نخيل مثمر بعد التطوير', parts: [480, 185, 60, 375] }
+        ];
+        // Priority ranking of every development plan. tasks / cat link a row to the timeline (live cost, timing, status).
+        const IRR_PRIORITY_TIERS = {
+            now: 'أولوية أولى · الآن، وبلا تمويل جديد',
+            surplus: 'أولوية ثانية · من الفائض بعد نجاح التجارب',
+            later: 'قرار لاحق',
+            no: 'غير موصى به'
+        };
+        const IRR_PRIORITIES = [
+            { n: 1, tier: 'now', name: 'قياس المياه وجدولة الري', est: '40–80 ألفاً', impact: 'توفير 10–15% من مياه الحقول، وبيانات تحسم باقي القرارات', funding: 'التشغيل', tasks: ['I1'] },
+            { n: 2, tier: 'now', name: 'إكمال العنبر A1 وخط المياه ودورة الأغنام', est: '', impact: 'sheep', funding: 'الخزينة الحالية', tasks: ['T0_SHED'] },
+            { n: 3, tier: 'now', name: 'تجربة محصولية: 5–10 أفدنة بابونج أو كمون', est: 'تشغيلية', impact: 'توفير 50–70% من مياه الفدان المحوّل، وصافٍ أعلى إن وُجد مشترٍ مسبق', funding: 'التشغيل', tasks: ['I2'] },
+            { n: 4, tier: 'now', name: 'تجربة تنقيط تحت سطحي على 10 أفدنة برسيم', est: '400–550 ألفاً', impact: 'تثبت توفير 35–45% قبل التوسع', funding: 'فائض القمح والأغنام 2027', tasks: ['I3'] },
+            { n: 5, tier: 'surplus', name: 'موجة النخيل الأولى', est: '', impact: 'أساس الدخل طويل الأجل', funding: 'الفائض، والشركاء إن لزم', cat: 'saidi' },
+            { n: 6, tier: 'surplus', name: 'تحويل البرسيم تدريجياً إلى التنقيط تحت السطحي', est: '2.1–3.0 مليون', impact: 'يحرر نحو 360 ألف م³ سنوياً، أي مياه النخيل المثمر تقريباً', funding: '15–20 فداناً سنوياً من الفائض', tasks: ['I4', 'I6', 'I7'] },
+            { n: 7, tier: 'surplus', name: 'توسع المواشي A2', est: '', impact: 'يضاعف الأغنام إلى 300 رأس', funding: 'أرباح الدورات', fixed: { cost: 'a2', when: 'بعد دورتين ناجحتين', status: 'خارج الجدول' } },
+            { n: 8, tier: 'surplus', name: 'أنابيب مبوبة لأحواض القمح', est: '5–8 آلاف للفدان', impact: 'توفير 15–25% في القمح', funding: 'الفائض', tasks: ['I5'] },
+            { n: 9, tier: 'surplus', name: 'موجة النخيل الثانية', est: '', impact: 'تكمل الـ 50 فداناً، وتثمر بعد 2032 أي بعد تحويل البرسيم', funding: 'الفائض', cat: 'medjool' },
+            { n: 10, tier: 'later', name: 'بحيرة التخزين', est: '', impact: 'محدود إذا اعتُمد الري المضغوط لأنه يعمل ليلاً مباشرة', funding: 'يُقرر في 2028', tasks: ['T1'] },
+            { n: 11, tier: 'later', name: 'ري خطي لبلوك واحد (نحو 45 فداناً)', est: '', impact: 'توفير مياه وعمالة لـ 45 فداناً', funding: '—', fixed: { cost: '3.4–4.9 مليون', when: 'يُعاد درسه في 2029', status: 'دراسة · البوابة 3' } },
+            { n: 12, tier: 'no', name: 'رش نصف ثابت', est: '', impact: 'متوسط بسبب الرياح والتبخر', funding: '—', fixed: { cost: '15–25 ألفاً للفدان', when: '—', status: 'غير موصى به حالياً' } },
+            { n: 13, tier: 'no', name: 'ري خطي للمزرعة كاملة (الدراسة المرفقة)', est: '', impact: 'المسار غير متاح لكل المزرعة', funding: '—', fixed: { cost: '5.25–7.5 مليون', when: '—', status: 'غير موصى به' } }
+        ];
+
         // 2. DEFAULT VARIABLE STATE
         const DEFAULT_STATE = {
             fundingMode: 'net', // 'net' | 'gross' | 'hybrid'
@@ -3043,7 +3394,7 @@
             reclaimPerFeddan: 30000,    // 2025 actual: 1,301,850 for 50 feddan (loader 950/h, laser 750/h) + 15%
             dripNetworkCost: 680000,    // 2025 actual: 615,450 for 50 feddan (network + excavator) + 10%
             pitPrepCost: 500000,
-            includePond: true,
+            includePond: false,         // suspended until the irrigation system is chosen (decision gate 2, Jan 2028)
             pondCost: 1200000,
             // 6-Month Sheep Fattening Cycle Variables (Nov 2026 - May 2027)
             integrateSheepWithPalms: true,
@@ -3068,7 +3419,6 @@
             ganttTasks: [
                 { id: 'T0_SHED', name: 'بناء عنبر الأغنام A1 (كود 083 · 600 م²): مظلة معدنية وأسوار وغرفة خدمة ومياه (5 أسابيع)', owner: 'شريك التشغيل + المشرف', category: 'care', startQ: 1, durationQ: 1, progress: 35, cost: LV_BOQ_TOTAL },
                 { id: 'T0_FLOCK', kind: 'opex', name: 'دورة تسمين الأغنام الأولى (150 رأس: نوفمبر 2026 ← تسليم مايو 2027) + كمر 27 طن كمبوست', owner: 'المشرف الزراعي', category: 'care', startQ: 1, durationQ: 3, progress: 20, cost: 1556500 },
-                { id: 'T1', name: 'حفر وتبطين بحيرة التخزين المائية (شمال ح27 - كود 088)', owner: 'شريك التشغيل', category: 'water', startQ: 2, durationQ: 2, progress: 15, cost: 1200000 },
                 { id: 'T2', name: 'استصلاح وتسوية ليزر — موجة النخيل 1 (25 فدان: ح47–ح52)', owner: 'المشرف + مقاول', category: 'saidi', startQ: 3, durationQ: 1, progress: 10, cost: 750000 },
                 { id: 'T3', name: 'مد شبكة الري بالتنقيط — موجة النخيل 1 (ح47–ح52)', owner: 'شريك التشغيل', category: 'saidi', startQ: 4, durationQ: 1, progress: 0, cost: 325000 },
                 { id: 'T4', name: 'حفر الجور وإنزال كمبوست الأغنام والجبس (عقب تسليم مايو 2027)', owner: 'المشرف الزراعي', category: 'saidi', startQ: 4, durationQ: 1, progress: 0, cost: 212500 },
@@ -3076,14 +3426,17 @@
                 { id: 'T6', name: 'استصلاح وتسوية ليزر — موجة النخيل 2 (25 فدان: ح53–ح59)', owner: 'المشرف + مقاول', category: 'medjool', startQ: 6, durationQ: 2, progress: 0, cost: 750000 },
                 { id: 'T7', name: 'شبكة الري بالتنقيط وتجهيز الجور بالكمبوست — موجة النخيل 2', owner: 'شريك التشغيل', category: 'medjool', startQ: 7, durationQ: 2, progress: 0, cost: 537500 },
                 { id: 'T8', name: 'توريد وغرس شتلات نخيل المجدول المعتمدة (ح53–ح59)', owner: 'المشرف الزراعي', category: 'medjool', startQ: 8, durationQ: 2, progress: 0, cost: 2062500 },
-                { id: 'T9', name: 'الترقيع والتحميض ومكافحة السوسة ودورات الأغنام المتتالية', owner: 'المشرف الزراعي', category: 'care', startQ: 5, durationQ: 12, progress: 10, cost: 0 }
+                { id: 'T9', name: 'الترقيع والتحميض ومكافحة السوسة ودورات الأغنام المتتالية', owner: 'المشرف الزراعي', category: 'care', startQ: 5, durationQ: 12, progress: 10, cost: 0 },
+                // Irrigation development plan (study of 14 Nov 2026). gate = decision gate that must pass first;
+                // a gated task enters the cash flow only once approved (the lake follows includePond).
+                ...IRR_DEFAULT_TASKS
             ]
         };
 
         // ---------------------------------------------------------------------
         // UNIFIED PLAN TIMELINE (single source for Gantt, Cash-flow & dates)
         // ---------------------------------------------------------------------
-        const STATE_SCHEMA_VERSION = 5;
+        const STATE_SCHEMA_VERSION = 6;
         const PLAN_START_YEAR = 2026;
         const PLAN_START_QUARTER = 4;     // Q4 2026
         const PLAN_START_MONTH = 10;      // November (0-based) — plan starts now
@@ -3117,8 +3470,21 @@
             return `${AR_MONTHS[total % 12]} ${Math.floor(total / 12)}`;
         }
 
+        // A gated task (irrigation plan) counts only once approved; the lake (T1) follows includePond
+        function taskApproved(t) {
+            if (!t) return false;
+            if (t.id === 'T1') return Boolean(appState.includePond);
+            return !t.gate || t.approved !== false;
+        }
+        function isGatedPending(t) {
+            return Boolean(t && t.gate) && !taskApproved(t);
+        }
+        // Cost of a gated task as if approved (the lake's synced cost is 0 while it is suspended)
+        function gatedTaskCost(t) {
+            return t.id === 'T1' ? Math.max(0, Number(appState.pondCost) || 0) : Math.max(0, Number(t.cost) || 0);
+        }
         function isCapexTask(t) {
-            return t && t.kind !== 'opex' && (Number(t.cost) || 0) > 0;
+            return Boolean(t) && t.kind !== 'opex' && (Number(t.cost) || 0) > 0 && taskApproved(t);
         }
 
         // Old (v3) Gantt defaults — used to migrate saved plans to the calendar-quarter timeline
@@ -3158,9 +3524,27 @@
             if (from < STATE_SCHEMA_VERSION) {
                 if (from < 4) migrateV3toV4(st);
                 if (from < 5) migrateV4toV5(st);
+                if (from < 6) migrateV5toV6(st);
                 st.schemaVersion = STATE_SCHEMA_VERSION;
             }
             return normalizePartners(st);
+        }
+        // v6: the irrigation development plan joins the timeline; the lake waits for decision gate 2
+        let stateMigratedV6 = false;
+        function migrateV5toV6(st) {
+            const tasks = Array.isArray(st.ganttTasks) ? st.ganttTasks : [];
+            const lake = tasks.find(t => t.id === 'T1');
+            const defLake = IRR_DEFAULT_TASKS.find(t => t.id === 'T1');
+            if (lake) {
+                if (Number(lake.startQ) === 2 && Number(lake.durationQ) === 2) { lake.startQ = defLake.startQ; lake.durationQ = defLake.durationQ; }
+                if (lake.category === 'water') lake.category = 'irrigation';
+                lake.gate = defLake.gate;
+            }
+            st.includePond = false;
+            IRR_DEFAULT_TASKS.forEach(d => { if (d.id !== 'T1' && !tasks.some(t => t.id === d.id)) tasks.push(structuredClone(d)); });
+            st.ganttTasks = tasks;
+            stateMigratedV6 = true;
+            return st;
         }
         function migrateV3toV4(st) {
             const defaults = Object.fromEntries(DEFAULT_STATE.ganttTasks.map(t => [t.id, t]));
@@ -4972,9 +5356,10 @@
             }
 
             // Last quarter that still has palm CAPEX = expected planting completion per the Gantt
+            // (irrigation upgrades run on their own track until 2030, so they do not move this date)
             let lastCapexIdx = 0;
             (tasks || []).forEach(t => {
-                if (!isCapexTask(t)) return;
+                if (!isCapexTask(t) || t.category === 'irrigation') return;
                 lastCapexIdx = Math.max(lastCapexIdx, Math.min(PLAN_QUARTERS, (Number(t.startQ) || 1) + (Number(t.durationQ) || 1) - 1));
             });
 
@@ -5447,6 +5832,9 @@
             // Render Gantt Chart
             renderGanttChart(m, cf);
 
+            // Irrigation development page + the dashboard water card
+            renderWaterPlan(m, cf);
+
             // Render Quarterly Cash Flow Table
             renderCashFlowTable(m, cf);
             renderRestoreButtons();
@@ -5484,7 +5872,12 @@
             const qN = quarterInfo(PLAN_QUARTERS);
             sum.classList.toggle('is-ok', !hasGap);
             const rs = scheduleRestoreInfo(m, cf);
-            const note = rs ? ` <span class="cf-why-note">التوقيت الحالي مؤجَّل عن الخطة الأصلية في ${rs.countText}. في الخطة الأصلية: تمويل <span class="num">${formatNum(rs.inject)}</span> ج.م، واكتمال الغرس <bdi>${rs.endCode}</bdi> بدل <bdi>${rs.curEndCode}</bdi>.</span>` : '';
+            let note = rs ? ` <span class="cf-why-note">التوقيت الحالي مؤجَّل عن الخطة الأصلية في ${rs.countText}. في الخطة الأصلية: تمويل <span class="num">${formatNum(rs.inject)}</span> ج.م، واكتمال الغرس <bdi>${rs.endCode}</bdi> بدل <bdi>${rs.curEndCode}</bdi>.</span>` : '';
+            const pendingIrr = appState.ganttTasks.filter(isGatedPending);
+            if (pendingIrr.length) {
+                const sum = pendingIrr.reduce((a, t) => a + gatedTaskCost(t), 0);
+                note += ` <span class="cf-why-note">لا يشمل ${pendingIrr.length === 1 ? 'مشروعاً مشروطاً' : `${pendingIrr.length} مشاريع ري مشروطة`} بقيمة <span class="num">${formatNum(sum)}</span> ج.م${pendingIrr.some(t => t.id === 'T1') ? ' (منها البحيرة)' : ''} حتى تُعتمد في صفحة «تطوير الري».</span>`;
+            }
             const restoreBtn = rs ? `<button type="button" class="tf-btn no-print" onclick="restoreOriginalSchedule()"><svg class="tf-ico" style="width:16px;height:16px" aria-hidden="true"><use href="#i-rotate"/></svg>استعادة الخطة الأصلية</button>` : '';
             sum.innerHTML = hasGap
                 ? `<svg class="tf-ico" aria-hidden="true"><use href="#i-warn"/></svg>
@@ -5812,7 +6205,7 @@
                 desc: 'نقطة الارتكاز المائية في منتصف الشريط الطولي للمزرعة، وتغذي الغرب والشرق بأقل فاقد هيدروليكي:',
                 bullets: [
                     'كود 095 (ح30): البئر الجوفي المرخص (BEER1 - عمق 205م، تصرف 180 م³/ساعة، ملوحة 850 ppm) بعد ربطه بالكهرباء الحكومية.',
-                    'كود 088 (شمال ح27): الموقع الأمثل لحفر وتبطين بحيرة التخزين المائية (60م × 40م × عمق 3م) لتخزين ضخ الكهرباء الليلي.',
+                    'كود 088 (شمال ح27): موقع بحيرة التخزين المائية (60م × 40م × عمق 3م) لتخزين ضخ الكهرباء الليلي. معلقة حتى اختيار نظام ري الحقول (قرار يناير 2028)، لأن الري المضغوط قد يعمل ليلاً مباشرة.',
                     'محطة الفلاتر الرملية والشبكية والسمادات المركزية لخدمة شبكة تنقيط النخيل.'
                 ]
             },
@@ -5891,7 +6284,7 @@
         // Next step link for each zone (navigation only)
         const ZONE_LINKS = {
             h23_services: { label: 'فتح مخطط المواشي', tab: 'livestock' },
-            h30_water: { label: 'موعد تنفيذ البحيرة', tab: 'gantt' },
+            h30_water: { label: 'خطة تطوير الري', tab: 'water' },
             palm_wave1: { label: 'عرض الجدول الزمني', tab: 'gantt' },
             palm_wave2: { label: 'عرض الجدول الزمني', tab: 'gantt' },
             medicinal: { label: 'جرّب سيناريو الطبية والعطرية', tab: 'simulator' }
@@ -6128,7 +6521,7 @@
             const items = [
                 { label: 'استصلاح وتسوية 50 فدان', val: m.reclaimTotalCost },
                 { label: `فسائل المجدول (${formatNum(m.medjoolPalms)} × ${formatNum(appState.medjoolPrice)})`, val: m.medjoolCost },
-                { label: appState.includePond ? 'بحيرة التخزين المائية' : 'بحيرة التخزين المائية (غير مفعّلة)', val: m.pondActualCost },
+                { label: appState.includePond ? 'بحيرة التخزين المائية' : 'بحيرة التخزين المائية (معلقة حتى قرار 2028)', val: m.pondActualCost },
                 { label: 'شبكة الري بالتنقيط', val: m.dripCost },
                 { label: `فسائل الصعيدي (${formatNum(m.saidiPalms)} × ${formatNum(appState.saidiPrice)})`, val: m.saidiCost },
                 { label: 'حفر الجور والجبس والكبريت', val: m.pitCost }
@@ -6155,13 +6548,14 @@
         // Overall Gantt progress, weighted by task cost (shared by the dashboard and the Gantt page)
         function ganttOverallProgress() {
             let wSum = 0, wProg = 0, simple = 0;
-            appState.ganttTasks.forEach(t => {
+            const tasks = appState.ganttTasks.filter(t => !isGatedPending(t)); // gated, not approved: not part of the plan yet
+            tasks.forEach(t => {
                 const p = Math.min(100, Math.max(0, Number(t.progress) || 0));
                 simple += p;
                 const w = Number(t.cost) || 0;
                 wSum += w; wProg += w * p;
             });
-            return wSum > 0 ? Math.round(wProg / wSum) : (appState.ganttTasks.length ? Math.round(simple / appState.ganttTasks.length) : 0);
+            return wSum > 0 ? Math.round(wProg / wSum) : (tasks.length ? Math.round(simple / tasks.length) : 0);
         }
 
         // DASHBOARD RENDERER — display only; every figure comes from calculateMetrics() / computeCashflow()
@@ -6199,7 +6593,7 @@
             set('d-capex', mil(m.totalCapexWithPond));
             title('d-capex', formatNum(m.totalCapexWithPond) + ' ج.م');
             set('d-capex-sar', formatNum(m.totalCapexWithPond / fx));
-            set('d-capex-pond', appState.includePond ? 'شامل بحيرة التخزين' : 'بدون بحيرة التخزين');
+            set('d-capex-pond', appState.includePond ? 'شامل بحيرة التخزين' : 'البحيرة معلقة حتى قرار 2028');
             set('d-palms', formatNum(m.totalPalms) + ' نخلة');
             set('d-m-palms', formatNum(m.totalPalms));
             set('d-per-feddan', formatNum(m.totalCapexWithPond / 50) + ' ج.م');
@@ -6281,7 +6675,7 @@
                 const b = quarterInfo(Math.min(PLAN_QUARTERS, (Number(t.startQ) || 1) + (Number(t.durationQ) || 1) - 1));
                 return a.idx === b.idx ? a.code : `${a.code} ← ${b.code}`;
             };
-            const byStart = [...appState.ganttTasks].sort((a, b) => (Number(a.startQ) || 1) - (Number(b.startQ) || 1));
+            const byStart = appState.ganttTasks.filter(t => !isGatedPending(t)).sort((a, b) => (Number(a.startQ) || 1) - (Number(b.startQ) || 1));
             const active = byStart.filter(t => { const p = Number(t.progress) || 0; return p > 0 && p < 100; });
             set('now-count', active.length === 1 ? 'مهمة واحدة قيد التنفيذ' : `${active.length} مهام قيد التنفيذ`);
             set('now-progress', ganttOverallProgress() + '%');
@@ -6383,7 +6777,7 @@
                 { k: 'pitPrepCost', l: 'حفر الجور والجبس والسباخ', u: 'ج.م', step: 25000, hint: (d, m) => m.sheepCompostPitSaving > 0 ? `يُخصم ${formatNum(m.sheepCompostPitSaving)} وفر الكمبوست` : 'بدون وفر كمبوست (دورة الأغنام متوقفة)' }
             ],
             pond: [
-                { k: 'includePond', type: 'check', l: 'تضمين بحيرة التخزين المائية', hint: 'ضرورية لتخزين ضخ الكهرباء الليلي · كود 088' },
+                { k: 'includePond', type: 'check', l: 'اعتماد بحيرة التخزين المائية', hint: 'معلقة حتى البوابة 2 (يناير 2028) واختيار نظام الري · كود 088' },
                 { k: 'pondCost', l: 'تكلفة البحيرة', u: 'ج.م', step: 50000, srOnlyLabel: true }
             ],
             sheepOn: [
@@ -6772,9 +7166,10 @@
 
         // 5. GANTT CHART (calendar quarters, linked to the cash-flow table)
         // Display groups: setup work (water + the first sheep shed/cycle), wave 1, wave 2, ongoing care.
-        const GANTT_GROUP_ORDER = ['setup', 'saidi', 'medjool', 'care'];
+        const GANTT_GROUP_ORDER = ['setup', 'irrigation', 'saidi', 'medjool', 'care'];
         function ganttGroupOf(t) {
             if (!t) return 'saidi';
+            if (t.category === 'irrigation') return 'irrigation';
             if (t.category === 'water' || /^T0_/.test(t.id)) return 'setup';
             return ['saidi', 'medjool', 'care'].includes(t.category) ? t.category : 'care';
         }
@@ -6782,13 +7177,14 @@
             const medjFed = +(50 * (Number(appState.medjoolPct) || 0) / 100).toFixed(1);
             const saidiFed = +(50 - medjFed).toFixed(1);
             return {
-                setup: { title: 'التجهيز والبنية المائية', sub: '' },
+                setup: { title: 'التجهيز وتشغيل العنبر A1', sub: '' },
+                irrigation: { title: 'تطوير الري وتخزين المياه', sub: '(المشروطة خارج السيولة حتى اعتمادها)' },
                 saidi: { title: `الموجة 1 · ${formatNum(saidiFed)} فدان صعيدي`, sub: '(ح47–ح52)' },
                 medjool: { title: `الموجة 2 · ${formatNum(medjFed)} فدان مجدول`, sub: '(ح53–ح59)' },
                 care: { title: 'الرعاية المستمرة', sub: '' }
             }[key];
         }
-        const GANTT_GROUP_OPTIONS = [['setup', 'التجهيز والبنية المائية'], ['saidi', 'الموجة 1 · نخيل صعيدي'], ['medjool', 'الموجة 2 · نخيل مجدول'], ['care', 'الرعاية المستمرة']];
+        const GANTT_GROUP_OPTIONS = [['setup', 'التجهيز وتشغيل العنبر A1'], ['irrigation', 'تطوير الري وتخزين المياه'], ['saidi', 'الموجة 1 · نخيل صعيدي'], ['medjool', 'الموجة 2 · نخيل مجدول'], ['care', 'الرعاية المستمرة']];
         // Short labels for the default tasks (the group header already names the wave). Shown only while the
         // saved name is still the default one; the full name stays in the tooltip and in the editor.
         const GANTT_SHORT_NAMES = {
@@ -6801,7 +7197,14 @@
             T6: 'استصلاح وتسوية بالليزر',
             T7: 'شبكة الري وتجهيز الجور بالكمبوست',
             T8: 'توريد وغرس شتلات المجدول المعتمدة',
-            T9: 'الترقيع والتحميض ومكافحة السوسة'
+            T9: 'الترقيع والتحميض ومكافحة السوسة',
+            I1: 'قياس المياه وجدولة الري',
+            I2: 'تجربة بابونج أو كمون (5–10 أفدنة)',
+            I3: 'تجربة تنقيط تحت سطحي · 10 أفدنة برسيم',
+            I4: 'تحويل البرسيم للتنقيط · الدفعة 1 (17 ف)',
+            I5: 'أنابيب مبوبة لأحواض القمح (60 ف)',
+            I6: 'تحويل البرسيم للتنقيط · الدفعة 2 (17 ف)',
+            I7: 'تحويل البرسيم للتنقيط · الدفعة 3 (16 ف)'
         };
         function ganttDisplayName(t) {
             if (t.id === 'T0_FLOCK') { // name is regenerated from the sheep inputs, so shorten it from its parts
@@ -6820,7 +7223,7 @@
             return { s, e, html: s === e ? `<bdi>${quarterInfo(s).code}</bdi>` : `<bdi>${quarterInfo(s).code}</bdi> ← <bdi>${quarterInfo(e).code}</bdi>` };
         }
         function ganttCostLabel(t) {
-            if (t.id === 'T1' && !appState.includePond) return 'مستبعدة';
+            if (isGatedPending(t)) return formatNum(gatedTaskCost(t)); // the row says «مشروطة / معلقة» next to it
             if (t.kind === 'opex') return `${formatNum(t.cost)} تشغيلي`;
             return t.cost > 0 ? formatNum(t.cost) : 'ضمن التشغيل';
         }
@@ -6863,7 +7266,8 @@
             if (legend) {
                 legend.innerHTML = `<span><span class="tf-g-dot in"></span>${useSheep ? 'حصاد القمح وبيع الأغنام' : 'حصاد القمح'} (وارد)</span>` +
                     (useSheep ? '<span><span class="tf-g-dot out"></span>شراء القطيع (منصرف)</span>' : '') +
-                    (gapSet.size ? '<span><span class="tf-g-gapmark"></span>ربع يحتاج تمويلاً</span>' : '');
+                    (gapSet.size ? '<span><span class="tf-g-gapmark"></span>ربع يحتاج تمويلاً</span>' : '') +
+                    (appState.ganttTasks.some(isGatedPending) ? '<span><span class="tf-g-dashmark"></span>مشروطة: خارج السيولة حتى اعتمادها</span>' : '');
             }
         }
 
@@ -6878,8 +7282,18 @@
             }).join('');
             const groupOpts = GANTT_GROUP_OPTIONS.map(([k, l]) => `<option value="${k}"${k === group ? ' selected' : ''}>${l}</option>`).join('');
             const prog = Math.min(100, Math.max(0, Number(t.progress) || 0));
+            const gate = !isNew && t.gate ? IRR_GATES.find(g => g.n === Number(t.gate)) : null;
+            const pend = Boolean(gate) && isGatedPending(t);
+            const gateBox = gate ? `
+                    <div class="tf-g-gatebox${pend ? ' is-pending' : ''}">
+                        <p><b>${pend ? (t.id === 'T1' ? 'معلقة' : 'مشروطة') : 'معتمدة'} · البوابة ${gate.n} (${gate.when}):</b> ${gate.rule}. ${pend
+                            ? `لا تدخل جدول السيولة قبل اعتمادها (<span class="num">${formatNum(gatedTaskCost(t))}</span> ج.م).`
+                            : 'محتسبة في جدول السيولة.'}</p>
+                        <button type="button" class="tf-btn${pend ? ' tf-btn-primary' : ''}" onclick="setTaskApproval('${t.id}', ${pend})">${pend ? 'اعتماد وإدخالها في السيولة' : 'تعليق وإخراجها من السيولة'}</button>
+                    </div>` : '';
+            const shownCost = t.id === 'T1' ? gatedTaskCost(t) : Math.max(0, Number(t.cost) || 0);
             return `
-                <div class="tf-g-editor" role="group" aria-labelledby="ged-title">
+                <div class="tf-g-editor" role="group" aria-labelledby="ged-title">${gateBox}
                     <h3 id="ged-title"${isNew ? '' : ' class="tf-sr"'}>${isNew ? 'مهمة جديدة' : 'تعديل: ' + escapeHtml(t.name)}</h3>
                     <div id="ged-more" class="tf-g-fields${isNew ? '' : ' hidden'}">
                         <label class="tf-g-field wide">اسم المهمة<input id="ged-name" class="tf-g-input" type="text" value="${escapeHtml(t.name)}" placeholder="مثال: تركيب مضخة ثانية"></label>
@@ -6892,10 +7306,10 @@
                         <div class="tf-g-field full"><span><label for="ged-prog">نسبة الإنجاز</label> · <b id="ged-prog-val" class="num">${prog}%</b></span>
                             <input id="ged-prog" class="tf-g-range" type="range" min="0" max="100" step="5" value="${prog}" style="--p:${prog}%" oninput="this.style.setProperty('--p', this.value + '%'); document.getElementById('ged-prog-val').textContent = this.value + '%'"></div>
                         <label class="tf-g-field mfull">التكلفة (ج.م)${linked
-                            ? `<input id="ged-cost" class="tf-g-input num" type="text" value="${formatNum(Math.max(0, Number(t.cost) || 0))}" readonly aria-describedby="ged-cost-hint">`
+                            ? `<input id="ged-cost" class="tf-g-input num" type="text" value="${formatNum(shownCost)}" readonly aria-describedby="ged-cost-hint">`
                             : `<input id="ged-cost" class="tf-g-input num" type="number" inputmode="numeric" min="0" step="25000" value="${Math.max(0, Number(t.cost) || 0)}">`}</label>
                     </div>
-                    ${linked ? '<p id="ged-cost-hint" class="tf-g-hint">التكلفة تُحسب تلقائياً من مدخلات المحاكي (أسعار الفسائل والاستصلاح والشبكة).</p>' : ''}
+                    ${linked ? `<p id="ged-cost-hint" class="tf-g-hint">${t.id === 'T1' ? 'التكلفة من «تكلفة البحيرة» في المحاكي.' : 'التكلفة تُحسب تلقائياً من مدخلات المحاكي (أسعار الفسائل والاستصلاح والشبكة).'}</p>` : ''}
                     <div class="tf-g-foot">
                         <span class="tf-g-meta"><span>${isNew ? 'تُضاف المهمة وتنعكس تكلفتها على جدول السيولة.' : `المسؤول: ${escapeHtml(t.owner)} · ${sp.html}`}</span>
                             ${isNew ? '' : '<button type="button" class="tf-link" onclick="toggleGanttMore(this)" aria-expanded="false" aria-controls="ged-more">الاسم والمسؤول والمرحلة</button>'}</span>
@@ -6920,34 +7334,52 @@
                 const sp = ganttSpan(task);
                 const progress = Math.min(100, Math.max(0, Number(task.progress) || 0));
                 const open = ganttOpenId === task.id;
+                const pending = isGatedPending(task);
+                const held = task.id === 'T1' ? 'معلقة' : 'مشروطة';
+                const gateNote = task.gate ? (pending ? ` · <span class="tf-g-tag">${held} · البوابة ${task.gate}</span>` : ` · البوابة ${task.gate}`) : '';
                 let cells = '';
                 for (let q = 1; q <= PLAN_QUARTERS; q++) {
                     cells += `<span class="tf-g-cell${q === nowIdx ? ' is-now' : ''}${q >= sp.s && q <= sp.e ? ' is-on' : ''}" style="grid-column:${q}"></span>`;
                 }
-                const pctTxt = progress >= 100 ? 'مكتملة' : progress > 0 ? progress + '%' : 'لم تبدأ';
-                const full = escapeHtml(task.name);
+                const pctTxt = pending ? held : progress >= 100 ? 'مكتملة' : progress > 0 ? progress + '%' : 'لم تبدأ';
+                const full = escapeHtml(task.name) + (pending ? ` (${held} بالبوابة ${task.gate}، غير محتسبة في السيولة)` : '');
+                const barTxt = pending ? (sp.e > sp.s ? held : '') : progress > 0 ? progress + '%' : '';
                 return `
-                    <div class="tf-g-line tf-g-row tf-gp-${ganttGroupOf(task)}${open ? ' is-open' : ''}">
+                    <div class="tf-g-line tf-g-row tf-gp-${ganttGroupOf(task)}${open ? ' is-open' : ''}${pending ? ' is-gated' : ''}">
                         <button type="button" id="gt-btn-${task.id}" class="tf-g-task" onclick="toggleGanttTask('${task.id}')" aria-expanded="${open}" title="${full}">
                             <span class="tf-g-name"><b>${escapeHtml(ganttDisplayName(task))}</b>
-                                <small><span class="tf-g-sub-d">${escapeHtml(task.owner)} · <span class="num">${ganttCostLabel(task)}</span></span><span class="tf-g-sub-m">${sp.html} · <span class="num">${ganttCostLabel(task)}</span></span></small></span>
-                            <span class="tf-g-pct num${progress > 0 && progress < 100 ? '' : ' is-idle'}">${pctTxt}</span>
+                                <small><span class="tf-g-sub-d">${escapeHtml(task.owner)} · <span class="num">${ganttCostLabel(task)}</span>${gateNote}</span><span class="tf-g-sub-m">${sp.html} · <span class="num">${ganttCostLabel(task)}</span></span></small></span>
+                            <span class="tf-g-pct num${!pending && progress > 0 && progress < 100 ? '' : ' is-idle'}">${pctTxt}</span>
                             <svg class="tf-ico tf-g-chev" aria-hidden="true"><use href="#i-chev-down"/></svg>
                         </button>
                         <div class="tf-g-track tf-g-q16" onclick="toggleGanttTask('${task.id}')" aria-hidden="true">
                             ${cells}
-                            <span class="tf-g-bar num" style="grid-column:${sp.s} / span ${sp.e - sp.s + 1}" title="${full} — ${quarterInfo(sp.s).code}${sp.e !== sp.s ? ' ← ' + quarterInfo(sp.e).code : ''} · ${progress}%">${progress > 0 ? progress + '%' : ''}<i style="width:${progress}%"></i></span>
+                            <span class="tf-g-bar num" style="grid-column:${sp.s} / span ${sp.e - sp.s + 1}" title="${full} — ${quarterInfo(sp.s).code}${sp.e !== sp.s ? ' ← ' + quarterInfo(sp.e).code : ''}${pending ? '' : ' · ' + progress + '%'}">${barTxt}${pending ? '' : `<i style="width:${progress}%"></i>`}</span>
                         </div>
                         ${open ? ganttEditorHTML(task, false) : ''}
                     </div>`;
             };
 
+            const gateRowHTML = () => {
+                let cells = '';
+                for (let q = 1; q <= PLAN_QUARTERS; q++) cells += `<span class="tf-g-cell${q === nowIdx ? ' is-now' : ''}" style="grid-column:${q}"></span>`;
+                const marks = IRR_GATES.map(g => `<span class="tf-g-gate" style="grid-column:${g.q}" title="البوابة ${g.n} · ${g.when}: ${g.rule}"><i></i><b class="num">${g.n}</b></span>`).join('');
+                return `
+                    <div class="tf-g-line tf-g-row tf-g-gaterow tf-gp-irrigation">
+                        <div class="tf-g-gatename"><b>بوابات القرار</b><small aria-hidden="true">${IRR_GATES.map(g => `${g.n}: ${g.when}`).join(' · ')}</small>
+                            <span class="tf-sr">${IRR_GATES.map(g => `البوابة ${g.n} في ${g.when}: ${g.rule}`).join('. ')}</span></div>
+                        <div class="tf-g-track tf-g-q16" aria-hidden="true">${cells}${marks}</div>
+                    </div>`;
+            };
             container.innerHTML = GANTT_GROUP_ORDER.map(g => {
-                const list = tasks.filter(t => ganttGroupOf(t) === g);
+                let list = tasks.filter(t => ganttGroupOf(t) === g);
                 if (!list.length) return '';
+                if (g === 'irrigation') list = list.map((t, i) => ({ t, i })).sort((a, b) => ((Number(a.t.startQ) || 1) - (Number(b.t.startQ) || 1)) || (a.i - b.i)).map(x => x.t);
                 const gt = ganttGroupTitle(g);
-                return `<div class="tf-g-group tf-gp-${g}"><span class="tf-g-sq" aria-hidden="true"></span><span>${gt.title}${gt.sub ? ' ' + gt.sub : ''}</span><small>· ${ganttTaskCountLabel(list.length)}</small></div>` +
-                    list.map(rowHTML).join('');
+                const pend = list.filter(isGatedPending).length;
+                const sub = g === 'irrigation' && !pend ? '' : gt.sub;
+                return `<div class="tf-g-group tf-gp-${g}"><span class="tf-g-sq" aria-hidden="true"></span><span>${gt.title}${sub ? ' ' + sub : ''}</span><small>· ${ganttTaskCountLabel(list.length)}${pend ? ` · ${pend} مشروطة` : ''}</small></div>` +
+                    (g === 'irrigation' ? gateRowHTML() : '') + list.map(rowHTML).join('');
             }).join('');
 
             const slot = document.getElementById('g-new-slot');
@@ -6962,18 +7394,22 @@
             set('g-k-plant', cf.lastCapexIdx ? quarterInfo(cf.lastCapexIdx).code : '—');
             const w1End = Math.max(0, ...tasks.filter(t => ganttGroupOf(t) === 'saidi').map(t => ganttSpan(t).e));
             set('g-k-wave1', w1End ? `الموجة 1 في ${quarterInfo(w1End).code}` : '—');
-            const active = tasks.filter(t => { const p = Number(t.progress) || 0; return p > 0 && p < 100; }).length;
-            const idle = tasks.filter(t => (Number(t.progress) || 0) <= 0).length;
-            const done = tasks.length - active - idle;
-            const status = [`${active} جارية`, `${idle} لم تبدأ`, done ? `${done} مكتملة` : ''].filter(Boolean).join(' · ');
+            const planned = tasks.filter(t => !isGatedPending(t));
+            const gatedN = tasks.length - planned.length;
+            const active = planned.filter(t => { const p = Number(t.progress) || 0; return p > 0 && p < 100; }).length;
+            const idle = planned.filter(t => (Number(t.progress) || 0) <= 0).length;
+            const done = planned.length - active - idle;
+            const status = [`${active} جارية`, `${idle} لم تبدأ`, done ? `${done} مكتملة` : '', gatedN ? `${gatedN} مشروطة` : ''].filter(Boolean).join(' · ');
             set('g-k-tasks', tasks.length);
             set('g-k-tasks-sub', status);
             set('g-k-tasks-m', status);
             set('g-k-capex', formatNum(cf.totals.capex));
             const parts = ['النخيل'];
-            if (tasks.some(t => t.id === 'T1' && isCapexTask(t))) parts.push('البحيرة');
             if (tasks.some(t => t.id === 'T0_SHED' && isCapexTask(t))) parts.push('العنبر');
-            set('g-k-capex-sub', parts.join(' + '));
+            if (tasks.some(t => t.category === 'irrigation' && t.id !== 'T1' && isCapexTask(t))) parts.push('الري');
+            if (tasks.some(t => t.id === 'T1' && isCapexTask(t))) parts.push('البحيرة');
+            const gatedSum = tasks.filter(isGatedPending).reduce((a, t) => a + gatedTaskCost(t), 0);
+            set('g-k-capex-sub', parts.join(' + ') + (gatedSum > 0 ? ` · مشروطة ${formatNum(gatedSum)}` : ''));
             if (activeTab === 'gantt') setPageTitle('gantt');
         }
 
@@ -7058,6 +7494,176 @@
             renderAll();
             saveState();
             showToast('تم حذف المهمة من المخطط الزمني');
+        }
+
+        // ---- Decision gates (irrigation plan): approve / suspend gated tasks, with undo
+        function gateApprovalSnapshot() {
+            return { includePond: Boolean(appState.includePond), approved: Object.fromEntries(appState.ganttTasks.filter(t => t.gate && t.id !== 'T1').map(t => [t.id, t.approved !== false])) };
+        }
+        function restoreGateApprovals(snap) {
+            appState.includePond = snap.includePond;
+            appState.ganttTasks.forEach(t => { if (t.id in snap.approved) t.approved = snap.approved[t.id]; });
+            renderAll();
+            saveState();
+            showToast('تم التراجع، والاعتمادات كما كانت');
+        }
+        function setTasksApproval(ids, on, label) {
+            const targets = appState.ganttTasks.filter(t => t.gate && ids.includes(t.id));
+            if (!targets.length) return;
+            const before = computeCashflow(calculateMetrics()).totals.inject;
+            const snap = gateApprovalSnapshot();
+            targets.forEach(t => { if (t.id === 'T1') appState.includePond = on; else t.approved = on; });
+            renderAll();
+            saveState();
+            const after = computeCashflow(calculateMetrics()).totals.inject;
+            const diff = after - before;
+            const effect = Math.abs(diff) < 1 ? 'دون تغيير في التمويل المطلوب من الشركاء'
+                : `التمويل المطلوب من الشركاء ${formatNum(after)} ج.م (${diff > 0 ? '+' : '−'}${formatNum(Math.abs(diff))})`;
+            showToast(`${on ? 'اعتُمد' : 'عُلّق'}: ${label} — ${effect}`, () => restoreGateApprovals(snap));
+        }
+        function setTaskApproval(id, on) {
+            const t = appState.ganttTasks.find(x => x.id === id);
+            if (t) setTasksApproval([id], on, `«${ganttDisplayName(t)}»`);
+        }
+        function setGateApproval(n, on) {
+            const ids = appState.ganttTasks.filter(t => Number(t.gate) === n).map(t => t.id);
+            setTasksApproval(ids, on, `مشاريع البوابة ${n}`);
+        }
+
+        // ---- IRRIGATION PAGE (display; the study's figures + live status from the timeline and the cash-flow engine)
+        // Partner funding if the given gated tasks were approved (the lake's cost follows includePond, so it is set briefly)
+        function irrInjectIfApproved(ids) {
+            const pond = appState.includePond;
+            const tasks = appState.ganttTasks.map(t => !ids.includes(t.id) ? t : t.id === 'T1' ? { ...t, cost: gatedTaskCost(t) } : { ...t, approved: true });
+            if (ids.includes('T1')) appState.includePond = true;
+            try { return computeCashflow(calculateMetrics(), tasks).totals.inject; } finally { appState.includePond = pond; }
+        }
+        function irrWaterBarsHTML(keys) {
+            const cap = FARM_CONSTANTS.annualWellWaterM3 / 1000;
+            const max = 1600;
+            const list = IRR_WATER_SCENARIOS.filter(sc => !keys || keys.includes(sc.key));
+            const rows = list.map(sc => {
+                const tot = sc.parts.reduce((a, b) => a + b, 0);
+                const pct = Math.round(tot / cap * 100);
+                const segs = sc.parts.map((v, i) => v > 0 ? `<span class="ir-seg ir-seg${i}" style="width:${(v / max * 100).toFixed(2)}%" title="${IRR_WATER_PARTS[i]}: ${formatNum(v)} ألف م³"></span>` : '').join('');
+                return `<div class="ir-wrow${tot > cap ? ' is-over' : ''}">
+                        <span class="ir-wlbl">${sc.label}</span>
+                        <div class="ir-wtrack">${segs}<span class="ir-wcap" style="inset-inline-start:${(cap / max * 100).toFixed(2)}%"></span></div>
+                        <span class="ir-wval"><b class="num">${pct}%</b><small><span class="num">${formatNum(tot)}</span> ألف م³${tot > cap ? ' · فوق طاقة البئر' : ''}</small></span>
+                    </div>`;
+            }).join('');
+            const legend = IRR_WATER_PARTS.map((p, i) => `<span><span class="ir-sw ir-seg${i}"></span>${p}</span>`).join('') +
+                `<span><span class="ir-capsw"></span>طاقة البئر <span class="num">${formatNum(cap)}</span> ألف م³</span>`;
+            const aria = list.map(sc => { const tot = sc.parts.reduce((a, b) => a + b, 0); return `${sc.label}: ${Math.round(tot / cap * 100)}% من طاقة البئر`; }).join('، ');
+            return `<div class="ir-wbars" role="img" aria-label="${aria}">${rows}</div><div class="ir-wlegend">${legend}</div>`;
+        }
+        function irrRowTasks(r) {
+            if (r.cat) return appState.ganttTasks.filter(t => t.category === r.cat);
+            return (r.tasks || []).map(id => appState.ganttTasks.find(t => t.id === id)).filter(Boolean);
+        }
+        function irrApproveRow(n, on) {
+            const r = IRR_PRIORITIES.find(x => x.n === n);
+            if (!r) return;
+            setTasksApproval(irrRowTasks(r).filter(t => t.gate).map(t => t.id), on, `«${r.name}»`);
+        }
+        function renderWaterPlan(m, cf) {
+            const set = (id, h) => { const el = document.getElementById(id); if (el) el.innerHTML = h; };
+            const cap = FARM_CONSTANTS.annualWellWaterM3 / 1000;
+            const pctOf = key => Math.round(IRR_WATER_SCENARIOS.find(s => s.key === key).parts.reduce((a, b) => a + b, 0) / cap * 100);
+            const irrTasks = appState.ganttTasks.filter(t => t.category === 'irrigation');
+            const counted = irrTasks.filter(isCapexTask).reduce((a, t) => a + (Number(t.cost) || 0), 0);
+            const pendingTasks = appState.ganttTasks.filter(isGatedPending);
+            const pendingSum = pendingTasks.reduce((a, t) => a + gatedTaskCost(t), 0);
+            const link = document.getElementById('ir-study-link');
+            if (link) link.href = IRR_STUDY_URL;
+
+            set('ir-kpis', `
+                <div><span class="tf-gk-label">طلب المياه اليوم</span><strong class="tf-gk-value num">${pctOf('today')}%</strong><span class="tf-gk-sub">من طاقة البئر · تقديري</span></div>
+                <div><span class="tf-gk-label">عند إثمار النخيل</span><strong class="tf-gk-value num">${pctOf('mature')}%</strong><span class="tf-gk-sub">إذا بقيت الحقول على الغمر</span></div>
+                <div><span class="tf-gk-label">بعد التطوير</span><strong class="tf-gk-value num">${pctOf('upgraded')}%</strong><span class="tf-gk-sub">تنقيط للبرسيم وتحسين القمح</span></div>
+                <div><span class="tf-gk-label">مشاريع الري في السيولة</span><strong class="tf-gk-value num">${formatNum(counted)}</strong><span class="tf-gk-sub">${pendingSum > 0 ? `مشروطة <span class="num">${formatNum(pendingSum)}</span> ج.م` : 'لا توجد مشروطة'}</span></div>`);
+            set('ir-water-bars', irrWaterBarsHTML());
+            set('dash-water-bars', irrWaterBarsHTML(['today', 'mature', 'upgraded']));
+
+            // Priority table, grouped by tier
+            const spanTxt = list => {
+                if (!list.length) return '—';
+                const s = Math.min(...list.map(t => ganttSpan(t).s)), e = Math.max(...list.map(t => ganttSpan(t).e));
+                return s === e ? `<bdi>${quarterInfo(s).code}</bdi>` : `<bdi>${quarterInfo(s).code}</bdi> ← <bdi>${quarterInfo(e).code}</bdi>`;
+            };
+            let tier = null;
+            const body = IRR_PRIORITIES.map(r => {
+                const list = irrRowTasks(r);
+                const head = r.tier !== tier ? `<tr class="ir-tier ir-tier-${r.tier}"><th colspan="7" scope="colgroup">${IRR_PRIORITY_TIERS[r.tier]}</th></tr>` : '';
+                tier = r.tier;
+                let cost, when, status;
+                if (r.fixed) {
+                    cost = r.fixed.cost === 'a2' ? `<b class="num">${formatNum(LV_A2_EXTENSION)}</b>` : `<span class="num">${r.fixed.cost}</span>`;
+                    when = r.fixed.when;
+                    status = `<span class="ir-st is-${r.tier === 'no' ? 'no' : 'muted'}">${r.fixed.status}</span>`;
+                } else {
+                    const planCost = list.reduce((a, t) => a + (t.gate ? gatedTaskCost(t) : (t.kind === 'opex' ? 0 : Number(t.cost) || 0)), 0);
+                    cost = planCost > 0 ? `<b class="num">${formatNum(planCost)}</b>${r.est ? `<small>تقدير ${r.est}</small>` : ''}` : `<span>${r.est || 'تشغيلية'}</span>`;
+                    when = spanTxt(list);
+                    const gated = list.filter(t => t.gate);
+                    const pend = gated.filter(isGatedPending);
+                    const gateNs = [...new Set(gated.map(t => Number(t.gate)))].sort();
+                    const gateLbl = gateNs.length > 1 ? `البوابتان ${gateNs.join(' و ')}` : `البوابة ${gateNs[0] || ''}`;
+                    if (!gated.length) status = `<span class="ir-st is-ok">في الخطة</span>`;
+                    else if (!pend.length) status = `<span class="ir-st is-ok">معتمدة · ${gateLbl}</span><button type="button" class="tf-link ir-act" onclick="irrApproveRow(${r.n}, false)">تعليق</button>`;
+                    else status = `<span class="ir-st is-gated">${pend.length < gated.length ? `معتمدة ${gated.length - pend.length} من ${gated.length}` : (r.tasks && r.tasks[0] === 'T1' ? 'معلقة' : 'مشروطة')} · ${gateLbl}</span><button type="button" class="tf-link ir-act" onclick="irrApproveRow(${r.n}, true)">اعتماد</button>`;
+                }
+                const impact = r.impact === 'sheep'
+                    ? (appState.integrateSheepWithPalms ? `ربح الدورة نحو <span class="num">${formatNum(m.sheep.netOperatingProfit6M)}</span> ج.م في السنة، وهو مصدر النقد لما بعده` : 'دورة الأغنام متوقفة في الخطة الحالية')
+                    : r.impact;
+                return head + `<tr class="ir-row-${r.tier}">
+                        <td data-l="#" class="num ir-n">${r.n}</td>
+                        <th scope="row">${r.name}</th>
+                        <td data-l="التكلفة" class="ir-cost"><span>${cost}</span></td>
+                        <td data-l="الأثر"><span>${impact}</span></td>
+                        <td data-l="التوقيت" class="num"><span>${when}</span></td>
+                        <td data-l="التمويل"><span>${r.funding}</span></td>
+                        <td data-l="الحالة" class="ir-status"><span>${status}</span></td>
+                    </tr>`;
+            }).join('');
+            set('ir-prio-body', body);
+
+            // Decision gates with the partner-funding effect of approving each
+            const nowIdx = currentQuarterIdx();
+            const nextGate = IRR_GATES.find(g => g.q >= nowIdx);
+            const gates = IRR_GATES.map(g => {
+                const list = appState.ganttTasks.filter(t => Number(t.gate) === g.n);
+                const pend = list.filter(isGatedPending);
+                const total = list.reduce((a, t) => a + gatedTaskCost(t), 0);
+                let effect = '';
+                if (pend.length) {
+                    const diff = irrInjectIfApproved(pend.map(t => t.id)) - cf.totals.inject;
+                    effect = diff > 1 ? `اعتمادها يرفع التمويل المطلوب من الشركاء <b class="num">+${formatNum(diff)}</b> ج.م` : 'اعتمادها لا يزيد التمويل المطلوب من الشركاء';
+                } else if (list.length) effect = 'محتسبة في جدول السيولة';
+                const items = list.map(t => `<li class="${isGatedPending(t) ? 'is-pending' : 'is-on'}"><span>${escapeHtml(ganttDisplayName(t))} · <bdi>${quarterInfo(ganttSpan(t).s).code}</bdi></span><b class="num">${formatNum(gatedTaskCost(t))}</b></li>`).join('');
+                return `<article class="ir-gate${g === nextGate ? ' is-next' : ''}">
+                        <header><span class="ir-gate-dia" aria-hidden="true"></span><b>البوابة ${g.n}</b><span class="ir-gate-when">${g.when}</span>${g === nextGate ? '<span class="ir-gate-next">القادمة</span>' : ''}</header>
+                        <p><b>الشرط:</b> ${g.rule}.</p>
+                        <p><b>تفتح:</b> ${g.unlocks}.</p>
+                        ${items ? `<ul class="ir-gate-list">${items}</ul>` : ''}
+                        <footer>
+                            <span class="ir-gate-sum"><span>المجموع <b class="num">${formatNum(total)}</b> ج.م</span><small>${effect}</small></span>
+                            ${list.length ? (pend.length
+                                ? `<button type="button" class="tf-btn tf-btn-primary" onclick="setGateApproval(${g.n}, true)">اعتماد مشاريع البوابة ${g.n}</button>`
+                                : `<button type="button" class="tf-btn" onclick="setGateApproval(${g.n}, false)">تعليق</button>`) : ''}
+                        </footer>
+                    </article>`;
+            }).join('');
+            const allPend = pendingTasks.map(t => t.id);
+            const allAfter = allPend.length ? irrInjectIfApproved(allPend) : cf.totals.inject;
+            set('ir-gates', gates + `<p class="ir-gates-note">${allPend.length
+                ? `لو اعتُمدت كل المشروطة (<span class="num">${formatNum(pendingSum)}</span> ج.م) لارتفع التمويل المطلوب من الشركاء من <b class="num">${formatNum(cf.totals.inject)}</b> إلى <b class="num">${formatNum(allAfter)}</b> ج.م. لذلك تبقى مشروطة حتى تثبت التجارب جدواها ويتوفر فائض.`
+                : `كل مشاريع الري معتمدة ومحتسبة في السيولة. التمويل المطلوب من الشركاء <b class="num">${formatNum(cf.totals.inject)}</b> ج.م.`}</p>`);
+
+            const badge = document.getElementById('nav-badge-water');
+            if (badge) badge.textContent = pendingTasks.length ? `${pendingTasks.length} مشروطة` : 'معتمدة';
+            const more = document.getElementById('more-water');
+            if (more) more.textContent = `الطلب عند الإثمار ${pctOf('mature')}% من البئر · ${pendingTasks.length} مشروطة`;
         }
 
         // Shift not-yet-started CAPEX tasks later, in their original order, until the plan
@@ -7392,6 +7998,7 @@
         const SUB_PAGES = {
             masterplan: { title: 'مخطط المزرعة', meta: '200 فدان · 59 حوشة · 187 كود' },
             livestock: { title: 'المواشي ودورة الأغنام', meta: 'كود 083 · 60 × 70 م' },
+            water: { title: 'تطوير الري والأولويات', meta: 'دراسة 14 نوفمبر 2026 · 3 بوابات قرار' },
             constants: { title: 'الشركاء والأصول', meta: 'حصص متساوية 25% · مثبّتة بالريال' }
         };
         // Main pages (bottom bar) show their title on phones, without a back button
@@ -7417,7 +8024,7 @@
             setPageTitle(tabId);
             toggleHeaderMenu(false);
 
-            const tabs = ['dashboard', 'masterplan', 'livestock', 'simulator', 'gantt', 'cashflow', 'constants', 'more'];
+            const tabs = ['dashboard', 'masterplan', 'livestock', 'water', 'simulator', 'gantt', 'cashflow', 'constants', 'more'];
             tabs.forEach(t => {
                 const sec = document.getElementById('section-' + t);
                 if (sec) sec.classList.toggle('hidden', t !== tabId);
@@ -7571,6 +8178,7 @@
             initBlueprintUI();
             selectLivestockPart('all_phase1');
             if (stateMigratedV5) setTimeout(() => showToast('حُدّثت افتراضات الخطة من سجل الحسابات (سبتمبر 2025 – أغسطس 2026) وتصميم العنبر الجديد', true), 600);
+            else if (stateMigratedV6) setTimeout(() => showToast('أُضيفت خطة تطوير الري إلى الجدول الزمني، وعُلّقت البحيرة حتى قرار يناير 2028', true), 600);
             buildSimulatorFields();
             renderAll();
             saveState();
