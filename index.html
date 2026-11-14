@@ -1980,7 +1980,7 @@
 
                             <!-- Southern Ring Road (10-13m wide) -->
                             <line x1="45" y1="295" x2="1215" y2="295" stroke="#f59e0b" stroke-width="5" stroke-dasharray="10,4"/>
-                            <text x="630" y="312" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold">الطريق الدائري الجنوبي (عرض 10–13 م) — محور دخول شاحنات الأعلاف والمواشي والخدمة الثقيلة (باقي قطعة الـ 600 فدان جنوباً)</text>
+                            <text x="630" y="312" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold">الطريق الدائري الجنوبي (عرض 10–13 م) — محور الشاحنات الثقيلة · شاحنات الأعلاف والمواشي تصل ح42 من الطريق الطولي الأوسط (باقي قطعة الـ 600 فدان جنوباً)</text>
 
                             <!-- ================= WESTERN ENTRANCE & POST-HARVEST (ح1 - ح7) ================= -->
                             <g id="cad-group-entrance" class="map-zone zone-entrance" onclick="selectCadBasinFromMap('entrance')">
@@ -2047,7 +2047,7 @@
                                 </g>
                             </g>
 
-                            <!-- ================= MEDICINAL & DRYING YARDS (ح19, ح20-22, ح24-26) ================= -->
+                            <!-- ================= MEDICINAL & DRYING YARDS (ح19, ح20-22, ح24-25) ================= -->
                             <g id="cad-group-medicinal" class="map-zone zone-medicinal" onclick="selectCadBasinFromMap('medicinal')">
                                 <rect x="490" y="170" width="45" height="115" fill="#6b21a8" stroke="#e9d5ff" stroke-width="1.5"/>
                                 <text x="512" y="225" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ح19</text>
@@ -2064,8 +2064,6 @@
                                 <text x="606" y="69" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">ح24 (مناشر)</text>
                                 <rect x="584" y="84" width="45" height="32" fill="#9333ea" stroke="#e9d5ff" stroke-width="1"/>
                                 <text x="606" y="103" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">ح25 (تجهيز)</text>
-                                <rect x="584" y="118" width="45" height="34" fill="#0284c7" stroke="#bae6fd" stroke-width="1"/>
-                                <text x="606" y="138" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">ح26 (087)</text>
 
                                 <g class="lod-detail-group">
                                     <text x="512" y="256" text-anchor="middle" fill="#fde047" font-size="5.8">أكواد 069–072 (بابونج/ليمون)</text>
@@ -2074,41 +2072,36 @@
                                 </g>
                             </g>
 
-                            <!-- ================= CENTRAL SERVICE & LIVESTOCK HUB (ح23 - Codes 076-083) ================= -->
-                            <g id="cad-group-h23_services" class="map-zone zone-services" onclick="selectCadBasinFromMap('h23_services')">
-                                <polygon points="537,168 580,148 625,165 578,285 537,285" fill="#ea580c" stroke="#fde047" stroke-width="2.5"/>
-                                <text x="572" y="180" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="900">ح23 (6.6 ف)</text>
-                                <text x="572" y="193" text-anchor="middle" fill="#fef08a" font-size="8" font-weight="bold">076: استراحة (R1,R3,R4)</text>
-                                <text x="570" y="206" text-anchor="middle" fill="#fff" font-size="8">077-078: مخزن وورشة</text>
-                                <text x="566" y="219" text-anchor="middle" fill="#bbf7d0" font-size="7.5">079-081: عازل شجري</text>
-                                <text x="563" y="233" text-anchor="middle" fill="#fed7aa" font-size="7.5">082: توسع مواشي (1ف)</text>
-                                <rect x="539" y="242" width="44" height="41" rx="3" fill="#9a3412" stroke="#fde047" stroke-width="1.5"/>
-                                <text x="561" y="257" text-anchor="middle" fill="#fde047" font-size="8.5" font-weight="900">كود 083</text>
-                                <text x="561" y="269" text-anchor="middle" fill="#fff" font-size="7">مجمع المواشي (60×70م)</text>
-                                <text x="561" y="279" text-anchor="middle" fill="#86efac" font-size="6.2" font-weight="bold">+ مكمر الكمبوست</text>
+                            <!-- ================= REST HOUSE ON THE HILL (ح23 - Codes 076-083) ================= -->
+                            <g id="cad-group-h23_rest" class="map-zone zone-services" onclick="selectCadBasinFromMap('h23_rest')">
+                                <polygon points="537,168 580,148 625,165 578,285 537,285" fill="#9a3412" stroke="#fde047" stroke-width="2"/>
+                                <text x="572" y="182" text-anchor="middle" fill="#fff" font-size="10.5" font-weight="900">ح23 (6.6 ف)</text>
+                                <text x="572" y="196" text-anchor="middle" fill="#fef08a" font-size="8" font-weight="bold">076: الاستراحة على التبة</text>
+                                <text x="572" y="208" text-anchor="middle" fill="#fff" font-size="6.5">إطلالة على المزرعة والبحيرة</text>
+                                <text x="566" y="240" text-anchor="middle" fill="#fed7aa" font-size="6.5">077–083: أرض التبة</text>
+                                <text x="564" y="251" text-anchor="middle" fill="#fed7aa" font-size="6">احتياطي غير مزروع</text>
                             </g>
-
-                            <!-- ================= HYDRAULIC HEART: WELL 1 (ح30) & POND (North ح27) ================= -->
+                            <!-- ================= HYDRAULIC HEART: WELL + STORE + TRANSFORMER + SOLAR (ح30) & LAKE (part of ح26) ================= -->
                             <g id="cad-group-h30_water" class="map-zone zone-services" onclick="selectCadBasinFromMap('h30_water')">
                                 <rect x="631" y="50" width="44" height="32" fill="#15803d" stroke="#bbf7d0" stroke-width="1"/>
                                 <text x="653" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">ح28</text>
                                 <rect x="631" y="84" width="44" height="32" fill="#15803d" stroke="#bbf7d0" stroke-width="1"/>
                                 <text x="653" y="104" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">ح29</text>
                                 <rect x="631" y="118" width="44" height="40" fill="#0369a1" stroke="#38bdf8" stroke-width="2"/>
-                                <circle cx="653" cy="138" r="10" fill="#0284c7" stroke="#fff" stroke-width="2"/>
-                                <text x="653" y="141" text-anchor="middle" fill="#fff" font-size="8" font-weight="900">بئر1</text>
-                                <text x="653" y="127" text-anchor="middle" fill="#bae6fd" font-size="8" font-weight="bold">ح30 (095)</text>
-
-                                <polygon points="627,168 675,168 662,202 612,202" fill="#0284c7" stroke="#fde047" stroke-width="2"/>
-                                <text x="644" y="184" text-anchor="middle" fill="#fff" font-size="8.5" font-weight="900">بحيرة (088)</text>
-                                <text x="644" y="195" text-anchor="middle" fill="#bae6fd" font-size="7.5">60م×40م · فلاتر</text>
-
+                                <text x="653" y="127" text-anchor="middle" fill="#bae6fd" font-size="7.5" font-weight="bold">ح30 (095)</text>
+                                <circle cx="642" cy="142" r="7.5" fill="#0284c7" stroke="#fff" stroke-width="1.6"/>
+                                <text x="642" y="145" text-anchor="middle" fill="#fff" font-size="6" font-weight="900">بئر1</text>
+                                <rect x="584" y="118" width="45" height="34" fill="#0284c7" stroke="#bae6fd" stroke-width="1"/>
+                                <rect x="588" y="128" width="37" height="21" rx="5" fill="#0369a1" stroke="#fde047" stroke-width="1.2" stroke-dasharray="3,2"/>
+                                <text x="606" y="126" text-anchor="middle" fill="#fff" font-size="7.5" font-weight="bold">ح26</text>
+                                <text x="606.5" y="140" text-anchor="middle" fill="#fff" font-size="6.5" font-weight="900">بحيرة</text>
                                 <g class="lod-detail-group">
-                                    <line x1="653" y1="148" x2="561" y2="242" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2"/>
-                                    <text x="615" y="214" text-anchor="middle" fill="#7dd3fc" font-size="5.8" font-weight="bold">خط مياه 2 بوصة (180م للمواشي)</text>
+                                    <text x="663" y="138" text-anchor="middle" fill="#bae6fd" font-size="4" font-weight="bold">مخزن</text>
+                                    <text x="663" y="144" text-anchor="middle" fill="#bae6fd" font-size="4" font-weight="bold">محول</text>
+                                    <text x="663" y="150" text-anchor="middle" fill="#bae6fd" font-size="4" font-weight="bold">طاقة شمسية</text>
+                                    <text x="606.5" y="146" text-anchor="middle" fill="#bae6fd" font-size="3.6">60×40 م · معلقة</text>
                                 </g>
                             </g>
-
                             <!-- ================= CENTRAL CULTIVATED BLOCK (ح27 South, ح31 - ح46) ================= -->
                             <g id="cad-group-center_crops" class="map-zone zone-cultivated" onclick="selectCadBasinFromMap('center_crops')">
                                 <rect x="677" y="50" width="44" height="35" fill="#15803d" stroke="#bbf7d0" stroke-width="1"/>
@@ -2125,14 +2118,12 @@
                                 <rect x="723" y="124" width="44" height="36" fill="#15803d" stroke="#bbf7d0" stroke-width="1"/>
                                 <text x="745" y="145" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">ح41</text>
 
-                                <polygon points="769,50 815,50 785,160 769,160" fill="#15803d" stroke="#bbf7d0" stroke-width="1"/>
-                                <text x="786" y="95" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ح42</text>
                                 <polygon points="817,50 865,50 825,160 787,160" fill="#15803d" stroke="#bbf7d0" stroke-width="1"/>
                                 <text x="822" y="108" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ح44</text>
                                 <polygon points="867,50 915,50 875,160 827,160" fill="#15803d" stroke="#bbf7d0" stroke-width="1"/>
                                 <text x="868" y="108" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ح46</text>
 
-                                <polygon points="611,204 660,204 630,285 580,285" fill="#166534" stroke="#bbf7d0" stroke-width="1"/>
+                                <polygon points="627,170 660,170 630,285 580,285" fill="#166534" stroke="#bbf7d0" stroke-width="1"/>
                                 <text x="620" y="248" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ح27</text>
                                 <polygon points="662,170 715,170 675,285 632,285" fill="#166534" stroke="#bbf7d0" stroke-width="1"/>
                                 <text x="672" y="225" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ح32 / ح31</text>
@@ -2148,6 +2139,23 @@
                                 </g>
                             </g>
 
+                            <!-- ================= SERVICES & LIVESTOCK HUB (ح42): livestock complex A1–B2 + compost, workshop, tractor shed, weighbridge ================= -->
+                            <g id="cad-group-h42_services" class="map-zone zone-services" onclick="selectCadBasinFromMap('h42_services')">
+                                <polygon points="769,50 815,50 785,160 769,160" fill="#ea580c" stroke="#fde047" stroke-width="2.5"/>
+                                <text x="790" y="60" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="900">ح42</text>
+                                <rect x="773" y="65" width="30" height="40" rx="2" fill="#9a3412" stroke="#fde047" stroke-width="1.2"/>
+                                <text x="788" y="80" text-anchor="middle" fill="#fde047" font-size="6.5" font-weight="900">المواشي</text>
+                                <text x="788" y="89" text-anchor="middle" fill="#fff" font-size="5">60×70م</text>
+                                <rect x="773" y="110" width="18" height="24" rx="2" fill="#9a3412" stroke="#fed7aa" stroke-width="0.8"/>
+                                <text x="782" y="124" text-anchor="middle" fill="#fed7aa" font-size="5" font-weight="bold">ورشة</text>
+                                <line x1="770.5" y1="66" x2="770.5" y2="162" stroke="#fde047" stroke-width="1.2" stroke-dasharray="2,2"/>
+                                <path d="M 653,158 L 653,160 L 772.5,160 L 772.5,106" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2"/>
+                                <g class="lod-detail-group">
+                                    <text x="712" y="157.5" text-anchor="middle" direction="rtl" fill="#7dd3fc" font-size="4.5" font-weight="bold">خط المياه من البئر إلى مجمع ح42</text>
+                                    <text x="788" y="98" text-anchor="middle" fill="#86efac" font-size="3.8">A1–B2 + مكمر</text>
+                                    <text x="782" y="130" text-anchor="middle" fill="#fff" font-size="3.4">جرارات · ميزان</text>
+                                </g>
+                            </g>
                             <!-- ================= EASTERN 50-FEDDAN DATE PALM EXPANSION (ح47 - ح59 / Codes 142-187) ================= -->
                             <g id="cad-group-palm_wave1" class="map-zone zone-palms" onclick="selectCadBasinFromMap('palm_wave1')">
                                 <polygon points="917,50 972,50 932,160 877,160" fill="#d97706" stroke="#fef08a" stroke-width="1.5"/>
@@ -2212,9 +2220,10 @@
                                 <rect x="255" y="50" width="280" height="235" fill="#15803d" opacity="0.8"/>
                                 <rect x="490" y="170" width="45" height="115" fill="#7e22ce"/>
                                 <rect x="537" y="50" width="92" height="100" fill="#9333ea"/>
-                                <polygon points="537,168 580,148 625,165 578,285 537,285" fill="#ea580c"/>
-                                <rect x="631" y="118" width="44" height="84" fill="#0284c7"/>
+                                <polygon points="537,168 580,148 625,165 578,285 537,285" fill="#9a3412"/>
+                                <rect x="584" y="118" width="91" height="40" fill="#0284c7"/>
                                 <rect x="677" y="50" width="195" height="235" fill="#166534" opacity="0.8"/>
+                                <polygon points="769,50 815,50 785,160 769,160" fill="#ea580c"/>
                                 <polygon points="875,50 1086,50 1041,285 832,285" fill="#d97706" opacity="0.85"/>
                                 <polygon points="1088,50 1283,50 1212,285 1043,285" fill="#ca8a04" opacity="0.85"/>
                                 <rect id="cad-minimap-viewport" x="0" y="0" width="1320" height="340" fill="rgba(251, 191, 36, 0.22)" stroke="#fbbf24" stroke-width="14" rx="12"/>
@@ -2255,7 +2264,7 @@
 
                 <div class="tf-page-head tf-m-hide">
                     <div>
-                        <span class="tf-eyebrow">كود 083 · جنوب ح23 · مجمع 60 × 70 م</span>
+                        <span class="tf-eyebrow">ح42 · مجمع 60 × 70 م · التصميم الهجين</span>
                         <h1 class="tf-h1">المواشي ودورة الأغنام</h1>
                         <p class="tf-lead">عنبر المرحلة الأولى A1 ودورة تسمين <span id="lv-lead-heads" class="num">150</span> رأساً من نوفمبر 2026 حتى موسم الأضحى (مايو 2027).</p>
                     </div>
@@ -2789,8 +2798,8 @@
                         </div>
                         <div class="tf-collapse-body" id="ir-linear-body">
                             <ul class="ir-list">
-                                <li><b>المسار مقطوع:</b> مباني ح23 ومحطة البئر والبحيرة بجوار الطريق، والحزام الشجري والنخيل شرقاً.</li>
-                                <li><b>يغطي بلوكاً واحداً:</b> الغربي (ح8–ح18) أو الأوسط (ح27–ح46)، نحو 45 فداناً، فتصبح التكلفة 75–110 ألف ج.م للفدان.</li>
+                                <li><b>المسار مقطوع:</b> الاستراحة على تبة ح23، ومحطة البئر في ح30 والبحيرة في ح26 بجوار الطريق، ومجمع المواشي في ح42، والحزام الشجري والنخيل شرقاً.</li>
+                                <li><b>يغطي بلوكاً واحداً:</b> الغربي (ح8–ح18) أو الأوسط (ح27–ح46، ويقطعه الآن مجمع ح42)، نحو 45 فداناً، فتصبح التكلفة 75–110 ألف ج.م للفدان.</li>
                                 <li><b>بلا مقارنة مالية للنظام:</b> العائد في الدراسة عائد المحاصيل، والتوفير المباشر لا يسترد 3.4 مليون قبل نحو 15 سنة.</li>
                                 <li><b>إنتاجية متفائلة:</b> قمح 20–22 أردباً للفدان، والفعلي 8.8 وهدف الخطة 14.</li>
                             </ul>
@@ -3157,7 +3166,7 @@
                 <select id="print-sheet-selector" class="tf-select" onchange="openStandalonePrintSheet(this.value)">
                     <option value="cad_full">المخطط العام للمزرعة (ح1–ح59 · 200 فدان)</option>
                     <option value="cad_sector">القطاع المحدد حالياً في المخطط</option>
-                    <option value="livestock_master">الموقع العام لمجمع المواشي (كود 083)</option>
+                    <option value="livestock_master">الموقع العام لمجمع المواشي (ح42)</option>
                     <option value="phase1_single">مساقط العنصر المختار من المرحلة الأولى</option>
                     <option value="phase1_booklet">كراسة التنفيذ الكاملة للمرحلة الأولى</option>
                 </select>
@@ -3213,7 +3222,13 @@
             ['shade_shed', 'هيكل مواسير حديد مجلفنة (أعمدة 4" · مدادات 3" · مرابيع 2" · شدادات) توريد وتصنيع وتركيب ودهان', 'طن', 2.4, 65000],
             ['shade_shed', 'تغطية صاج مجلفن مموج 0.5 مم مدهون أبيض من أعلى بالبراغي والجلب', 'م²', 213, 350],
             ['shade_shed', 'ستارة صد رياح شمالية من شبك تظليل 80% على كابل شد', 'م²', 45, 110],
-            ['pens_yards', 'أسوار: قاعدة بلوك 40 سم على أساس شريطي + بانوهات مواسير مجلفنة حتى 1.30 م', 'م.ط', 76, 600],
+            ['shade_shed', 'عازل حراري فويل مزدوج بفقاعات هواء 8 مم تحت الصاج على شبك مجلفن', 'م²', 213, 120],
+            ['shade_shed', 'خط رذاذ: ماسورة 3/4" بـ 16 فوهة على حافة الظل الجنوبية + مضخة صغيرة ومؤقت', 'مقطوعية', 1, 15000],
+            ['pens_yards', 'أسوار جنوبية وشرقية وفاصل: قاعدة بلوك 40 سم على أساس شريطي + بانوهات مواسير مجلفنة حتى 1.30 م', 'م.ط', 60, 600],
+            ['pens_yards', 'السور الغربي: أساس شريطي 0.50 × 0.30 م خرسانة عادية', 'م.ط', 20, 700],
+            ['pens_yards', 'السور الغربي: بلوك 20 سم بارتفاع 2.50 م (صافي بعد الفتحات)', 'م²', 48, 380],
+            ['pens_yards', 'السور الغربي: سملة مسلحة 0.20 × 0.20 م أعلى السور', 'م.ط', 20, 300],
+            ['pens_yards', 'السور الغربي: 13 فتحة تهوية 30 × 40 سم بإطار وسلك + لياسة داخلية حتى 1.20 م ودهان جيري', 'مقطوعية', 1, 6500],
             ['pens_yards', 'بوابات حظائر مواسير 2.5 م', 'عدد', 2, 8000],
             ['pens_yards', 'بوابتا أفراد 1.0 م على خط المذود', 'عدد', 2, 3500],
             ['pens_yards', 'مساقي مجلفنة 1.5 م بعوامة (منها مسقى مزدوج على الفاصل)', 'عدد', 3, 4000],
@@ -3230,7 +3245,12 @@
             ['service_room', 'لياسة ودهان داخلي وخارجي', 'م²', 210, 90],
             ['service_room', 'باب صاج مزدوج 2.4 × 2.4 م للمخزن + باب الغرفة + 3 شبابيك بسلك ضد القوارض', 'مقطوعية', 1, 25000],
             ['service_room', 'حمام وبيارة صرف + كهرباء الغرفة', 'مقطوعية', 1, 20000],
-            ['quarantine_hay', 'حظيرة عزل 6 × 5 م: سور مواسير 1.30 م + بوابة + مظلة شبك 80% على هيكل مواسير', 'مقطوعية', 1, 22000],
+            ['quarantine_hay', 'أساس شريطي 0.50 × 0.30 م لغرفة العزل وسور الشمال', 'م.ط', 30, 700],
+            ['quarantine_hay', 'غرفة العزل: حوائط بلوك 20 سم بارتفاع 2.80–3.00 م (صافي بعد الفتحات)', 'م²', 60, 380],
+            ['quarantine_hay', 'غرفة العزل: سقف صاج مجلفن معزول بصوف صخري 5 سم على مدادات C', 'م²', 37, 650],
+            ['quarantine_hay', 'غرفة العزل: أرضية خرسانية 10 سم بميل نحو الباب + لياسة داخلية ملساء', 'مقطوعية', 1, 16500],
+            ['quarantine_hay', 'غرفة العزل: باب صاج 1.2 م على الممر + شباكان علويان بسلك', 'مقطوعية', 1, 9000],
+            ['quarantine_hay', 'سور شمالي خلف المصطبة: بلوك 20 سم بارتفاع 2.50 م + سملة + 5 فتحات تهوية', 'م.ط', 8, 1650],
             ['quarantine_hay', 'مسقى ومعلف صغير مستقل للعزل', 'مقطوعية', 1, 4000],
             ['quarantine_hay', 'مصطبة بالات خرسانية 8 × 5 م بسمك 15 سم', 'م²', 40, 380],
             ['handling', 'ممر فرز مواسير بعرض 45 سم وطول 6 م + بوابتا توجيه', 'مقطوعية', 1, 12000],
@@ -3251,7 +3271,9 @@
             return LV_BOQ.filter(r => r.el === el).reduce((s, r) => s + r.amount, 0);
         }
         // A2 (second 150 heads): a copy of the shade, pens and feed line; service room, handling and compost are shared
-        const LV_A2_EXTENSION = Math.round(['shade_shed', 'pens_yards', 'feed_line'].reduce((s, el) => s + lvElementCost(el), 0) * (1 + LV_BOQ_CONTINGENCY_PCT / 100));
+        // (A1 already shelters A2 from the west, so A2 does not repeat the west wall)
+        const LV_A2_EXTENSION = Math.round(LV_BOQ.filter(r => ['shade_shed', 'pens_yards', 'feed_line'].includes(r.el) && !r.item.startsWith('السور الغربي'))
+            .reduce((s, r) => s + r.amount, 0) * (1 + LV_BOQ_CONTINGENCY_PCT / 100));
 
         // Ledger-based crop & overhead baseline (sep 2025 – aug 2026) used by the v5 defaults
         const LEDGER_BASELINE = Object.freeze({
@@ -3278,7 +3300,7 @@
             { id: 'I3', name: 'تجربة تنقيط تحت سطحي (SDI) على 10 أفدنة برسيم، مع رأس تحكم وفلترة', owner: 'شريك التشغيل', category: 'irrigation', startQ: 4, durationQ: 1, progress: 0, cost: 475000, gate: 1, approved: true },
             { id: 'I4', name: 'تحويل البرسيم إلى التنقيط تحت السطحي — الدفعة 1 (17 فداناً)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 8, durationQ: 1, progress: 0, cost: 17 * IRR_SDI_PER_FEDDAN, gate: 2, approved: false },
             { id: 'I5', name: 'أنابيب مبوبة وري متقطع لأحواض القمح (60 فداناً)', owner: 'المشرف الزراعي', category: 'irrigation', startQ: 8, durationQ: 1, progress: 0, cost: 390000, gate: 2, approved: false },
-            { id: 'T1', name: 'حفر وتبطين بحيرة التخزين المائية (شمال ح27 - كود 088)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 7, durationQ: 2, progress: 15, cost: 0, gate: 2 },
+            { id: 'T1', name: 'حفر وتبطين بحيرة التخزين المائية (جزء من ح26 بجوار البئر)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 7, durationQ: 2, progress: 15, cost: 0, gate: 2 },
             { id: 'I6', name: 'تحويل البرسيم إلى التنقيط تحت السطحي — الدفعة 2 (17 فداناً)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 12, durationQ: 1, progress: 0, cost: 17 * IRR_SDI_PER_FEDDAN, gate: 2, approved: false },
             { id: 'I7', name: 'تحويل البرسيم إلى التنقيط تحت السطحي — الدفعة 3 (16 فداناً)', owner: 'شريك التشغيل', category: 'irrigation', startQ: 16, durationQ: 1, progress: 0, cost: 16 * IRR_SDI_PER_FEDDAN, gate: 3, approved: false }
         ];
@@ -3417,7 +3439,7 @@
             // 1 = Q4 2026 (Nov–Dec, plan start) · 2 = Q1 2027 · 3 = Q2 2027 … 16 = Q3 2030
             // kind: 'opex' = operating activity (not counted as palm CAPEX in the cash-flow table)
             ganttTasks: [
-                { id: 'T0_SHED', name: 'بناء عنبر الأغنام A1 (كود 083 · 600 م²): مظلة معدنية وأسوار وغرفة خدمة ومياه (5 أسابيع)', owner: 'شريك التشغيل + المشرف', category: 'care', startQ: 1, durationQ: 1, progress: 35, cost: LV_BOQ_TOTAL },
+                { id: 'T0_SHED', name: 'بناء عنبر الأغنام A1 (ح42 · 600 م²): مظلة معزولة وسور شمالي وغربي وغرفة خدمة وغرفة مرضى ومياه (6 أسابيع)', owner: 'شريك التشغيل + المشرف', category: 'care', startQ: 1, durationQ: 1, progress: 35, cost: LV_BOQ_TOTAL },
                 { id: 'T0_FLOCK', kind: 'opex', name: 'دورة تسمين الأغنام الأولى (150 رأس: نوفمبر 2026 ← تسليم مايو 2027) + كمر 27 طن كمبوست', owner: 'المشرف الزراعي', category: 'care', startQ: 1, durationQ: 3, progress: 20, cost: 1556500 },
                 { id: 'T2', name: 'استصلاح وتسوية ليزر — موجة النخيل 1 (25 فدان: ح47–ح52)', owner: 'المشرف + مقاول', category: 'saidi', startQ: 3, durationQ: 1, progress: 10, cost: 750000 },
                 { id: 'T3', name: 'مد شبكة الري بالتنقيط — موجة النخيل 1 (ح47–ح52)', owner: 'شريك التشغيل', category: 'saidi', startQ: 4, durationQ: 1, progress: 0, cost: 325000 },
@@ -3436,7 +3458,7 @@
         // ---------------------------------------------------------------------
         // UNIFIED PLAN TIMELINE (single source for Gantt, Cash-flow & dates)
         // ---------------------------------------------------------------------
-        const STATE_SCHEMA_VERSION = 6;
+        const STATE_SCHEMA_VERSION = 7;
         const PLAN_START_YEAR = 2026;
         const PLAN_START_QUARTER = 4;     // Q4 2026
         const PLAN_START_MONTH = 10;      // November (0-based) — plan starts now
@@ -3525,6 +3547,7 @@
                 if (from < 4) migrateV3toV4(st);
                 if (from < 5) migrateV4toV5(st);
                 if (from < 6) migrateV5toV6(st);
+                if (from < 7) migrateV6toV7(st);
                 st.schemaVersion = STATE_SCHEMA_VERSION;
             }
             return normalizePartners(st);
@@ -3544,6 +3567,22 @@
             IRR_DEFAULT_TASKS.forEach(d => { if (d.id !== 'T1' && !tasks.some(t => t.id === d.id)) tasks.push(structuredClone(d)); });
             st.ganttTasks = tasks;
             stateMigratedV6 = true;
+            return st;
+        }
+        // v7: services move to ح42 (lake in ح26) and A1 gets the hybrid design (north/west walls, isolation room, insulation, misting)
+        const V6_DEFAULTS = {
+            shedCapex: 834246,
+            shedName: 'بناء عنبر الأغنام A1 (كود 083 · 600 م²): مظلة معدنية وأسوار وغرفة خدمة ومياه (5 أسابيع)',
+            lakeName: 'حفر وتبطين بحيرة التخزين المائية (شمال ح27 - كود 088)'
+        };
+        let stateMigratedV7 = false;
+        function migrateV6toV7(st) {
+            if (Number(st.sheepShedCapex) === V6_DEFAULTS.shedCapex) st.sheepShedCapex = LV_BOQ_TOTAL;
+            (st.ganttTasks || []).forEach(t => {
+                if (t.id === 'T0_SHED' && t.name === V6_DEFAULTS.shedName) t.name = DEFAULT_STATE.ganttTasks.find(d => d.id === 'T0_SHED').name;
+                if (t.id === 'T1' && t.name === V6_DEFAULTS.lakeName) t.name = IRR_DEFAULT_TASKS.find(d => d.id === 'T1').name;
+            });
+            stateMigratedV7 = true;
             return st;
         }
         function migrateV3toV4(st) {
@@ -3717,18 +3756,17 @@
         // =====================================================================
         let is3DRoofCutaway = false;
         let activePhase1ElementKey = 'all_phase1';
-        const LV_A1_ORIGIN = { x: 2, y: 2 };          // A1 inside code 083 (60 × 70 m)
+        const LV_A1_ORIGIN = { x: 2, y: 2 };          // A1 inside the 60 × 70 m complex in ح42
         const LV_SHED = { zN: 2.8, zS: 3.6, y0: 8.0, y1: 16.6 };
         const lvRoofZ = y => LV_SHED.zN + (LV_SHED.zS - LV_SHED.zN) * (y - LV_SHED.y0) / (LV_SHED.y1 - LV_SHED.y0);
 
         // Components (A1 local metres). t = type, el = element sheet it belongs to.
         const LV_COMP = [
-            { el: 'quarantine_hay', t: 'soil', x0: 0, x1: 6, y0: 0, y1: 5 },
-            { el: 'quarantine_hay', t: 'net', x0: 0, x1: 6, y0: 0, y1: 5, z: 2.6 },
-            { el: 'quarantine_hay', t: 'fence', pts: [[0, 0], [6, 0], [6, 5], [5, 5]] },
-            { el: 'quarantine_hay', t: 'fence', pts: [[4, 5], [0, 5], [0, 0]] },
-            { el: 'quarantine_hay', t: 'gate', a: [4, 5], b: [5, 5] },
-            { el: 'quarantine_hay', t: 'drinker', x0: 0.15, x1: 0.55, y0: 1.0, y1: 2.0 },
+            // hybrid design (14 Nov 2026): closed isolation room + 2.5 m block walls with vents on the north and west
+            { el: 'quarantine_hay', t: 'room', x0: 0, x1: 6, y0: 0, y1: 5, hN: 2.8, hS: 3.0,
+                walls: [], doors: [{ a: 1.4, b: 2.6, h: 2.1 }], windows: [{ a: 3.6, b: 5.0, z0: 2.0, z1: 2.6 }] },
+            { el: 'quarantine_hay', t: 'drinker', x0: 0.3, x1: 0.7, y0: 1.0, y1: 2.0 },
+            { el: 'quarantine_hay', t: 'wall', x0: 6, x1: 14, y0: -0.2, y1: 0, h: 2.5, vents: { axis: 'x', at: [6.8, 8.4, 10, 11.6, 13.2], w: 0.3, z0: 1.9, z1: 2.3 } },
             { el: 'quarantine_hay', t: 'slab', x0: 6, x1: 14, y0: 0, y1: 5, h: 0.15 },
             { el: 'quarantine_hay', t: 'bales', x0: 6.6, x1: 13.4, y0: 0.4, y1: 3.6, h: 2.0 },
             { el: 'service_room', t: 'room', x0: 14, x1: 24, y0: 0, y1: 5, hN: 3.0, hS: 3.3,
@@ -3744,7 +3782,10 @@
             { el: 'shade_shed', t: 'roof', x0: -0.3, x1: 24.3, y0: LV_SHED.y0, y1: LV_SHED.y1 },
             { el: 'shade_shed', t: 'cols', xs: [0, 6, 12, 18, 24], ys: [8.6, 12.3, 16.0] },
             { el: 'shade_shed', t: 'curtain', x0: 0, x1: 24, y: 8.45 },
-            { el: 'pens_yards', t: 'fence', pts: [[0, 8.6], [0, 25], [2, 25]] },
+            { el: 'shade_shed', t: 'mist', x0: 0.4, x1: 23.6, y: 16.3 },
+            { el: 'pens_yards', t: 'wall', x0: -0.2, x1: 0, y0: 5, y1: 16.6, h: 2.5, vents: { axis: 'y', at: [5.75, 7.25, 9.35, 10.85, 12.35, 13.85, 15.35], w: 0.3, z0: 1.9, z1: 2.3 } },
+            { el: 'pens_yards', t: 'wall', x0: -0.2, x1: 0, y0: 16.6, y1: 25, h: 2.5, vents: { axis: 'y', at: [17.6, 19.1, 20.6, 22.1, 23.6], w: 0.3, z0: 1.9, z1: 2.3 } },
+            { el: 'pens_yards', t: 'fence', pts: [[0, 25], [2, 25]] },
             { el: 'pens_yards', t: 'fence', pts: [[4.5, 25], [11.775, 25]] },
             { el: 'pens_yards', t: 'fence', pts: [[12.225, 25], [19.5, 25]] },
             { el: 'pens_yards', t: 'fence', pts: [[22, 25], [24, 25], [24, 8.6]] },
@@ -3795,8 +3836,9 @@
                 area: '600 م² · ظل 192 م² (1.28 م²/رأس) · أحواش 216 م² · 2.6 م²/رأس إجمالاً',
                 foundation: 'كل الخرسانات الملامسة للتربة بأسمنت مقاوم للكبريتات (تربة الوادي الجديد مالحة)، مع عزل بيتومين للأجزاء المدفونة، وإحلال 30 سم رمل مدكوك تحت الأرضيات الخرسانية. منسوب الصفر المعماري ±0.00 = منسوب ممر الخدمة الرئيسي.',
                 materials: [
-                    'الفكرة: مظلة معدنية واحدة مفتوحة جنوباً + أسوار مواسير خفيفة + غرفة خدمة واحدة — أقل عدد من البنود والصنايعية، وتُنفَّذ في 4 إلى 5 أسابيع.',
-                    'التوجيه: المحور الطويل شرق–غرب والواجهة المفتوحة للجنوب لدخول شمس الشتاء، والغرفة والبالات شمالاً لصد الرياح الباردة.',
+                    'الفكرة (تصميم هجين بعد طلب المشرف): مظلة معدنية معزولة مفتوحة للجنوب والشرق، وسور بلوك 2.5 م بفتحات تهوية على الشمال والغرب، وغرفة عزل مغلقة للمرضى والوافدين. يصد رياح الشتاء دون أن يحبس حر الصيف، ويُنفَّذ في 5 إلى 6 أسابيع.',
+                    'التوجيه: المحور الطويل شرق–غرب والواجهة المفتوحة للجنوب لدخول شمس الشتاء، والغرفتان والبالات وسور الشمال لصد الرياح الباردة، والسور الغربي لصد رياح الغرب والعواصف الرملية.',
+                    'الحرارة: عازل فويل تحت صاج المظلة، وخط رذاذ على حافة الظل يعمل في ظهيرة أبريل ومايو آخر الدورة.',
                     'التغذية من ممر خلفي واحد بعرض 3 م للجرار: 20 م مذود + 12 م معالف = 21 سم لكل رأس.',
                     'المياه: خزان 2 م³ بالجاذبية يغذي 3 مساقي (6 م فعلية = 4 سم/رأس) ويكفي يوماً كاملاً عند انقطاع الكهرباء.',
                     'الحركة: بوابة جرار 3 م من ممر الخدمة الرئيسي، وبوابتا 2.5 م جنوباً لرفع السماد باللودر، وممر فرز ووزن ورامب على حارة الشاحنات.'
@@ -3805,12 +3847,13 @@
             shade_shed: {
                 code: 'A1-SHD', name: 'المظلة المعدنية', short: '24 × 8 م · 15 عموداً',
                 dims: '24.0 × 8.0 م + بروز 0.6 م · محاور 6.0 × 3.7 م',
-                area: '192 م² ظل — 1.28 م² لكل رأس',
+                area: '192 م² ظل معزول — 1.28 م² لكل رأس',
                 foundation: '15 قاعدة منفصلة 0.80 × 0.80 × 0.60 م خرسانة مسلحة (5Ø12/م في الاتجاهين) على فرشة عادية 10 سم، منسوب التأسيس −0.80 م، رقبة 0.30 × 0.30 م حتى +0.15 م، وصفيحة تثبيت 30 × 30 × 1.2 سم بأربعة مسامير Ø16.',
                 materials: [
                     'الأعمدة: مواسير مجلفنة 4" (سُمك 3.6 مم) على 3 محاور (أ، ب، ج) كل 6.0 م — ارتفاع +2.80 م شمالاً و+3.60 م جنوباً.',
                     'المدادات: ماسورة 3" مستمرة شمال–جنوب فوق الأعمدة بميل 9.3%، والمرابيع مواسير 2" كل 1.0 م شرق–غرب.',
-                    'السقف: صاج مجلفن مموج 0.5 مم مدهون أبيض من أعلى (يخفض حرارة الظل بشكل ملحوظ)، بروز 0.6 م من الجهتين.',
+                    'السقف: صاج مجلفن مموج 0.5 مم مدهون أبيض من أعلى، وتحته عازل حراري فويل مزدوج بفقاعات هواء 8 مم مثبت على شبك مجلفن، بروز 0.6 م من الجهتين.',
+                    'التبريد: خط رذاذ ماسورة 3/4" بـ 16 فوهة على حافة الظل الجنوبية، بمضخة صغيرة ومؤقت (دقيقة كل 15 دقيقة في الظهيرة)، ولا يعمل في الشتاء.',
                     'شدادات قطرية Ø16 في البحرتين الطرفيتين بالاتجاهين لمقاومة الرياح.',
                     'ستارة شمالية من شبك تظليل 80% فوق المذود من +1.00 م حتى السقف، تُنزل في ليالي الشتاء وتُرفع صيفاً.'
                 ]
@@ -3819,9 +3862,10 @@
                 code: 'A1-PEN', name: 'الحظيرتان والأحواش والمياه', short: '2 × (12 × 16.4 م)',
                 dims: 'حظيرتان 12.0 × 16.4 م (ظل 7.4 م + حوش 9.0 م)',
                 area: '394 م² — 75 رأساً لكل حظيرة · 2.6 م²/رأس',
-                foundation: 'أساس شريطي خرسانة عادية 0.40 × 0.30 م تحت قاعدة السور، وقواعد 0.40 × 0.40 × 0.50 م لقوائم البوابات.',
+                foundation: 'أساس شريطي خرسانة عادية 0.40 × 0.30 م تحت قاعدة السور، و0.50 × 0.30 م تحت السور الغربي، وقواعد 0.40 × 0.40 × 0.50 م لقوائم البوابات.',
                 materials: [
-                    'السور: قاعدة بلوك 20 سم بارتفاع 40 سم مبيضة من الداخل، فوقها بانوهات مواسير مجلفنة 1.5" حتى +1.30 م (قوائم كل 2.0 م و4 مدادات).',
+                    'السور الغربي: بلوك 20 سم بارتفاع 2.50 م بطول 20 م (من الممر حتى الجنوب)، بفتحات تهوية 30 × 40 سم كل 1.5 م بين +1.90 و+2.30 م بإطار وسلك، وسملة مسلحة 0.20 × 0.20 م أعلاه، ولياسة داخلية حتى 1.20 م لسهولة التطهير.',
+                    'السور الجنوبي والفاصل والشرقي: قاعدة بلوك 20 سم بارتفاع 40 سم مبيضة من الداخل، فوقها بانوهات مواسير مجلفنة 1.5" حتى +1.30 م (قوائم كل 2.0 م و4 مدادات).',
                     'الأرضية ترابية مدكوكة بميل 2% نحو الجنوب، وفرشة رمل 10 سم تُجدد كل شهرين، وخندق حصى بعرض 40 سم على السور الجنوبي للصرف.',
                     'المساقي: 3 أحواض مجلفنة 1.5 م بعوامة على ارتفاع 40 سم (الأوسط مزدوج على الفاصل) = 6 م فعلية، 4 سم لكل رأس.',
                     'الخزان: 2 م³ بولي إيثيلين على حامل حديد 3.0 م بالركن الغربي للممر، ومواسير PPR 1" مدفونة 40 سم.',
@@ -3854,14 +3898,15 @@
                 ]
             },
             quarantine_hay: {
-                code: 'A1-QHY', name: 'حظيرة العزل ومصطبة البالات', short: '6 × 5 م + 8 × 5 م',
-                dims: 'عزل 6.0 × 5.0 م · مصطبة 8.0 × 5.0 م',
+                code: 'A1-QHY', name: 'غرفة العزل ومصطبة البالات', short: 'غرفة مغلقة 6 × 5 م + مصطبة 8 × 5 م',
+                dims: 'غرفة 6.0 × 5.0 م بارتفاع 2.80–3.00 م · مصطبة 8.0 × 5.0 م · سور شمالي 2.5 م',
                 area: '70 م² — عزل حتى 8 رؤوس · نحو 160 بالة دريس',
-                foundation: 'قواعد 0.40 × 0.40 × 0.50 م لقوائم مظلة العزل، والمصطبة خرسانة عادية 15 سم مرتفعة +0.15 م لحماية البالات من الرطوبة.',
+                foundation: 'أساس شريطي خرسانة عادية 0.50 × 0.30 م للغرفة وسور الشمال، وأرضية الغرفة خرسانة 10 سم بميل نحو الباب للغسيل، والمصطبة خرسانة عادية 15 سم مرتفعة +0.15 م لحماية البالات من الرطوبة.',
                 materials: [
-                    'العزل: سور مواسير 1.30 م وبوابة 1.0 م على الممر، ومظلة شبك 80% على +2.60 م، ومسقى ومعلف مستقلان.',
-                    'المصطبة: رص البالات بارتفاع لا يزيد عن 2.0 م مع ممر 0.8 م، وتغطيتها بمشمع في العواصف.',
-                    'البالات شمال الممر تعمل كمصد رياح إضافي للمظلة في الشتاء.'
+                    'الغرفة المغلقة: بلوك 20 سم بلياسة داخلية ملساء تتحمل التطهير، وسقف صاج معزول بصوف صخري 5 سم، وباب صاج 1.2 م على الممر، وشباكان علويان بسلك للتهوية، ومسقى ومعلف مستقلان.',
+                    'الاستخدام: الحملان الوافدة أول أسبوعين قبل دخول الحظائر، والمريضة، والضعيفة في ليالي البرد.',
+                    'سور شمالي 2.5 م بفتحات تهوية خلف المصطبة، يصد الرياح عن البالات والممر.',
+                    'المصطبة: رص البالات بارتفاع لا يزيد عن 2.0 م مع ممر 0.8 م، وتغطيتها بمشمع في العواصف.'
                 ]
             },
             handling: {
@@ -3884,7 +3929,7 @@
                 materials: [
                     '3 حارات: تجميع أسبوعي، ثم تقليب وترطيب (رطوبة 50–60% وحرارة 55–65°م)، ثم نضج — 8 إلى 10 أسابيع لكل دفعة.',
                     'حوائط حجز بلوك 20 سم بارتفاع 1.0 م من 3 جهات، والجهة الجنوبية مفتوحة للودر.',
-                    'الموقع: الركن الجنوبي الشرقي من الكود 083 مع اتجاه الريح، بعيداً عن الحظائر.'
+                    'الموقع: الركن الجنوبي الشرقي من المجمع مع اتجاه الريح، بعيداً عن الحظائر.'
                 ]
             }
         };
@@ -3975,7 +4020,7 @@
             const { X, Y, s, pal } = ctx;
             const fade = c => ctx.focus && ctx.focus !== 'all_phase1' && c.el !== ctx.focus ? ' opacity="0.38"' : '';
             const g = (c, body) => `<g${fade(c)}>${body}</g>`;
-            const order = ['soil', 'slab', 'room', 'wall', 'heap', 'channel', 'net', 'bales', 'manger', 'trough', 'drinker', 'crate', 'ramp', 'tank', 'fence', 'gate', 'curtain', 'cols', 'roof'];
+            const order = ['soil', 'slab', 'room', 'wall', 'heap', 'channel', 'net', 'bales', 'manger', 'trough', 'drinker', 'crate', 'ramp', 'tank', 'fence', 'gate', 'curtain', 'mist', 'cols', 'roof'];
             let out = '';
             order.forEach(type => comps.filter(c => c.t === type).forEach(c => {
                 const x0 = X(c.x0), y0 = Y(c.y0), w = (c.x1 - c.x0) * s, h = (c.y1 - c.y0) * s;
@@ -4060,6 +4105,7 @@
                         break;
                     }
                     case 'curtain': out += g(c, lvLine(X(c.x0), Y(c.y), X(c.x1), Y(c.y), pal.net, 1.2, 'stroke-dasharray:1 3')); break;
+                    case 'mist': out += g(c, lvLine(X(c.x0), Y(c.y), X(c.x1), Y(c.y), pal.waterS, 1, 'stroke-dasharray:0.5 4;stroke-linecap:round;stroke-width:2.2px')); break;
                     case 'cols': {
                         let r = '';
                         c.xs.forEach(xx => c.ys.forEach(yy => { r += lvRect(X(xx) - 0.14 * s, Y(yy) - 0.14 * s, 0.28 * s, 0.28 * s, pal.steel, pal.ink, 0.5); }));
@@ -4090,7 +4136,7 @@
             }
             if (show('feed_line')) o += L(7, 6.8, 'ممر العلف 3.0 م ← بوابة جرار', f - 1, pal.ink2, 600);
             if (show('service_room')) o += L(17.5, 2.9, 'مخزن الأعلاف', f - 1) + L(17.5, 3.8, '7 × 5 م', f - 2, pal.ink2, 600) + L(21.75, 3.4, 'الراعي', f - 2);
-            if (show('quarantine_hay')) o += L(3, 3.4, 'العزل', f - 1) + L(10, 4.4, 'مصطبة البالات', f - 2, pal.ink2, 600);
+            if (show('quarantine_hay')) o += L(3, 2.9, 'غرفة العزل', f - 1) + L(3, 3.8, 'مغلقة 6 × 5 م', f - 2, pal.ink2, 600) + L(10, 4.4, 'مصطبة البالات', f - 2, pal.ink2, 600);
             if (show('handling') && s >= 14) o += lvText(X(13.0), Y(27.2), 'رامب +0.90', f - 2, pal.ink2, 'start', 600);
             if (show('compost_unit') && focus === 'compost_unit') o += L(43.5, 63, 'تجميع', f - 1) + L(48.5, 63, 'تقليب', f - 1) + L(53.5, 63, 'نضج', f - 1);
             return o;
@@ -4158,7 +4204,7 @@
                 return overlap(c.x0, c.x1, c.y0, c.y1);
             };
             const fade = c => elKey !== 'all_phase1' && c.el !== elKey ? 'opacity:.35' : '';
-            const comps = LV_COMP.filter(c => c.t !== 'soil' && c.t !== 'gate' && c.t !== 'curtain' && inBox(c));
+            const comps = LV_COMP.filter(c => c.t !== 'soil' && c.t !== 'gate' && c.t !== 'curtain' && c.t !== 'mist' && inBox(c));
             // depth: far first (south view: small y first; east view: small x first)
             const depth = c => c.pts ? (southView ? Math.max(...c.pts.map(p => p[1])) : Math.max(...c.pts.map(p => p[0]))) : (southView ? (c.y1 ?? 0) : (c.x1 ?? 0));
             comps.sort((a, b) => depth(a) - depth(b));
@@ -4168,7 +4214,15 @@
                 const span = southView ? [c.x0, c.x1] : [c.y0, c.y1];
                 switch (c.t) {
                     case 'slab': out += lvRect(Math.min(HX(span[0]), HX(span[1])), Z(c.h), Math.abs(HX(span[1]) - HX(span[0])), c.h * s, pal.conc, pal.concS, 0.6, st); break;
-                    case 'wall': out += lvRect(Math.min(HX(span[0]), HX(span[1])), Z(c.h), Math.abs(HX(span[1]) - HX(span[0])), c.h * s, pal.block, pal.ink, 0.8, st); break;
+                    case 'wall': {
+                        out += lvRect(Math.min(HX(span[0]), HX(span[1])), Z(c.h), Math.abs(HX(span[1]) - HX(span[0])), c.h * s, pal.block, pal.ink, 0.8, st);
+                        // ventilation openings show on the face that runs across this view
+                        if (c.vents && (c.vents.axis === 'x') === southView) c.vents.at.forEach(u => {
+                            const a = HX(u - c.vents.w / 2), b = HX(u + c.vents.w / 2);
+                            out += lvRect(Math.min(a, b), Z(c.vents.z1), Math.abs(b - a), (c.vents.z1 - c.vents.z0) * s, pal.paper, pal.ink, 0.6, st);
+                        });
+                        break;
+                    }
                     case 'heap': {
                         const a = Math.min(HX(span[0]), HX(span[1])), b = Math.max(HX(span[0]), HX(span[1]));
                         out += lvPath(`M${lvN(a)},${lvN(gy)} Q${lvN((a + b) / 2)},${lvN(Z(c.h * 1.9))} ${lvN(b)},${lvN(gy)} Z`, pal.hay, pal.hayS, 0.8, st);
@@ -4266,7 +4320,7 @@
                 if (elKey !== 'service_room') out += lvLevel(lvlX, Z(LV_SHED.zS), '+3.60', pal, 'start') + lvLevel(lvlX, Z(LV_SHED.zN), '+2.80', pal, 'start');
 
             } else if (elKey === 'handling') out += lvLevel(lvlX, Z(0.9), '+0.90', pal, 'start');
-            else out += lvLevel(lvlX, Z(elKey === 'quarantine_hay' ? 2.6 : 1.0), elKey === 'quarantine_hay' ? '+2.60' : '+1.00', pal, 'start');
+            else out += lvLevel(lvlX, Z(elKey === 'quarantine_hay' ? 3.0 : 1.0), elKey === 'quarantine_hay' ? '+3.00' : '+1.00', pal, 'start');
             const xsDims = southView ? v.dx : v.dy;
             const dy = gy + 18;
             for (let i = 1; i < xsDims.length; i++) out += lvDimH(Math.min(HX(xsDims[i - 1]), HX(xsDims[i])), Math.max(HX(xsDims[i - 1]), HX(xsDims[i])), dy, (xsDims[i] - xsDims[i - 1]).toFixed(1), pal, 8.5);
@@ -4324,7 +4378,10 @@
                 o += lvDimV(Z(LV_SHED.zN), gy, U(8.0) - 10, '2.80', pal, 8.5) + lvDimV(Z(LV_SHED.zS), gy, U(16.6) + 10, '3.60', pal, 8.5);
                 o += lvLevel(U(u1) + 2, gy, '±0.00', pal, 'start') + lvLevel(U(u0) + 4, gy + 0.8 * s, '−0.80', pal, 'start');
                 o += lvNote(U(12.3) + 4, Z(1.6), U(12.3) + 30, Z(2.3), 'ماسورة مجلفنة 4"', pal);
-                o += lvNote(U(14.5), Z(lvRoofZ(14.5) + 0.1), U(14.5) + 10, 34, 'صاج مموج 0.5 مم + مرابيع 2" كل 1.0 م', pal);
+                o += lvPoly([[U(8.0), Z(LV_SHED.zN - 0.06)], [U(16.6), Z(LV_SHED.zS - 0.06)], [U(16.6), Z(LV_SHED.zS)], [U(8.0), Z(LV_SHED.zN)]], pal.hay, pal.hayS, 0.5);
+                o += `<circle cx="${lvN(U(16.3))}" cy="${lvN(Z(lvRoofZ(16.3) - 0.22))}" r="2.4" ${lvSt(pal.water, pal.waterS, 0.9)}/>`;
+                o += lvNote(U(16.3), Z(lvRoofZ(16.3) - 0.3), U(16.3) + 18, Z(2.4), 'خط رذاذ', pal);
+                o += lvNote(U(14.5), Z(lvRoofZ(14.5) + 0.1), U(14.5) + 10, 34, 'صاج مموج 0.5 مم + عازل فويل 8 مم + مرابيع 2" كل 1.0 م', pal);
                 o += lvNote(U(12.3) + 0.4 * s, gy + 0.55 * s, U(14.2), gy + 1.05 * s, 'قاعدة 0.80 × 0.80 × 0.60 م', pal);
                 o += lvNote(U(8.3), Z(0.5), U(6.0), Z(1.2), 'مذود خرساني', pal, 'end');
                 o += lvNote(U(8.6), Z(2.0), U(6.2), Z(2.2), 'ستارة شبك 80%', pal, 'end');
@@ -4411,24 +4468,35 @@
             if (elKey === 'quarantine_hay') {
                 const u0 = -0.6, u1 = 14.6, s = (W - 80) / (u1 - u0), gy = 210;
                 const U = x => 40 + (x - u0) * s, Z = z => gy - z * s;
-                o += title('قطاع شرق–غرب في العزل والمصطبة');
+                o += title('قطاع شرق–غرب في غرفة العزل والمصطبة');
                 o += lvRect(U(u0), gy, (u1 - u0) * s, 0.5 * s, pal.soil, 'none', 0);
-                [0, 6].forEach(x => { o += lvLine(U(x), gy, U(x), Z(2.6), pal.steel, 1.6) + lvFooting(U(x), gy, s, pal, 0.4, 0.4, 0.5, 0.15); });
-                o += lvLine(U(0), Z(2.6), U(6), Z(2.6), pal.net, 2, 'stroke-dasharray:5 3');
-                o += lvRect(U(0), Z(1.3), 6 * s, 1.3 * s, 'none', pal.fence, 0.9);
-                o += lvSheep(U(2.6), Z(0), s, pal);
-                o += lvRect(U(6), Z(0.15), 8 * s, 0.15 * s, pal.conc, pal.ink, 0.8);
+                // north wall behind the bales slab (seen beyond the cut) with its vents
+                o += lvRect(U(6), Z(2.5), 8 * s, 2.5 * s, pal.block, pal.ink2, 0.6, 'opacity:.55');
+                [6.8, 8.4, 10, 11.6, 13.2].forEach(x => { o += lvRect(U(x - 0.15), Z(2.3), 0.3 * s, 0.4 * s, pal.paper, pal.ink2, 0.6); });
+                // room: walls cut at x = 0 and x = 6, insulated roof, concrete floor
+                [0, 6].forEach(x => {
+                    o += lvRect(U(x) - 0.25 * s, gy + 0.2 * s, 0.5 * s, 0.3 * s, pal.concS, pal.ink, 0.8, 'opacity:.55');
+                    o += lvRect(U(x) - 0.1 * s, Z(2.9), 0.2 * s, 2.9 * s + 0.2 * s, pal.block, pal.ink, 0.9);
+                });
+                o += lvRect(U(-0.3), Z(3.02), 6.6 * s, 0.12 * s, pal.roof, pal.ink, 0.8);
+                o += lvRect(U(0.1), Z(0.1), 5.8 * s, 0.1 * s, pal.conc, pal.ink, 0.6);
+                o += lvSheep(U(2.2), Z(0.1), s, pal) + lvSheep(U(4.2), Z(0.1), s, pal, 0.85);
+                o += lvRect(U(0.2), Z(0.85), 0.4 * s, 0.45 * s, pal.water, pal.waterS, 0.8);
+                // bales slab
+                o += lvRect(U(6.1), Z(0.15), 7.9 * s, 0.15 * s, pal.conc, pal.ink, 0.8);
                 for (let r = 0; r < 4; r++) for (let k = 0; k < 7; k++) o += lvRect(U(6.6 + k * 0.97), Z(0.15 + (r + 1) * 0.46), 0.95 * s, 0.45 * s, pal.hay, pal.hayS, 0.6);
                 o += lvGround(U(u0) - 6, U(u1) + 6, gy, pal);
                 o += lvDimH(U(0), U(6), gy + 0.5 * s + 12, '6.0', pal, 8.5) + lvDimH(U(6), U(14), gy + 0.5 * s + 12, '8.0', pal, 8.5);
-                o += lvLevel(U(14.3), Z(2.6), '+2.60', pal, 'start') + lvLevel(U(14.3), Z(2.0), '+2.15', pal, 'start');
-                o += lvNote(U(3), Z(2.6), U(3), 40, 'مظلة شبك 80% على مواسير', pal, 'middle');
-                o += lvNote(U(10), Z(2.1), U(10), 56, 'بالات حتى 2.0 م · ممر 0.8 م', pal, 'middle');
-                return lvSvg(W, H, pal, 'قطاع العزل والمصطبة', o);
+                o += lvLevel(U(14.3), Z(2.5), '+2.50', pal, 'start') + lvLevel(U(14.3), Z(2.15), '+2.15', pal, 'start') + lvLevel(U(-0.4), Z(2.9), '+2.90', pal, 'end');
+                o += lvNote(U(3), Z(3.0), U(3), 34, 'صاج معزول بصوف صخري 5 سم', pal, 'middle');
+                o += lvNote(U(0), Z(1.6), U(0) + 40, Z(2.2), 'بلوك 20 سم + لياسة ملساء', pal, 'end');
+                o += lvNote(U(10), Z(2.3), U(10), 52, 'سور شمالي 2.5 م بفتحات 30 × 40 سم', pal, 'middle');
+                o += lvNote(U(3.4), Z(0.1), U(3.4), Z(1.55), 'أرضية خرسانية 10 سم', pal, 'middle');
+                return lvSvg(W, H, pal, 'قطاع غرفة العزل والمصطبة', o);
             }
             // pens_yards: fence + drinker detail
             const s = 95, gy = 220, x0 = 70;
-            o += title('تفصيلة سور الحظيرة والمسقى');
+            o += title('تفصيلة السور المنخفض والمسقى · والسور الغربي');
             o += lvRect(30, gy, W - 60, 0.7 * s, pal.soil, 'none', 0);
             o += lvRect(x0 + 0.5 * s - 0.2 * s, gy + 0.3 * s, 0.4 * s, 0.3 * s, pal.concS, pal.ink, 0.8, 'opacity:.55');
             o += lvRect(x0 + 0.5 * s - 0.1 * s, Z0(0.4), 0.2 * s, 0.7 * s, pal.block, pal.ink, 0.9);
@@ -4443,7 +4511,19 @@
             o += lvNote(x0 + 0.5 * s, Z0(1.1), x0 + 0.5 * s + 60, Z0(1.5), 'قوائم 1.5" كل 2.0 م + 3 مدادات', pal);
             o += lvNote(x0 + 0.5 * s, gy + 0.4 * s, x0 + 1.2 * s, gy + 0.55 * s, 'قاعدة بلوك 20 سم على أساس 0.40 × 0.30', pal, 'start');
             o += lvNote(x0 + 1.2 * s, Z0(0.6), x0 + 1.2 * s + 60, Z0(0.95), 'مسقى مجلفن 1.5 م بعوامة', pal);
-            o += lvText(W - 90, gy - 8, 'ميل الأرضية 2% نحو خندق الصرف', 8.5, pal.ink2, 'end', 600);
+            o += lvText(x0 + 3.75 * s, gy - 8, 'ميل الأرضية 2% نحو خندق الصرف', 8.5, pal.ink2, 'start', 600);
+            // West wall (2.5 m block wall with a vent and a tie beam), drawn at its own scale on the right
+            const s2 = 58, wx = W - 92, Zw = z => gy - z * s2;
+            o += lvRect(wx - 0.25 * s2, gy + 0.2 * s2, 0.5 * s2, 0.3 * s2, pal.concS, pal.ink, 0.8, 'opacity:.55');
+            o += lvRect(wx - 0.1 * s2, Zw(1.9), 0.2 * s2, 1.9 * s2 + 0.2 * s2, pal.block, pal.ink, 0.9);
+            o += lvRect(wx - 0.1 * s2, Zw(2.3), 0.2 * s2, 0.4 * s2, pal.paper, pal.ink, 0.6, 'stroke-dasharray:2 2');
+            o += lvRect(wx - 0.1 * s2, Zw(2.5), 0.2 * s2, 0.2 * s2, pal.concS, pal.ink, 0.9);
+            o += lvRect(wx + 0.1 * s2, Zw(1.2), 0.03 * s2, 1.2 * s2, pal.paper, pal.ink2, 0.6);
+            o += lvDimV(Zw(2.5), gy, wx - 0.1 * s2 - 12, '2.50', pal, 8.5) + lvDimV(Zw(1.2), gy, wx + 0.1 * s2 + 14, '1.20', pal, 8.5);
+            o += lvNote(wx, Zw(2.4), wx - 34, Zw(2.75), 'سملة 0.20 × 0.20', pal, 'start');
+            o += lvNote(wx, Zw(2.1), wx - 34, Zw(2.15), 'فتحة 30 × 40 كل 1.5 م', pal, 'start');
+            o += lvNote(wx + 0.12 * s2, Zw(0.7), wx + 26, Zw(1.55), 'لياسة داخلية', pal, 'end');
+            o += lvText(wx, gy + 0.6 * s2 + 14, 'السور الغربي · بلوك 20 سم', 8.5, pal.ink, 'middle', 700);
             return lvSvg(W, H, pal, 'تفصيلة السور', o);
         }
 
@@ -4485,7 +4565,23 @@
                 switch (c.t) {
                     case 'soil': ground += lvPoly([P(c.x0, c.y0, 0.01), P(c.x1, c.y0, 0.01), P(c.x1, c.y1, 0.01), P(c.x0, c.y1, 0.01)], pal.soil, 'none', 0, ghost(c)); break;
                     case 'slab': push(dep - 50, box(c, c.x0, c.x1, c.y0, c.y1, 0, c.h, [c.soil ? pal.soil2 : pal.concT, pal.wallS, pal.wallE]), cy); break;
-                    case 'wall': push(dep, box(c, c.x0, c.x1, c.y0, c.y1, 0, c.h, [pal.wallT, pal.wallS, pal.wallE]), cy); break;
+                    case 'wall': {
+                        let r = box(c, c.x0, c.x1, c.y0, c.y1, 0, c.h, [pal.wallT, pal.wallS, pal.wallE]);
+                        if (c.vents) c.vents.at.forEach(u => {
+                            const h = c.vents.w / 2, z0 = c.vents.z0, z1 = c.vents.z1;
+                            const q = c.vents.axis === 'x'
+                                ? [P(u - h, c.y1, z0), P(u + h, c.y1, z0), P(u + h, c.y1, z1), P(u - h, c.y1, z1)]
+                                : [P(c.x1, u - h, z0), P(c.x1, u + h, z0), P(c.x1, u + h, z1), P(c.x1, u - h, z1)];
+                            r += lvPoly(q, pal.ink2, 'none', 0, ghost(c) + ';opacity:.55');
+                        });
+                        push(dep, r, cy);
+                        break;
+                    }
+                    case 'mist': {
+                        const z = lvRoofZ(c.y) - 0.2, a = P(c.x0, c.y, z), b = P(c.x1, c.y, z);
+                        push(c.x1 + c.y, lvLine(a[0], a[1], b[0], b[1], pal.waterS, 1.6, ghost(c) + ';stroke-dasharray:1 4;stroke-linecap:round'), c.y);
+                        break;
+                    }
                     case 'bales': push(dep, box(c, c.x0, c.x1, c.y0, c.y1, 0.15, c.h + 0.15, [pal.baleT, pal.baleS, pal.baleE]), cy); break;
                     case 'heap': push(dep, box(c, c.x0, c.x1, c.y0, c.y1, 0, c.h, [pal.heap, pal.heapS, pal.heapS], ';opacity:.95'), cy); break;
                     case 'manger': case 'trough': case 'crate': push(dep, box(c, c.x0, c.x1, c.y0, c.y1, 0, c.h, [pal.concT, pal.wallS, pal.wallE]), cy); break;
@@ -4598,7 +4694,7 @@
                 ['shade_shed', 17, 12, LV_SHED.zS + 0.2, 70, -56, 'مظلة معدنية 24 × 8 م'],
                 ['service_room', 21, 2.5, 3.3, 54, -34, 'المخزن وغرفة الراعي'],
                 ['quarantine_hay', 10, 1.5, 2.2, 46, -52, 'مصطبة البالات'],
-                ['quarantine_hay', 2.5, 2.0, 2.6, 18, -64, 'حظيرة العزل'],
+                ['quarantine_hay', 2.5, 2.0, 3.0, 18, -64, 'غرفة العزل'],
                 ['feed_line', 1.0, 6.6, 0.15, -66, 8, 'ممر العلف 3 م'],
                 ['pens_yards', 0.8, 5.9, 4.2, -62, -6, 'خزان 2 م³'],
                 ['pens_yards', 5, 22, 0.1, -64, 26, 'حوش الحظيرة 1 (75 رأساً)'],
@@ -4625,7 +4721,7 @@
         }
 
         // ---------------------------------------------------------------------
-        // SITE PLAN of code 083 (60 × 70 m, to scale) — the "المسقط الأفقي" tab
+        // SITE PLAN of the livestock complex in ح42 (60 × 70 m, to scale) — the "المسقط الأفقي" tab
         // ---------------------------------------------------------------------
         function lvSitePlanSVG() {
             const pal = LV_PAL_VARS, s = 8, ML = 58, MT = 54;
@@ -4640,7 +4736,7 @@
             o += lvRect(SX(27), SY(0), 6 * s, 70 * s, pal.conc, pal.thin, 0.8, 'stroke-dasharray:6 4');
             o += `<text x="${SX(30)}" y="${SY(40)}" text-anchor="middle" transform="rotate(-90 ${SX(30)} ${SY(40)})" style="fill:${pal.ink2};font-size:9px;font-weight:600">ممر الخدمة الرئيسي 6.0 م (جرار · علف · سماد)</text>`;
             o += lvRect(SX(0.4), SY(27), 26.6 * s, 5 * s, pal.conc, pal.thin, 0.6, 'stroke-dasharray:4 3') + lvText(SX(6), SY(30.6), 'حارة الشاحنات 5 م', 8.5, pal.ink2);
-            o += lvRect(SX(27), SY(70) - 4, 6 * s, 8, pal.ink2, 'none', 0) + lvText(SX(30), SY(70) + 16, 'بوابة الشاحنات ← الطريق الدائري الجنوبي', 9, pal.ink2);
+            o += lvRect(SX(27), SY(70) - 4, 6 * s, 8, pal.ink2, 'none', 0) + lvText(SX(30), SY(70) + 16, 'بوابة الشاحنات ← حارة الدخول إلى الطريق الطولي الأوسط', 9, pal.ink2);
             // future phases
             const fut = (key, x, y, w, h, t1, t2) => `<g class="lv-part lv-future" data-part="${key}" onclick="selectLivestockPartFromPlan('${key}')">` +
                 lvRect(SX(x), SY(y), w * s, h * s, pal.paper, pal.thin, 1.1, 'stroke-dasharray:6 4', 'class="lv-hit"') +
@@ -4669,8 +4765,8 @@
             o += lvDimH(SX(0), SX(60), SY(0) - 30, '60.0 م', pal) + lvDimV(SY(0), SY(70), SX(0) - 30, '70.0 م', pal);
             o += lvDimH(AX(0), AX(24), SY(0) - 14, '24.0', pal) + lvDimV(AY(0), AY(25), SX(0) - 14, '25.0', pal);
             o += lvNorth(W - 18, 30, pal);
-            o += lvText(SX(60), H - 8, 'كود 083 · مقياس الرسم 1:500 تقريباً على الطباعة', 8.5, pal.ink2, 'end', 600);
-            return `<svg id="livestock-blueprint-svg" viewBox="0 0 ${W} ${H}" class="tf-bp-svg select-none" role="group" aria-label="المسقط الأفقي لمجمع المواشي (كود 083) بمقياس رسم" style="font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif">${o}</svg>`;
+            o += lvText(SX(60), H - 8, 'مجمع المواشي · ح42 · مقياس الرسم 1:500 تقريباً على الطباعة', 8.5, pal.ink2, 'end', 600);
+            return `<svg id="livestock-blueprint-svg" viewBox="0 0 ${W} ${H}" class="tf-bp-svg select-none" role="group" aria-label="المسقط الأفقي لمجمع المواشي في ح42 بمقياس رسم" style="font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif">${o}</svg>`;
         }
 
         // Bill of quantities table (screen + print)
@@ -4711,7 +4807,7 @@
         // Later phases drawn on the plan (no projections yet)
         const LV_FUTURE = {
             phase2_sheep: { phase: 2, name: 'المرحلة الثانية — توسع أغنام A2', dims: '24.0م × 20.0م (480 م²) · سعة +150 رأس إضافي', cost: 'توسع مستقبلي ممول ذاتياً من أرباح الدورات', desc: 'امتداد شرقي مباشر عبر ممر الخدمة الأوسط (عرض 6م). يتيح مضاعفة الطاقة الاستيعابية للأغنام إلى 300 رأس دون المساس بالعنبر الأول أو تعطيله، ويستخدم نفس مخزن الأعلاف وغرفة الراعي وبوابة الشاحنات ومكمر السماد.' },
-            phase3_cattle: { phase: 3, name: 'المرحلة الثالثة — عنبر تسمين عجول B1', dims: '24.0م × 30.0م (720 م²) · سعة 35–40 عجل', cost: 'مدرج في خطة التوسع (2029–2030)', desc: 'الربع الجنوبي الغربي للكود 083. مخصص لاستيعاب 30 إلى 40 رأس عجل تسمين لتعظيم القيمة المضافة من البرسيم الحجازي ومخلفات المزرعة.' },
+            phase3_cattle: { phase: 3, name: 'المرحلة الثالثة — عنبر تسمين عجول B1', dims: '24.0م × 30.0م (720 م²) · سعة 35–40 عجل', cost: 'مدرج في خطة التوسع (2029–2030)', desc: 'الربع الجنوبي الغربي من المجمع. مخصص لاستيعاب 30 إلى 40 رأس عجل تسمين لتعظيم القيمة المضافة من البرسيم الحجازي ومخلفات المزرعة.' },
             phase4_b2: { phase: 4, name: 'المرحلة الرابعة — عنبر أمهات / عجول B2', dims: '24.0م × 25.0م (600 م²)', cost: 'لم تُسعَّر بعد', desc: 'المرحلة الرابعة من مجمع الإنتاج الحيواني شرق ممر الخدمة.' }
         };
         let lvSelectedPart = 'all_phase1';
@@ -4829,7 +4925,7 @@
             if (box) box.innerHTML = rows.map(r => `<div><span>${r[0]}</span><span class="num">${r[1]}</span></div>`).join('');
         }
 
-        // Site plan of code 083 is generated from the design model (to scale)
+        // Site plan of the ح42 complex is generated from the design model (to scale)
         function renderLvSitePlan() {
             const stage = document.getElementById('blueprint-map-stage');
             if (!stage) return;
@@ -4947,7 +5043,7 @@
                         </div>
                         <div>
                             <span class="text-[10px] text-slate-500 block">الموقع المساحي</span>
-                            <strong class="font-black text-slate-900">الحوشة ح23 / كود 083</strong>
+                            <strong class="font-black text-slate-900">الحوشة ح42 · مجمع المواشي</strong>
                         </div>
                         <div>
                             <span class="text-[10px] text-slate-500 block">تاريخ الإصدار التنفيذي</span>
@@ -5031,13 +5127,13 @@
                     <div class="p-2 border-2 border-slate-800 rounded-xl bg-white">${cadSvgClone}</div>
                     <div class="grid grid-cols-3 gap-3 text-xs">
                         <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>إجمالي المساحة الجيوديسية:</strong> 200.0 فدان (186.9 فدان صافي · 59 حوشة · 187 كود + 13.1 فدان طرق ومدقات).</div>
-                        <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>منطقة الخدمات والمواشي (ح23):</strong> 6.6 فدان تشمل الأكواد 076–083 (الاستراحة، المخزن، الحزام العازل، ومجمع المواشي في الكود 083).</div>
-                        <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>الارتكاز المائي وتوسع النخيل:</strong> البئر BEER1 في ح30 (كود 095)، البحيرة في كود 088، وتوسع الـ 50 فدان نخيل في ح47–ح59.</div>
+                        <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>الخدمات والمواشي (ح42):</strong> مجمع المواشي 60م × 70م والورشة ومظلة الجرارات والميزان. الاستراحة باقية على التبة في ح23 (076).</div>
+                        <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>الارتكاز المائي وتوسع النخيل:</strong> البئر BEER1 والمخزن والمحول والطاقة الشمسية في ح30 (كود 095)، والبحيرة في جزء من ح26، وتوسع الـ 50 فدان نخيل في ح47–ح59.</div>
                     </div>
                 `;
             } else if (sheetType === 'cad_sector') {
-                const zoneKey = MAP_VIEW_CONFIG.cad.activeZoneKey || 'h23_services';
-                const zData = CAD_ZONES_DATA[zoneKey] || CAD_ZONES_DATA.h23_services;
+                const zoneKey = MAP_VIEW_CONFIG.cad.activeZoneKey || 'h42_services';
+                const zData = CAD_ZONES_DATA[zoneKey] || CAD_ZONES_DATA.h42_services;
                 const zBox = CAD_ZOOM_BOXES[zoneKey] || { x: 480, y: 40, w: 300, h: 270 };
                 const cadSectorSvg = printSafeSvg(document.getElementById('tenida-cad-svg').outerHTML)
                     .replace(/viewBox="[^"]*"/, `viewBox="${zBox.x} ${zBox.y} ${zBox.w} ${zBox.h}"`)
@@ -5059,7 +5155,7 @@
                     .replace(/class="[^"]*"/, 'class="w-full h-[500px] border border-slate-400 rounded-xl bg-white is-zoomed-in"')
                     .replace(/ is-selected/g, '');
                 container.innerHTML = `
-                    ${buildEngineeringTitleBlockHTML('المخطط الهندسي العام لمجمع الإنتاج الحيواني ودورة الأغنام (كود 083 — 60م × 70م)', 'LV-MASTER-083', '1:200')}
+                    ${buildEngineeringTitleBlockHTML('المخطط الهندسي العام لمجمع الإنتاج الحيواني ودورة الأغنام (ح42 — 60م × 70م)', 'LV-MASTER-H42', '1:200')}
                     <div class="p-2 border-2 border-slate-800 rounded-xl bg-white">${bpSvgClone}</div>
                     <div class="grid grid-cols-4 gap-3 text-xs">
                         <div class="p-3 rounded-xl border border-slate-300 bg-slate-50"><strong>المرحلة 1 · A1 (24 × 25 م = 600م²):</strong> مظلة معدنية 24 × 8 م فوق ممر علف خلفي ومذود 20 م، حظيرتان 12 × 16.4 م، غرفة خدمة 10 × 5 م، عزل ومصطبة بالات، وممر فرز وميزان ورامب تحميل.</div>
@@ -6005,8 +6101,9 @@
             entrance: { x: 35, y: 30, w: 245, h: 275, label: 'المدخل الغربي ومبردات التمور (ح1–ح7)' },
             west_crops: { x: 240, y: 35, w: 315, h: 270, label: 'القطاع الغربي المزروع (ح8–ح18)' },
             medicinal: { x: 475, y: 35, w: 175, h: 270, label: 'الطبية والعطرية والمناشر (ح19–ح25)' },
-            h23_services: { x: 510, y: 125, w: 165, h: 185, label: 'قلب الخدمات ومجمع المواشي (ح23 · كود 083)' },
-            h30_water: { x: 585, y: 40, w: 130, h: 185, label: 'الارتكاز المائي والبحيرة (ح30 · بئر BEER1)' },
+            h42_services: { x: 735, y: 40, w: 115, h: 135, label: 'مجمع المواشي والورشة (ح42)' },
+            h23_rest: { x: 515, y: 135, w: 135, h: 160, label: 'الاستراحة على التبة (ح23)' },
+            h30_water: { x: 570, y: 100, w: 120, h: 75, label: 'البئر والمخزن والطاقة (ح30) والبحيرة (ح26)' },
             center_crops: { x: 595, y: 35, w: 330, h: 270, label: 'القطاع الأوسط المزروع (ح27–ح46)' },
             palm_wave1: { x: 820, y: 35, w: 280, h: 270, label: 'موجة النخيل الأولى 25 فدان (ح47–ح52)' },
             palm_wave2: { x: 1030, y: 35, w: 275, h: 270, label: 'موجة النخيل الثانية 25 فدان (ح53–ح59)' }
@@ -6187,26 +6284,36 @@
         }
 
         const CAD_ZONES_DATA = {
-            h23_services: {
-                title: 'الحوشة ح23 (الأكواد 076 – 083 · المساحة: 6.6 فدان)',
+            h42_services: {
+                title: 'الحوشة ح42 · مجمع المواشي والورشة',
                 badge: 'قلب الخدمات ومجمع الإنتاج الحيواني',
-                desc: 'تقع جنوب الطريق الطولي الأوسط مباشرة وبها علامات الرفع المساحي (R1, R3, R4). تم تقسيمها هندسياً من الشمال للجنوب مع اتجاه الرياح السائدة لتحقيق العزل الحيوي التام:',
+                desc: 'نُقلت الخدمات من ح23 إلى ح42 (14 نوفمبر 2026) لإبعاد المواشي عن الاستراحة وتقريب الكمبوست من النخيل. تقع ح42 شمال الطريق الطولي الأوسط، على بعد حوشتين غرب موجة النخيل الأولى:',
                 bullets: [
-                    'كود 076 (شمال ح23 - 0.85 ف): الاستراحة القائمة، سكن العمال، ومحطة الطاقة الشمسية.',
-                    'كود 077 و078 (وسط ح23 - 1.7 ف): المخزن الرئيسي للأسمدة والتقاوي، الميزان الأرضي، ومظلة الجرارات والورشة.',
-                    'أكواد 079–081 (2.05 ف): حزام شجري عازل (مورينجا/أكاسيا/علف أخضر) يمنع وصول أي روائح أو غبار للاستراحة.',
-                    'كود 082 (1.0 ف): احتياطي توسع مستقبلي للإنتاج الحيواني.',
-                    'كود 083 (جنوب ح23 - 1.0 ف = 60م×70م): مجمع المواشي ودورة الأغنام الفورية + مكمر السماد العضوي؛ يفتح مباشرة على الطريق الدائري الجنوبي (عرض 10–13م).'
+                    'مجمع المواشي (60م × 70م): عنبر الأغنام A1 بالتصميم الهجين، ثم A2 والعجول B1 والأمهات B2، ومكمر السماد العضوي في الركن مع اتجاه الريح.',
+                    'الورشة ومظلة الجرارات والميزان الأرضي: جنوب المجمع على حارة الدخول.',
+                    'الدخول: حارة خدمة على الحد الغربي للحوشة تصل إلى الطريق الطولي الأوسط، فلا تدخل الشاحنات بين الحظائر.',
+                    'المياه: خط HDPE 63 مم من هيدر البئر في ح30 على حافة الطريق الأوسط (يُؤكَّد طوله برفع مساحي).',
+                    'الكهرباء: كابل من محول ح30 للإنارة والورشة.',
+                    'المساحة: يخرج نحو 2 فدان من الأرض المزروعة في ح42.'
+                ]
+            },
+            h23_rest: {
+                title: 'الحوشة ح23 (الأكواد 076 – 083 · 6.6 فدان)',
+                badge: 'الاستراحة على التبة',
+                desc: 'تبقى الاستراحة في موقعها على التبة العالية، فتطل على المزرعة والبحيرة في ح26:',
+                bullets: [
+                    'كود 076 (0.85 ف): الاستراحة القائمة وسكن العمال (علامات الرفع المساحي R1, R3, R4).',
+                    'أكواد 077–083 (5.75 ف): أرض التبة، احتياطي غير مزروع بعد نقل المواشي والورشة إلى ح42.'
                 ]
             },
             h30_water: {
-                title: 'الحوشة ح30 (كود 095) + شمال ح27 (كود 088)',
+                title: 'الحوشة ح30 (كود 095) + ح26',
                 badge: 'القلب الهيدروليكي والطاقة (BEER1)',
                 desc: 'نقطة الارتكاز المائية في منتصف الشريط الطولي للمزرعة، وتغذي الغرب والشرق بأقل فاقد هيدروليكي:',
                 bullets: [
-                    'كود 095 (ح30): البئر الجوفي المرخص (BEER1 - عمق 205م، تصرف 180 م³/ساعة، ملوحة 850 ppm) بعد ربطه بالكهرباء الحكومية.',
-                    'كود 088 (شمال ح27): موقع بحيرة التخزين المائية (60م × 40م × عمق 3م) لتخزين ضخ الكهرباء الليلي. معلقة حتى اختيار نظام ري الحقول (قرار يناير 2028)، لأن الري المضغوط قد يعمل ليلاً مباشرة.',
-                    'محطة الفلاتر الرملية والشبكية والسمادات المركزية لخدمة شبكة تنقيط النخيل.'
+                    'ح30 (كود 095): البئر الجوفي المرخص (BEER1 - عمق 205م، تصرف 180 م³/ساعة، ملوحة 850 ppm)، والمخزن، ومحول الكهرباء الحكومية، ووحدة الطاقة الشمسية.',
+                    'محطة الفلاتر الرملية والشبكية والسمادات عند مخرج البئر، ومنها الخط الرئيسي ومنها خط مياه مجمع المواشي في ح42.',
+                    'جزء من ح26 (بجوار البئر): موقع بحيرة التخزين (60م × 40م × عمق 3م). معلقة حتى اختيار نظام ري الحقول (قرار يناير 2028)، لأن الري المضغوط قد يعمل ليلاً مباشرة.'
                 ]
             },
             palm_wave1: {
@@ -6233,7 +6340,7 @@
                 badge: 'قطاع النباتات الطبية والعطرية ومناشر التجفيف',
                 desc: 'منطقة إنتاج وتجفيف المحاصيل التصديرية عالية القيمة (الشيح البابونج، حشيشة الليمون، وحبة البركة):',
                 bullets: [
-                    'تقع الحوشة ح24 وح25 شمال الطريق الطولي الأوسط (فوق الريح بالنسبة لعنابر المواشي) لضمان نقاء المحاصيل التصديرية من أي تلوث.',
+                    'تقع الحوشة ح24 وح25 شمال الطريق الطولي الأوسط، بعيدة عن مجمع المواشي في ح42، لضمان نقاء المحاصيل التصديرية من أي تلوث.',
                     'تولّد رافعة نقدية إضافية تتراوح بين 450 إلى 600 ألف ج.م سنوياً.'
                 ]
             },
@@ -6255,7 +6362,7 @@
                 ]
             },
             center_crops: {
-                title: 'الأحواش ح27 إلى ح46 (الأكواد 088 – 141)',
+                title: 'الأحواش ح27 إلى ح46 عدا ح42 (الأكواد 088 – 141)',
                 badge: 'القطاع الأوسط المزروع (محرك القمح والمحاصيل الموسمية)',
                 desc: 'الكتلة الزراعية الوسطى المحيطة بالبئر، وتمثل العمود الفقري لدورة القمح الشتوية (60 فدان):',
                 bullets: [
@@ -6271,7 +6378,7 @@
         // ---------------------------------------------------------------------
         const MAP_CATEGORIES = {
             all: { name: 'كل المناطق', sw: 'var(--sf)', zones: [] },
-            services: { name: 'الخدمات والمواشي', sw: 'var(--z-services)', zones: ['h23_services'], def: 'h23_services' },
+            services: { name: 'الخدمات والمواشي', sw: 'var(--z-services)', zones: ['h42_services', 'h23_rest'], def: 'h42_services' },
             palms: { name: 'توسع النخيل', sw: 'var(--z-palms)', zones: ['palm_wave1', 'palm_wave2'], def: 'palm_wave1', box: { x: 825, y: 35, w: 475, h: 270, label: 'قطاع توسع النخيل الكامل 50 فدان (ح47–ح59)' } },
             water: { name: 'البئر والبحيرة', sw: 'var(--z-water)', zones: ['h30_water'], def: 'h30_water' },
             medicinal: { name: 'الطبية والعطرية', sw: 'var(--z-med)', zones: ['medicinal'], def: 'medicinal' },
@@ -6283,7 +6390,7 @@
 
         // Next step link for each zone (navigation only)
         const ZONE_LINKS = {
-            h23_services: { label: 'فتح مخطط المواشي', tab: 'livestock' },
+            h42_services: { label: 'فتح مخطط المواشي', tab: 'livestock' },
             h30_water: { label: 'خطة تطوير الري', tab: 'water' },
             palm_wave1: { label: 'عرض الجدول الزمني', tab: 'gantt' },
             palm_wave2: { label: 'عرض الجدول الزمني', tab: 'gantt' },
@@ -6292,16 +6399,17 @@
 
         // Service projects (same rows as the former zoning table)
         const MAP_PROJECTS = [
-            { name: 'القطب الإداري واللوجستي', loc: 'شمال ووسط ح23 (076–078)', area: '2.55 ف', zone: 'h23_services', desc: 'الاستراحة القائمة (R1,R3,R4)، سكن العمال، الطاقة الشمسية، المخزن الرئيسي، الميزان، والورشة.' },
-            { name: 'مجمع المواشي والكمبوست', loc: 'جنوب ح23 (083 + 082 + عازل 081)', area: '2.0 ف + 0.8 عازل', zone: 'h23_services', desc: 'عنبر الأغنام الفوري (60م×70م في 083) + توسع العجول + مكمر السماد العضوي؛ يفتح على الدائري الجنوبي.' },
-            { name: 'القطب المائي والهيدروليكي', loc: 'ح30 (095) + شمال ح27 (088)', area: '2.2 ف', zone: 'h30_water', desc: 'بئر BEER1 (205م) + محطة الكهرباء + بحيرة التخزين المبطنة (60م×40م) + محطة الفلاتر والسمادات.' },
+            { name: 'مجمع المواشي والكمبوست', loc: 'ح42 (60م × 70م)', area: '1.0 ف + توسع', zone: 'h42_services', desc: 'عنبر الأغنام A1 بالتصميم الهجين، ثم A2 والعجول B1 والأمهات B2، ومكمر السماد العضوي؛ أقرب لجور النخيل في ح47–ح59.' },
+            { name: 'الورشة ومظلة الجرارات والميزان', loc: 'ح42 (جنوب المجمع)', area: 'نحو 1 ف', zone: 'h42_services', desc: 'نُقلت من ح23 مع المواشي، على حارة الدخول من الطريق الطولي الأوسط.' },
+            { name: 'الاستراحة', loc: 'ح23 (076) على التبة', area: '0.85 ف', zone: 'h23_rest', desc: 'الاستراحة القائمة وسكن العمال، تطل على المزرعة والبحيرة. باقي التبة (077–083) احتياطي.' },
+            { name: 'القطب المائي والهيدروليكي', loc: 'ح30 (095) + جزء من ح26', area: '2.2 ف', zone: 'h30_water', desc: 'بئر BEER1 (205م) + المخزن + محول الكهرباء + وحدة الطاقة الشمسية + محطة الفلاتر، والبحيرة المبطنة (60م×40م) في ح26.' },
             { name: 'ساحة التجفيف والتجهيز', loc: 'ح24 وح25 (084–086)', area: '2.5 ف', zone: 'medicinal', desc: 'مناشر تجفيف نظيفة (فوق الريح شمال الطريق الأوسط) للبابونج وحشيشة الليمون وحبة البركة.' },
             { name: 'بوابة التحكم ومبردات التمور', loc: 'ح1 وح2 (001–004)', area: '3.5 ف', zone: 'entrance', desc: 'نقطة 1 (بوابة الأمن والتحكم الغربي) + موقع صالة فرز وتدريج وثلاجات التمور التصديرية (2031).' },
             { name: 'قطاع توسع النخيل', loc: 'ح47 إلى ح59 (142–187)', area: '50.0 ف صافي', zone: 'palm_wave1', desc: 'موجة 1 (ح47–ح52: 25 فدان تُغرس بعد تسليم الأغنام في مايو 2027) + موجة 2 (ح53–ح59: 25 فدان).' }
         ];
 
         let mapCategory = 'all';
-        let mapSelectedZone = 'h23_services';
+        let mapSelectedZone = 'h42_services';
         let mapSelectedProject = null;
         let mapSheetOpen = false;
 
@@ -6320,7 +6428,7 @@
             '#6ee7b7': '--map-edge', '#94a3b8': '--map-road', '#f59e0b': '--map-ring', '#10b981': '--map-edge', '#34d399': '--map-edge',
             '#000': '--sf', '#38bdf8': '--map-pipe', '#fff': '--sf', '#fde047': '--map-strong', '#fbbf24': '--pr'
         };
-        const ZONE_INK = { entrance: '--zi-entrance', west_crops: '--zi-planted', center_crops: '--zi-planted', medicinal: '--zi-med', h23_services: '--zi-services', h30_water: '--zi-water', palm_wave1: '--zi-palms', palm_wave2: '--zi-palms' };
+        const ZONE_INK = { entrance: '--zi-entrance', west_crops: '--zi-planted', center_crops: '--zi-planted', medicinal: '--zi-med', h42_services: '--zi-services', h23_rest: '--zi-services', h30_water: '--zi-water', palm_wave1: '--zi-palms', palm_wave2: '--zi-palms' };
 
         function applyCadPalette() {
             ['tenida-cad-svg', 'cad-minimap-svg'].forEach(id => {
@@ -6410,7 +6518,7 @@
         }
 
         function selectCadBasin(zoneKey, triggerZoom = false, opts = {}) {
-            const data = CAD_ZONES_DATA[zoneKey] || CAD_ZONES_DATA.h23_services;
+            const data = CAD_ZONES_DATA[zoneKey] || CAD_ZONES_DATA.h42_services;
             const cfg = MAP_VIEW_CONFIG.cad;
 
             if (triggerZoom && CAD_ZOOM_BOXES[zoneKey]) {
@@ -6477,7 +6585,7 @@
             renderMapChips();
             const c = MAP_CATEGORIES[mapCategory];
             if (mapCategory === 'all') {
-                selectCadBasin(mapSelectedZone || 'h23_services', false);
+                selectCadBasin(mapSelectedZone || 'h42_services', false);
                 resetMapZoom('cad');
                 return;
             }
@@ -6777,7 +6885,7 @@
                 { k: 'pitPrepCost', l: 'حفر الجور والجبس والسباخ', u: 'ج.م', step: 25000, hint: (d, m) => m.sheepCompostPitSaving > 0 ? `يُخصم ${formatNum(m.sheepCompostPitSaving)} وفر الكمبوست` : 'بدون وفر كمبوست (دورة الأغنام متوقفة)' }
             ],
             pond: [
-                { k: 'includePond', type: 'check', l: 'اعتماد بحيرة التخزين المائية', hint: 'معلقة حتى البوابة 2 (يناير 2028) واختيار نظام الري · كود 088' },
+                { k: 'includePond', type: 'check', l: 'اعتماد بحيرة التخزين المائية', hint: 'معلقة حتى البوابة 2 (يناير 2028) واختيار نظام الري · جزء من ح26' },
                 { k: 'pondCost', l: 'تكلفة البحيرة', u: 'ج.م', step: 50000, srOnlyLabel: true }
             ],
             sheepOn: [
@@ -7189,7 +7297,7 @@
         // saved name is still the default one; the full name stays in the tooltip and in the editor.
         const GANTT_SHORT_NAMES = {
             T0_SHED: 'بناء عنبر الأغنام A1 ومد خط المياه',
-            T1: 'حفر وتبطين بحيرة التخزين (ح27 · 088)',
+            T1: 'حفر وتبطين بحيرة التخزين (ح26)',
             T2: 'استصلاح وتسوية بالليزر',
             T3: 'شبكة الري بالتنقيط',
             T4: 'حفر الجور وإنزال الكمبوست والجبس',
@@ -7997,7 +8105,7 @@
         // Phone sub-pages (reached from "More") show a back button and their own title
         const SUB_PAGES = {
             masterplan: { title: 'مخطط المزرعة', meta: '200 فدان · 59 حوشة · 187 كود' },
-            livestock: { title: 'المواشي ودورة الأغنام', meta: 'كود 083 · 60 × 70 م' },
+            livestock: { title: 'المواشي ودورة الأغنام', meta: 'ح42 · 60 × 70 م' },
             water: { title: 'تطوير الري والأولويات', meta: 'دراسة 14 نوفمبر 2026 · 3 بوابات قرار' },
             constants: { title: 'الشركاء والأصول', meta: 'حصص متساوية 25% · مثبّتة بالريال' }
         };
@@ -8173,12 +8281,13 @@
             setupInteractiveMapDragAndWheel('cad');
             setupInteractiveMapDragAndWheel('blueprint');
             initCadMapUI();
-            selectCadBasin('h23_services', false);
+            selectCadBasin('h42_services', false);
             document.querySelectorAll('#p1-part-dropdown, #p1-part-dropdown-3d').forEach(sel => { sel.innerHTML = lvPartOptionsHTML(); });
             initBlueprintUI();
             selectLivestockPart('all_phase1');
             if (stateMigratedV5) setTimeout(() => showToast('حُدّثت افتراضات الخطة من سجل الحسابات (سبتمبر 2025 – أغسطس 2026) وتصميم العنبر الجديد', true), 600);
-            else if (stateMigratedV6) setTimeout(() => showToast('أُضيفت خطة تطوير الري إلى الجدول الزمني، وعُلّقت البحيرة حتى قرار يناير 2028', true), 600);
+            else if (stateMigratedV6) setTimeout(() => showToast('أُضيفت خطة تطوير الري، ونُقل مجمع المواشي والورشة إلى ح42 بتصميم A1 الهجين', true), 600);
+            else if (stateMigratedV7) setTimeout(() => showToast('نُقل مجمع المواشي والورشة إلى ح42، والبحيرة إلى ح26، وحُدّث تصميم A1 (هجين)', true), 600);
             buildSimulatorFields();
             renderAll();
             saveState();
